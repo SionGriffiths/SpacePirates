@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+
+
+
+<!--  -->
+<!-- Space Mining Pirates  -->
+<!--  -->
+
+
+
+
+
+
+<!-- Begin Head -->
+<head>
+    
+<!--  -->
+<!-- Meta Information / Tags -->
+<!--  -->
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<title> Space Mining Pirates </title>
+
+<meta name="keywords" content="Space Mining Pirates" />
+<meta name="description" content="An interactive 2D and isometric Javascript space-themed game using the HTML5 canvas" />
+
+
+<!--  -->
+<!--   Link to the CSS Stylesheet  -->
+<!--  -->
+<link rel="stylesheet" type="text/css" href="mainstyle.css" media="screen" />
+
+<!--  -->
+<!--  JavaScript Scripts -->
+<!--  -->
+<script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="keyboard.js"></script>
+
+
+</head>
+<!-- End Head-->
+
+
+
+
+
+
+
+
+
+<!-- Begin Body -->
+<body>
+
+
+    <!--  -->
+    <!--   Wrapper -->
+    <!--  -->
+    <div id="wrapper">
+        
+        
+		
+        <!--  -->
+        <!--  Header -->
+        <!--  -->
+        <div class="header">
+            <h1>Space Mining Pirates</h1>
+        </div>
+        
+        
+        <!--  -->
+        <!--  Sidebar  -->
+        <!--  -->
+        <div class="nav">
+		
+			<p id="debugtitle">
+			Debug Console
+			</p>
+			<div id = "debug">
+			
+			</div>
+		
+		</div>
+        
+        
+        
+        <!--  -->
+        <!-- Main Section-->
+        <!--  -->
+        <div class="main">
+        
+		<!-- Canvas -->
+		<canvas id="maincanvas" tabindex="0">
+		Sorry, HTML5 canvas is not supported by your browser.
+		Please try using the latest Firefox, Chrome (or if you must, IE) browser.
+		</canvas>
+		
+        </div>
+        <!-- End Main -->
+        
+    </div>
+    <!-- End Wrapper-->
+    
+	
+	
+	<!-- Game Script -->
+	<script>
+	setupEventListeners();
+	Game.initialize();
+	Game.load();
+	
+	Game.run = function() {
+		setInterval(function() {
+			Game.paint();
+			Game.update();
+
+		}, waitTime);
+	}; 
+
+	Game.run();
+	</script>
+	
+</body>
+<!-- End Body -->
+
+
+</html>
+<!-- End Document -->
+    

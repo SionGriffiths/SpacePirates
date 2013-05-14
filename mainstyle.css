@@ -1,0 +1,108 @@
+/* Reset the CSS */
+* {padding: 0; margin: 0;}
+
+
+
+/* Uncomment the line below to see outlines
+   around <div> tags */
+
+/* div {outline: 1px dotted #F0F;} */
+
+
+
+/* Set the HTML document to occupy the whole screen */
+html {height: 100%;}
+
+
+
+
+/*  Set a body-wide font, a minimum width as well
+    as set to full screen */
+body {
+    height: 100%;
+    width: 100%;
+    min-width: 720px;
+    font: 16px Arial, sans-serif;
+}
+
+
+/*  This div encases everything, to allow for easier document-wide settings 
+    to be applied. Sets a minimum height for use when resizing the window.
+    Referenced using 'id' */
+#wrapper {
+    height: 100%;
+    min-height: 400px;
+}
+
+/* Set the style for the Header div, referenced using class */
+.header {
+    height: 10%;
+    width: 100%;
+    background: #111;
+    color: #fff;
+    min-height: 50px;
+}
+
+/* Set the style for the Nav (sidebar) div, referenced using class */
+.nav {
+    width: 20%;
+    height: 90%;
+    float: left;
+    background: #ddd;
+	text-align:  center;
+    text-shadow: 1px 1px 3px #DDD;
+	line-height: 20px;
+}
+
+/* Set the style for the links in the nav div */
+.nav a:link { text-decoration: none; }
+.nav a:visited { color: #4B0082; }
+.nav a:active { color: green; }
+.nav a:hover {
+    font-size:24px;
+    font-weight:bold;
+    color: blue;
+    border-right: 6px solid blue;
+    padding-right: 9px;
+    }
+
+
+/* Set the style for the Main section div, referenced using class */
+.main {
+    width: 80%;
+    height: 90%;
+    float: left;
+    background: #eee;
+}
+
+
+
+
+/* Set the style for H1 tags inside the header */
+.header h1 {
+    line-height: 50px;
+    text-align:  center;
+    text-shadow: 1px 1px 3px #DDD;
+    padding: 5px 20px;
+}
+
+
+#maincanvas {
+	margin: 0;
+	background-color: #111;
+}
+
+
+/* Configure the canvas, and set a background image */
+canvas {
+	float: center;
+	max-width: 98%;
+	min-width: 98%; 
+	max-height: 98%;
+	min-height: 98%;
+	background:url(space2.jpg);
+	background-size: 100%;
+	
+}
+
+canvas, img { display:block; margin:1em auto; border:1px solid black; }
