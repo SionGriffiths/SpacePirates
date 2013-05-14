@@ -20,15 +20,18 @@ var shipThrusterImage1;
 var shipThrusterImage2;
 var shipThrusterImage3;
 
+var stars = new Array();
 
 
 // Initialize the canvas
 Game.initialize = function() {
 	canvasE = document.getElementById('maincanvas');
-	c = canvasElement.getContext("2d");
+	c = canvasE.getContext("2d");
 	
 	canvasWidth = canvasE.width;
 	canvasHeight = canvasE.height;
+	
+	initializeBackground();
 }
 
 // Display loading screen and preload images
@@ -100,6 +103,7 @@ Game.load = function() {
 	setTimeout(function() {
 		shipImage = new Image();
 		shipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
 		shipImage.src = "/images/ship2.png";
 	}, 200);
 	
@@ -108,29 +112,37 @@ Game.load = function() {
 	setTimeout(function() {
 		shipThrusterImage1 = new Image();
 		shipThrusterImage1.onload = updateProgressBar();
+		imageLoadProgress += 1;
 		shipThrusterImage1.src = "/images/thrust2.png";
 	}, 400);
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
+		imageLoadProgress += 1;
 		shipThrusterImage2.src = "/images/thrust4.png";
 	}, 600);
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
+		imageLoadProgress += 1;
 		shipThrusterImage3.src = "/images/thrust12.png";
 	}, 800);
 
 	
-}
+	// Call the game to run, after finished loading
+	setTimeout(function() {
+		Game.run();
+	}, 1000);
 
+}
 
 
 Game.paint = function() {
 	
-	//c.fillRect(50,50,50,50);
+	clearCanvas();
+	updateBackground();
 	
 }
 
@@ -164,5 +176,41 @@ Game.printToDebugConsole = function(e){
 
 	messageLogString = " ";
 }
+
+
+
+// Clear canvas
+function clearCanvas() {
+	canvasElement.width = canvasElement.width;
+}
+
+
+// Background manager
+function updateBackground(){
+	
+	// Paint the background black
+	c.save();
+	c.fillStyle = "black";
+	c.fillRect(0,0,canvasE.width, canvasE.height);
+	c.restore();
+	
+	updateStarPositions();
+	
+}
+
+function initializeBackground(){
+	// Create the stars
+	var star = ".";
+	
+	for (var i = 0; i < 20; i++){
+		
+	}
+	
+}
+
+function updateStarPositions(){
+	// If the ship moves, move the stars very very slightly
+}
+
 
 

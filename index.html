@@ -113,9 +113,6 @@
 	
 	<!-- Game Script -->
 	<script>
-	setupEventListeners();
-	Game.initialize();
-	Game.load();
 	
 	Game.run = function() {
 		setInterval(function() {
@@ -123,9 +120,16 @@
 			Game.update();
 
 		}, waitTime);
-	}; 
-
-	Game.run();
+	};
+	
+	
+	setupEventListeners();
+	Game.initialize();
+	Game.load();
+	
+	
+	
+	
 	</script>
 	
 </body>
