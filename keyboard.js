@@ -24,7 +24,8 @@ function setupEventListeners() {
 function keyEventFired(e) {
 	
 	var input = e.keyCode;
-	Game.printToDebugConsole(e.keyCode);
+	Game.printToDebugConsole(input);
+	
 	switch (input) {
 	
 	// W
@@ -77,5 +78,5 @@ function keyEventOver(e) {
 				break;
 	}
 	
-	window.alert(e.keyCode);
+	//window.alert(e.keyCode);
 }
