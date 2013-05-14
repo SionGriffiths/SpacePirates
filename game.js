@@ -78,6 +78,9 @@ Game.load = function() {
 	// Display loading progress bar
 	drawProgressBar();
 	
+	var updateProgressBar = function() {
+	
+	}
 	
 	
 	// Update loading progress bar based on (numOfImages - progress)
