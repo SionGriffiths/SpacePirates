@@ -58,19 +58,21 @@ Game.load = function() {
 																((loadingPaneY + (loadingPaneHeight / 2))));
 	c.restore();
 	
+	
+	var x = loadingPaneX + 10;
+	var y = loadingPaneY + (loadingPaneHeight - 15);
+	var xSpacing = (loadingPaneWidth - 20) / numOfImages;
+		
+	
 	// Loading screen progress bar
 	var drawProgressBar = function() {
 		
-		var x = loadingPaneX + 10;
-		var y = loadingPaneY + (loadingPaneHeight - 15);
-		var xSpacing = (loadingPaneWidth - 20) / numOfImages;
-		
 		for (var i = 0; i < numOfImages; i++) {
+			c.save();
 			c.fillStyle = "red";
 			c.strokeStyle = "red";
 			c.strokeRect(x, y, xSpacing, 10);
 			x += xSpacing;
-			
 		}
 	}
 	
@@ -78,15 +80,19 @@ Game.load = function() {
 	// Display loading progress bar
 	drawProgressBar();
 	
-	var updateProgressBar = function() {
 	
+	x = loadingPaneX + 10;
+	
+	var updateProgressBar = function() {
+		c.fillRect(x, y, xSpacing, 10);
+		x += xSpacing;
 	}
 	
 	
 	// Update loading progress bar based on (numOfImages - progress)
 	shipImage = new Image();
 	shipImage.onload = function() {
-		imageLoadProgress += 1;
+		updateProgressBar();
 	}
 	shipImage.src = "/images/ship2.png";
 	
@@ -110,9 +116,12 @@ Game.load = function() {
 	
 	shipThrusterImage3 = new Image();
 	shipThrusterImage3.onload = function() {
-		imageLoadProgress += 1;
+		updateProgressBar();
 	}
 	shipThrusterImage3.src = "/images/thrust12.png";
+	
+	// Restore canvas settings
+	c.restore();
 }
 
 
