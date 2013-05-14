@@ -85,13 +85,9 @@ Game.load = function() {
 	x = loadingPaneX + 10;
 	
 	var updateProgressBar = function() {
-		setTimeout(function() {
-			c.fillStyle = "red";
-			Game.printToDebugConsole("Update Progress Bar");
-			c.fillRect(x, y, xSpacing, 10);
-			x += xSpacing;
-		}, 20);
-		
+		c.fillStyle = "red";
+		c.fillRect(x, y, xSpacing, 10);
+		x += xSpacing;
 	}
 	
 	
@@ -152,11 +148,21 @@ Game.update = function() {
 // Print to debug
 var thisCode = "";
 var lastCode = ""; 
+var messageLog = new Array();
+var messageLogLength;
+var messageLogString = " ";
 
 Game.printToDebugConsole = function(e){
-	thisCode = e;
-	document.getElementById("debug").innerHTML = thisCode + "<br />" + lastCode;
-	lastCode = thisCode;
+	
+	messageLog.push(e);
+	
+	for (var i = 0; i < messageLog.length; i++){
+	 messageLogString = messageLogString + "<br  />" + messageLog[i];
+	}
+	
+	document.getElementById("debug").innerHTML = messageLogString;
+
+	messageLogString = " ";
 }
 
 
