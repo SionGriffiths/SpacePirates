@@ -12,6 +12,7 @@ function setupEventListeners() {
 	canvasElement = document.getElementById('maincanvas');
 	canvasElement.addEventListener( "keydown", keyEventFired, true);
 	canvasElement.addEventListener( "keyup", keyEventOver, true);
+	Game.printToDebugConsole("Added EventListeners to Canvas");
 }
 
 
@@ -78,5 +79,4 @@ function keyEventOver(e) {
 				break;
 	}
 	
-	//window.alert(e.keyCode);
 }
