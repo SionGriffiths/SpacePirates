@@ -73,6 +73,7 @@ Game.load = function() {
 			c.strokeStyle = "red";
 			c.strokeRect(x, y, xSpacing, 10);
 			x += xSpacing;
+			c.restore();
 		}
 	}
 	
@@ -84,44 +85,49 @@ Game.load = function() {
 	x = loadingPaneX + 10;
 	
 	var updateProgressBar = function() {
-		c.fillRect(x, y, xSpacing, 10);
-		x += xSpacing;
+		setTimeout(function() {
+			c.fillStyle = "red";
+			Game.printToDebugConsole("Update Progress Bar");
+			c.fillRect(x, y, xSpacing, 10);
+			x += xSpacing;
+		}, 20);
+		
 	}
+	
+	
 	
 	
 	// Update loading progress bar based on (numOfImages - progress)
-	shipImage = new Image();
-	shipImage.onload = function() {
-		updateProgressBar();
-	}
-	shipImage.src = "/images/ship2.png";
+	
+	// Slow down the loading of the images, purely for the graphical effect
+	// This will obviously be changed for the larger application :D
+	setTimeout(function() {
+		shipImage = new Image();
+		shipImage.onload = updateProgressBar();
+		shipImage.src = "/images/ship2.png";
+	}, 200);
 	
 	
 	
-	shipThrusterImage1 = new Image();
-	shipThrusterImage1.onload = function() {
-		imageLoadProgress += 1;
-	}
-	shipThrusterImage1.src = "/images/thrust2.png";
+	setTimeout(function() {
+		shipThrusterImage1 = new Image();
+		shipThrusterImage1.onload = updateProgressBar();
+		shipThrusterImage1.src = "/images/thrust2.png";
+	}, 400);
 	
+	setTimeout(function() {
+		shipThrusterImage2 = new Image();
+		shipThrusterImage2.onload = updateProgressBar();
+		shipThrusterImage2.src = "/images/thrust4.png";
+	}, 600);
 	
+	setTimeout(function() {
+		shipThrusterImage3 = new Image();
+		shipThrusterImage3.onload = updateProgressBar();
+		shipThrusterImage3.src = "/images/thrust12.png";
+	}, 800);
+
 	
-	shipThrusterImage2 = new Image();
-	shipThrusterImage2.onload = function() {
-		imageLoadProgress += 1;
-	}
-	shipThrusterImage2.src = "/images/thrust4.png";
-	
-	
-	
-	shipThrusterImage3 = new Image();
-	shipThrusterImage3.onload = function() {
-		updateProgressBar();
-	}
-	shipThrusterImage3.src = "/images/thrust12.png";
-	
-	// Restore canvas settings
-	c.restore();
 }
 
 
