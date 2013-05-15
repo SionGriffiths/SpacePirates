@@ -12,7 +12,6 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-
 var numOfImages = 4;
 var imageLoadProgress = 0;
 var shipImage;
@@ -26,7 +25,14 @@ var star;
 var backgroundStarColours;
 var numOfStarColours;
 
+var shipX = 50; // Canvas x
+var shipY = 50; // Canvas y
+var shipDirection = 0; // Degrees
+var shipMomentum = 0; // 0 - 10
+var shipMomentumDirection = 0; // Degrees
 
+var TO_RADIANS = Math.PI / 180;
+var TO_DEGREES = 180 / Math.PI;
 
 
 
@@ -43,7 +49,6 @@ Game.initialize = function() {
 	Game.printToDebugConsole("Initializing background");
 	
 	initializeBackground();
-	
 
 }
 
@@ -67,7 +72,9 @@ Game.load = function() {
 	var loadingPaneWidth = (canvasWidth / 1.5);
 	var loadingPaneHeight = (canvasHeight / 3);
 	
+	c.save();
 	drawRoundRect(c, loadingPaneX, loadingPaneY, loadingPaneWidth, loadingPaneHeight, 10, true, true);
+	c.restore();
 	
 	var loadingMessage = 'Loading';
 	var loadingMessageMetrics = c.measureText(loadingMessage);
@@ -76,7 +83,7 @@ Game.load = function() {
 	c.save();
 	c.textAlign = "start";
 	c.fillStyle = "white";
-	c.font = "20px arial";
+	c.font = "40px arial";
 	c.shadowColor = "red";
 	c.shadowOffsetX = 2;
 	c.shadowOffsetY = 2;
@@ -112,9 +119,11 @@ Game.load = function() {
 	x = loadingPaneX + 10;
 	
 	var updateProgressBar = function() {
+	c.save();
 		c.fillStyle = "red";
 		c.fillRect(x, y, xSpacing, 10);
 		x += xSpacing;
+	c.restore();
 	}
 	
 	
@@ -130,7 +139,7 @@ Game.load = function() {
 		shipImage = new Image();
 		shipImage.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipImage.src = "/images/ship2.png";
+		shipImage.src = "images/ship2.png";
 	}, 300);
 	
 	
@@ -139,21 +148,21 @@ Game.load = function() {
 		shipThrusterImage1 = new Image();
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage1.src = "/images/thrust2.png";
+		shipThrusterImage1.src = "images/thrust2.png";
 	}, 600);
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage2.src = "/images/thrust4.png";
+		shipThrusterImage2.src = "images/thrust4.png";
 	}, 900);
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage3.src = "/images/thrust12.png";
+		shipThrusterImage3.src = "images/thrust12.png";
 	}, 1200);
 
 	
@@ -178,9 +187,11 @@ Game.load = function() {
 // Paint - GAMELOOP
 Game.paint = function() {
 	
+	//Game.printToDebugConsole("Painting");
 	clearCanvas();
 	updateBackground();
-	
+	updatePlayerShip();
+	//Game.printToDebugConsole("Painting 2");
 }
 
 
@@ -223,9 +234,9 @@ var messageLog = new Array();
 var messageLogLength;
 var messageLogString = " ";
 
-Game.printToDebugConsole = function(e){
+Game.printToDebugConsole = function(message){
 	
-	messageLog.push(e);
+	messageLog.push(message);
 	
 	for (var i = 0; i < messageLog.length; i++){
 	 messageLogString = messageLogString + "<br  />" + messageLog[i];
@@ -270,23 +281,24 @@ function updateBackground(){
 	c.fillRect(0,0,canvasE.width, canvasE.height);
 	c.restore();
 	
-	tryRadialGradientBackground();
+	addBlueRadialGradientFlare();
 	
 	updateStarPositions();
 	
-	c.save();
+	
 	
 	for (var i = 0; i < backgroundStars.length; i++){
+	c.save();
 		c.fillStyle = backgroundStars[i][3];
 		c.font = backgroundStars[i][2] + "px arial";
 		c.shadowColor = "white";
 		c.shadowBlur = backgroundStars[i][2] / 10;
 		c.fillText(star, backgroundStars[i][0], backgroundStars[i][1]);
+	c.restore();
 	}
 	
-	c.restore();
 	
-	pissAround();
+	
 }
 
 
@@ -321,7 +333,7 @@ function initializeBackground(){
 		var starData = new Array();
 		var starDataX = Math.floor(Math.random()*canvasE.width);
 		var starDataY = Math.floor(Math.random()*canvasE.height);
-		var starDataSize = Math.floor(Math.random() * 10);
+		var starDataSize = Math.floor(Math.random() * 30);
 		var starDataColour = backgroundStarColours[Math.floor(Math.random()*(numOfStarColours + 1))];
 
 		starData.push(starDataX);
@@ -343,19 +355,31 @@ function initializeBackground(){
 
 
 function updateStarPositions(){
-	// If the ship moves, move the stars very very slightly
+	// If the ship moves, move the stars very very slightly,
+	// with the largest (closest) ones moving more.
 }
 
 
-function tryRadialGradientBackground(){
+function addBlueRadialGradientFlare(){
+	
+	c.save();
+	
 	// Create gradient
-	var grd = c.createRadialGradient(75,75,5,90,60,200);
+	var grd = c.createRadialGradient(75,75,5,90,60,2000);
 	grd.addColorStop( 0.5, "#000000");
-	//grd.addColorStop( 0, "#635D2A");
 	grd.addColorStop( 0.01, "#1C2FAD");
-
 
 	// Fill with gradient
 	c.fillStyle=grd;
 	c.fillRect(0,0,canvasE.width, canvasE.height);
+	
+	c.restore();
+}
+
+
+
+function updatePlayerShip() {
+	c.save();
+	c.drawImage(shipImage, shipX, shipY, 100, 180);
+	c.restore();
 }
