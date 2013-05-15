@@ -231,25 +231,24 @@ Game.update = function() {
 var thisCode = "";
 var lastCode = ""; 
 var messageLog = new Array();
-var messageLogLength;
 var messageLogString = " ";
 
 Game.printToDebugConsole = function(message){
 	
 	messageLog.push(message);
 	
-	for (var i = 0; i < messageLog.length; i++){
+	for (var i = messageLog.length - 1; i > -1; i--){
 	 messageLogString = messageLogString + "<br  />" + messageLog[i];
 	}
 	
 	document.getElementById("debug").innerHTML = messageLogString;
 
 	messageLogString = " ";
+	
+	if (messageLog.length >= 15) {
+		messageLog.splice(0,1);
+	}
 }
-
-
-
-
 
 
 
@@ -322,7 +321,7 @@ function initializeBackground(){
 	backgroundStarColours.push("#FFDEDE");
 	backgroundStarColours.push("#DEFFFD");
 	backgroundStarColours.push("#CAC5E6");
-	backgroundStarColours.push("#FFFFFF");
+	backgroundStarColours.push("#FFC400");
 	backgroundStarColours.push("#FFFFFF");
 	backgroundStarColours.push("#FFFFFF");
 	numOfStarColours = backgroundStarColours.length;
