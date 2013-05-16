@@ -12,12 +12,13 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 4;
+var numOfImages = 5;
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
 var shipThrusterImage2;
 var shipThrusterImage3;
+var shipGunImage1;
 
 var backgroundStars = new Array();
 var numOfStars = 80;
@@ -151,7 +152,7 @@ Game.load = function() {
 		shipImage.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipImage.src = "images/ship2.png";
-	}, 300);
+	}, 200);
 	
 	
 	
@@ -160,22 +161,28 @@ Game.load = function() {
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipThrusterImage1.src = "images/thrust1.png";
-	}, 600);
+	}, 500);
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipThrusterImage2.src = "images/thrust2.png";
-	}, 900);
+	}, 800);
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipThrusterImage3.src = "images/thrust3.png";
-	}, 1200);
+	}, 1100);
 
+	setTimeout(function() {
+		shipGunImage1 = new Image();
+		shipGunImage1.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		shipGunImage1.src = 'gun1.png';
+	}, 1200);
 	
 	// Call the game to run, after finished loading
 	setTimeout(function() {
@@ -241,7 +248,7 @@ function updatePlayerShip() {
 		if (shipAcceleration <= 5) {
 			shipAcceleration += 1;
 		}
-			
+		
 		shipMomentum = shipMomentum + shipAcceleration;
 	}
 	
@@ -254,6 +261,8 @@ function updatePlayerShip() {
 	
 	
 	updateShipCoordinates("Forwards");
+	
+	
 	
 	shipMovementModerator = 1;
 	}
