@@ -30,6 +30,10 @@ var shipY = 50; // Canvas y
 var shipDirection = 0; // Degrees
 var shipMomentum = 0; // 0 - 10
 var shipMomentumDirection = 0; // Degrees
+var shipAcceleration = 0;
+var shipThrustPower = 12;
+var shipMovingForwards = false;
+
 
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
@@ -189,8 +193,8 @@ Game.paint = function() {
 	
 	//Game.printToDebugConsole("Painting");
 	clearCanvas();
-	updateBackground();
-	updatePlayerShip();
+	paintBackground();
+	paintPlayerShip();
 	//Game.printToDebugConsole("Painting 2");
 }
 
@@ -206,14 +210,34 @@ Game.paint = function() {
 
 // Paint - GAMELOOP
 Game.update = function() {
-	// Update game logic
+	updatePlayerShip();
 }
 
 
 
 
 
+function updatePlayerShip() {
 
+	if (shipMovingForwards) {
+		if (shipAcceleration < 10) {
+			shipAcceleration += 1;
+		}
+			
+		shipMomentum = shipMomentum + shipAcceleration;
+	}
+	
+	else {
+		shipAcceleration = 0;
+		if (shipMomentum > 0) {
+			shipMomentum -= 1;
+		}
+	}
+	
+	updateShipCoordinates("Forwards");
+
+	
+}
 
 
 
@@ -272,7 +296,7 @@ function clearCanvas() {
 
 
 // Background manager
-function updateBackground(){
+function paintBackground(){
 	
 	// Paint the background black
 	c.save();
@@ -377,8 +401,94 @@ function addBlueRadialGradientFlare(){
 
 
 
-function updatePlayerShip() {
+function paintPlayerShip() {
 	c.save();
-	c.drawImage(shipImage, shipX, shipY, 100, 180);
+	c.translate(shipX, shipY);
+	c.translate(50, 70);
+	c.rotate(shipDirection * TO_RADIANS);
+	c.drawImage(shipImage, -50, -70, 100, 140);
 	c.restore();
+}
+
+
+
+
+
+Game.movePlayerShip = function(direction){
+
+	Game.printToDebugConsole("Moving Ship");
+	
+	
+	if (direction == "Forwards") {
+		shipMovingForwards = true;
+	}
+	
+	
+	else if (direction == "Backwards") {
+		shipMovingForwards = false;
+	}
+	
+	else if (direction == "Left") {
+		changeShipDirection("Left");
+	}
+	
+	else if (direction == "Right") {
+		changeShipDirection("Right");
+	}
+
+}
+
+
+
+
+Game.stopMovePlayerShip = function(direction){
+
+	Game.printToDebugConsole("Stop Moving Ship");
+	
+	
+	if (direction == "Forwards") {
+		shipMovingForwards = false;
+	}
+
+}
+
+
+// Find the ships new coordinates when moving in a direction
+// new X = X * sin(angle) + Y * cos(angle) 
+// new Y= X * sin(angle) + Y * -cos(angle)
+function updateShipCoordinates(input) {
+	
+	if (input == "Forwards") {
+		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
+		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+	}
+	
+	else if (input == "Backwards") {
+		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
+		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+	}
+	
+}
+
+// Change the angle the ship is facing
+function changeShipDirection(input) {
+
+	if (input == "Left") {
+		if ( shipDirection <= 0 ) {
+			shipDirection = 360;
+		}
+		else {
+			shipDirection -= 7;
+		}
+	}
+	
+	if (input == "Right") {
+		if (shipDirection >= 360) {
+			shipDirection = 0;
+		}
+		else {
+			shipDirection += 7;
+		}
+	}
+
 }
