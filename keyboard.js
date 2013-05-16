@@ -25,24 +25,24 @@ function setupEventListeners() {
 function keyEventFired(e) {
 	
 	var input = e.keyCode;
-	Game.printToDebugConsole(input);
+	//Game.printToDebugConsole(input);
 	
 	switch (input) {
 	
 	// W
-	case 87:	Game.playerShip.move("Forwards");
+	case 87:	Game.movePlayerShip("Forwards");
 				break;
 				
 	// S
-	case 83:	Game.playerShip.move("Backwards");
+	case 83:	Game.movePlayerShip("Backwards");
 				break;
 				
 	// A
-	case 65:	Game.playerShip.move("Left");
+	case 65:	Game.movePlayerShip("Left");
 				break;
 				
 	// D
-	case 68:	Game.playerShip.move("Right");
+	case 68:	Game.movePlayerShip("Right");
 				break;
 				
 	// ESC
@@ -63,19 +63,19 @@ function keyEventOver(e) {
 	switch (input) {
 	
 	// W
-	case 87:	Game.playerShip.stopMove("Forwards");
+	case 87:	Game.stopMovePlayerShip("Forwards");
 				break;
 	
 	// S
-	case 83:	Game.playerShip.stopMove("Backwards");
+	case 83:	Game.stopMovePlayerShip("Backwards");
 				break;
 					
 	// A
-	case 65:	Game.playerShip.stopMove("Left");
+	case 65:	Game.stopMovePlayerShip("Left");
 				break;
 					
 	// D
-	case 68:	Game.playerShip.stopMove("Right");
+	case 68:	Game.stopMovePlayerShip("Right");
 				break;
 	}
 	

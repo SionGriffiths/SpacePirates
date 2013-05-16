@@ -90,6 +90,7 @@ body {
 #maincanvas {
 	margin: 0;
 	background-color: #111;
+	
 }
 
 
@@ -102,7 +103,7 @@ canvas {
 	min-height: 98%;
 	background:url(space2.jpg);
 	background-size: 100%;
-	
+	outline: none;
 }
 
 canvas, img { display:block; margin:1em auto; border:1px solid black; }
