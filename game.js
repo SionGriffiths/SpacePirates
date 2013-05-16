@@ -39,8 +39,8 @@ var shipTurningLeft = false;
 var shipTurningRight = false;
 
 var thrustEffect = 0;
-var nextThrustImage = shipThrusterImage1;
-
+// var nextThrustImage = shipThrusterImage1;
+var currentShipThrusterImage;
 
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
@@ -159,21 +159,21 @@ Game.load = function() {
 		shipThrusterImage1 = new Image();
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage1.src = "images/thrust2.png";
+		shipThrusterImage1.src = "images/thrust1.png";
 	}, 600);
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage2.src = "images/thrust4.png";
+		shipThrusterImage2.src = "images/thrust2.png";
 	}, 900);
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage3.src = "images/thrust12.png";
+		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1200);
 
 	
@@ -217,7 +217,6 @@ Game.paint = function() {
 
 // Paint - GAMELOOP
 Game.update = function() {
-	//updateShipThrusters();
 	updatePlayerShip();
 }
 
@@ -266,6 +265,8 @@ function updatePlayerShip() {
 	else if (shipTurningRight) {
 		changeShipDirection("Right");
 	}
+	
+	updateShipThrusters();
 }
 
 
@@ -430,13 +431,16 @@ function addBlueRadialGradientFlare(){
 
 
 
+
+
+// Paint the Ship
 function paintPlayerShip() {
 	c.save();
 	c.translate(shipX, shipY);
 	c.translate(50, 70);
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
-	//c.drawImage(nextThrustImage, -50, 35, 100, 140);
+	c.drawImage(geCurrentShipThrusterImage(), -50, 45, 100, 140);
 	c.restore();
 }
 
@@ -532,23 +536,29 @@ function changeShipDirection(input) {
 
 
 
-function updateShipThrusters() {
+function geCurrentShipThrusterImage() {
 
+	var currentShipThrusterImage = shipThrusterImage1;
+	
 	switch (thrustEffect) {
 	
-	case 1:		nextThrustImage = shipThrusterImage1;
+	case 0:		currentShipThrusterImage = shipThrusterImage1;
 				break;
-	case 2:		nextThrustImage = shipThrusterImage2;
+	case 1:		currentShipThrusterImage = shipThrusterImage2;
 				break;
-	case 3:		nextThrustImage = shipThrusterImage3;
+	case 2:		currentShipThrusterImage = shipThrusterImage3;
 				break;
-	
+	case 3:		currentShipThrusterImage = shipThrusterImage2;
+				break;
 	}
-	
+
 	thrustEffect += 1;
 	
-	if (thrustEffect > 3) { thrustEffect = 1; }
+	if (thrustEffect == 4) { 
+		thrustEffect = 0; 
+	}
 	
+	return currentShipThrusterImage;
 }
 
 
