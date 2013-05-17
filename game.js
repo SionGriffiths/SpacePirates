@@ -58,6 +58,7 @@ var deployedMunitions = new Array();
 var previousDir;
 var previousMaps = new Array();
 
+var fuel = 100;
 
 
 // Initialize the canvas
@@ -221,11 +222,13 @@ Game.paint = function() {
 	
 	//Game.printToDebugConsole("Painting");
 	clearCanvas();
+
 	paintBackground();
+	paintFuelGuage();
 	paintPlayerShip();
+	
 	//Game.printToDebugConsole("Painting 2");
 }
-
 
 
 
@@ -239,33 +242,43 @@ Game.paint = function() {
 // Paint - GAMELOOP
 Game.update = function() {
 	updatePlayerShip();
+	paintFuelGuage();
 }
 
 
 
+function paintFuelGuage() {
+	c.save();
+	c.strokeStyle = "red";
+	c.strokeRect(10, canvasHeight - 30, 100, 10);
+	c.fillStyle = "red";
+	c.fillRect(10, canvasHeight - 30, fuel, 10);
+	c.restore();
+}
 
 
-function updatePlayerShip() {
 
-	if (shipMovingForwards) {
-		if (shipAcceleration < 10) {
-			shipAcceleration += 1;
-		}
+//function updatePlayerShip() {
+
+//	if (shipMovingForwards) {
+	//	if (shipAcceleration < 10) {
+		//	shipAcceleration += 1;
+		//}
 			
-		shipMomentum = shipMomentum + shipAcceleration;
-	}
+		//shipMomentum = shipMomentum + shipAcceleration;
+	//}
 	
-	else {
-		shipAcceleration = 0;
-		if (shipMomentum > 0) {
-			shipMomentum -= 1;
-		}
-	}
+	//else {
+		//shipAcceleration = 0;
+		//if (shipMomentum > 0) {
+			//shipMomentum -= 1;
+		//}
+	//}
 	
-	updateShipCoordinates("Forwards");
+	//updateShipCoordinates("Forwards");
 
 	
-}
+//}
 
 
 
@@ -393,6 +406,8 @@ function paintBackground(){
 	c.restore();
 	}
 	
+
+	
 	
 	
 }
@@ -500,6 +515,13 @@ Game.movePlayerShip = function(direction){
 	
 	if (direction == "Forwards") {
 		shipMovingForwards = true;
+		
+		fuel = fuel - (fuel / 100);
+		if (fuel < 1) {
+			fuel = 0;
+		}
+		Game.printToDebugConsole("Fuel = " + fuel + "%");
+		
 	}
 	
 	
@@ -548,12 +570,16 @@ function updateShipCoordinates(input) {
 	if (input == "Forwards") {
 		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+		
 	}
 	
 	else if (input == "Backwards") {
 		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
 	}
+	
+	
+	
 
 	if (shipX <= -1) {
 		if (previousDir == "left") {
