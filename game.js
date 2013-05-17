@@ -12,7 +12,11 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
+<<<<<<< HEAD
 var numOfImages = 5;
+=======
+var numOfImages = 4;
+>>>>>>> origin/Lewis's-Branch
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
@@ -29,6 +33,7 @@ var numOfStarColours;
 var shipX = 50; // Canvas x
 var shipY = 50; // Canvas y
 var shipDirection = 0; // Degrees
+<<<<<<< HEAD
 var shipMomentum = 0; // 0 - 6
 var shipMomentumDirection = 0; // Degrees
 var shipAcceleration = 0; // 0 - 6
@@ -41,12 +46,26 @@ var shipTurningRight = false;
 
 var thrustEffect = 0;
 var currentShipThrusterImage;
+=======
+var shipMomentum = 0; // 0 - 10
+var shipMomentumDirection = 0; // Degrees
+var shipAcceleration = 0;
+var shipThrustPower = 12;
+var shipMovingForwards = false;
+>>>>>>> origin/Lewis's-Branch
 
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
+<<<<<<< HEAD
 var deployedMunitions = new Array();
+=======
+var TO_RADIANS = Math.PI / 180;
+var TO_DEGREES = 180 / Math.PI;
+>>>>>>> origin/Lewis's-Branch
 
+var previousDir;
+var previousMaps = new Array();
 
 
 
@@ -152,7 +171,11 @@ Game.load = function() {
 		shipImage.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipImage.src = "images/ship2.png";
+<<<<<<< HEAD
 	}, 200);
+=======
+	}, 300);
+>>>>>>> origin/Lewis's-Branch
 	
 	
 	
@@ -160,22 +183,37 @@ Game.load = function() {
 		shipThrusterImage1 = new Image();
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
+<<<<<<< HEAD
 		shipThrusterImage1.src = "images/thrust1.png";
 	}, 500);
+=======
+		shipThrusterImage1.src = "images/thrust2.png";
+	}, 600);
+>>>>>>> origin/Lewis's-Branch
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
+<<<<<<< HEAD
 		shipThrusterImage2.src = "images/thrust2.png";
 	}, 800);
+=======
+		shipThrusterImage2.src = "images/thrust4.png";
+	}, 900);
+>>>>>>> origin/Lewis's-Branch
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
+<<<<<<< HEAD
 		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1100);
+=======
+		shipThrusterImage3.src = "images/thrust12.png";
+	}, 1200);
+>>>>>>> origin/Lewis's-Branch
 
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -231,7 +269,27 @@ Game.update = function() {
 
 
 
+function updatePlayerShip() {
 
+	if (shipMovingForwards) {
+		if (shipAcceleration < 10) {
+			shipAcceleration += 1;
+		}
+			
+		shipMomentum = shipMomentum + shipAcceleration;
+	}
+	
+	else {
+		shipAcceleration = 0;
+		if (shipMomentum > 0) {
+			shipMomentum -= 1;
+		}
+	}
+	
+	updateShipCoordinates("Forwards");
+
+	
+}
 
 
 
@@ -370,6 +428,8 @@ function paintBackground(){
 // Initialize the stars with their random coordinates and size
 function initializeBackground(){
 	
+	backgroundStars = new Array();
+	
 	star = ".";
 	
 	backgroundStarColours = new Array();
@@ -404,9 +464,10 @@ function initializeBackground(){
 		starData.push(starDataColour);
 		
 		backgroundStars.push(starData);
-		
+		previousMaps.push(backgroundStars);
 		
 	}	
+
 	
 	Game.printToDebugConsole(numOfStars + " stars created");
 	
@@ -422,35 +483,50 @@ function updateStarPositions(){
 }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/Lewis's-Branch
 function addBlueRadialGradientFlare(){
 	
 	c.save();
 	
 	// Create gradient
+<<<<<<< HEAD
 	var grd = c.createRadialGradient(75,75,5,90,60,1200);
+=======
+	var grd = c.createRadialGradient(75,75,5,90,60,2000);
+>>>>>>> origin/Lewis's-Branch
 	grd.addColorStop( 0.5, "#000000");
 	grd.addColorStop( 0.01, "#1C2FAD");
 
 	// Fill with gradient
 	c.fillStyle=grd;
 	c.fillRect(0,0,canvasE.width, canvasE.height);
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/Lewis's-Branch
 	c.restore();
 }
 
 
 
+<<<<<<< HEAD
 
 
 // Paint the Ship
+=======
+>>>>>>> origin/Lewis's-Branch
 function paintPlayerShip() {
 	c.save();
 	c.translate(shipX, shipY);
 	c.translate(50, 70);
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
+<<<<<<< HEAD
 	c.drawImage(geCurrentShipThrusterImage(), -50, 45, 100, 140);
 	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
@@ -507,6 +583,54 @@ Game.stopMovePlayerShip = function(direction){
 
 
 
+=======
+	c.restore();
+}
+
+
+
+
+
+Game.movePlayerShip = function(direction){
+
+	Game.printToDebugConsole("Moving Ship");
+	
+	
+	if (direction == "Forwards") {
+		shipMovingForwards = true;
+	}
+	
+	
+	else if (direction == "Backwards") {
+		shipMovingForwards = false;
+	}
+	
+	else if (direction == "Left") {
+		changeShipDirection("Left");
+	}
+	
+	else if (direction == "Right") {
+		changeShipDirection("Right");
+	}
+
+}
+
+
+
+
+Game.stopMovePlayerShip = function(direction){
+
+	Game.printToDebugConsole("Stop Moving Ship");
+	
+	
+	if (direction == "Forwards") {
+		shipMovingForwards = false;
+	}
+
+}
+
+
+>>>>>>> origin/Lewis's-Branch
 // Find the ships new coordinates when moving in a direction
 // new X = X * sin(angle) + Y * cos(angle) 
 // new Y= X * sin(angle) + Y * -cos(angle)
@@ -515,6 +639,11 @@ function updateShipCoordinates(input) {
 	if (input == "Forwards") {
 		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> origin/Lewis's-Branch
 	}
 	
 	else if (input == "Backwards") {
@@ -522,6 +651,58 @@ function updateShipCoordinates(input) {
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
 	}
 	
+<<<<<<< HEAD
+=======
+	
+	if (shipX <= -1) {
+		if (previousDir == "left") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 3];
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		previousDir = "right";
+		shipX = canvasWidth - 2;
+	} else if (shipX >= canvasWidth) {
+		if (previousDir == "right") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		
+		previousDir = "left";
+		shipX = 2;
+	} else if (shipY <= -1) {
+		if (previousDir == "down") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else { 
+			initializeBackground();
+		}
+		
+		previousDir = "up";
+		shipY = canvasHeight - 2;
+	} else if (shipY >= canvasHeight) {
+		if (previousDir == "up") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		
+		previousDir = "down";
+		shipY = 2;
+	}
+	
+>>>>>>> origin/Lewis's-Branch
 }
 
 // Change the angle the ship is facing
@@ -545,6 +726,7 @@ function changeShipDirection(input) {
 		}
 	}
 
+<<<<<<< HEAD
 }
 
 
@@ -620,3 +802,6 @@ function fireLasorz() {
 
 
 
+=======
+}r
+>>>>>>> origin/Lewis's-Branch

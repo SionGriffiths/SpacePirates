@@ -31,7 +31,10 @@ function keyEventFired(e) {
 	
 	// W
 	case 87:	Game.movePlayerShip("Forwards");
+<<<<<<< HEAD
 					Game.playThrust();
+=======
+>>>>>>> origin/Lewis's-Branch
 				break;
 				
 	// S
