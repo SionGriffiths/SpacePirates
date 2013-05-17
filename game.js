@@ -38,7 +38,8 @@ var shipMovingForwards = false;
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
-
+var previousDir;
+var previousMaps = new Array();
 
 
 
@@ -331,6 +332,8 @@ function paintBackground(){
 // Initialize the stars with their random coordinates and size
 function initializeBackground(){
 	
+	backgroundStars = new Array();
+	
 	star = ".";
 	
 	backgroundStarColours = new Array();
@@ -365,9 +368,10 @@ function initializeBackground(){
 		starData.push(starDataColour);
 		
 		backgroundStars.push(starData);
-		
+		previousMaps.push(backgroundStars);
 		
 	}	
+
 	
 	Game.printToDebugConsole(numOfStars + " stars created");
 	
@@ -461,11 +465,62 @@ function updateShipCoordinates(input) {
 	if (input == "Forwards") {
 		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+		
+		
 	}
 	
 	else if (input == "Backwards") {
 		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+	}
+	
+	
+	if (shipX <= -1) {
+		if (previousDir == "left") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 3];
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		previousDir = "right";
+		shipX = canvasWidth - 2;
+	} else if (shipX >= canvasWidth) {
+		if (previousDir == "right") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		
+		previousDir = "left";
+		shipX = 2;
+	} else if (shipY <= -1) {
+		if (previousDir == "down") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else { 
+			initializeBackground();
+		}
+		
+		previousDir = "up";
+		shipY = canvasHeight - 2;
+	} else if (shipY >= canvasHeight) {
+		if (previousDir == "up") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		
+		previousDir = "down";
+		shipY = 2;
 	}
 	
 }
@@ -491,4 +546,4 @@ function changeShipDirection(input) {
 		}
 	}
 
-}
+}r
