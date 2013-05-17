@@ -13,12 +13,14 @@ var canvasWidth;
 var canvasHeight;
 
 
-var numOfImages = 5;
+var numOfImages = 7;
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
 var shipThrusterImage2;
 var shipThrusterImage3;
+var shipThrusterImage4;
+var shipThrusterImage5;
 var shipGunImage1;
 
 var backgroundStars = new Array();
@@ -34,7 +36,10 @@ var shipDirection = 0; // Degrees
 var shipMomentum = 0; // 0 - 6
 var shipMomentumDirection = 0; // Degrees
 var shipAcceleration = 0; // 0 - 6
+var shipAccelerationFactor = 0.1;
+var shipDecelerationFactor = 0.5;
 var shipThrustPower = 1;
+var shipMaxSpeed = 30;
 var shipMovingForwards = false;
 var shipMovementModerator = 1;
 
@@ -191,6 +196,20 @@ Game.load = function() {
 		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1100);
 
+	setTimeout(function() {
+		shipThrusterImage4 = new Image();
+		shipThrusterImage4.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		shipThrusterImage4.src = "images/thrust0.png";
+	}, 300);
+
+	setTimeout(function() {
+		shipThrusterImage5 = new Image();
+		shipThrusterImage5.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		shipThrusterImage5.src = "images/thrust1.png";
+	}, 500);
+
 
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -258,30 +277,6 @@ function paintFuelGuage() {
 
 
 
-//function updatePlayerShip() {
-
-//	if (shipMovingForwards) {
-	//	if (shipAcceleration < 10) {
-		//	shipAcceleration += 1;
-		//}
-			
-		//shipMomentum = shipMomentum + shipAcceleration;
-	//}
-	
-	//else {
-		//shipAcceleration = 0;
-		//if (shipMomentum > 0) {
-			//shipMomentum -= 1;
-		//}
-	//}
-	
-	//updateShipCoordinates("Forwards");
-
-	
-//}
-
-
-
 
 
 function updatePlayerShip() {
@@ -293,17 +288,29 @@ function updatePlayerShip() {
 
 	if (shipMovingForwards) {
 		if (shipAcceleration <= 5) {
-			shipAcceleration += 1;
+			shipAcceleration += shipAccelerationFactor;
 		}
 		
 		shipMomentum = shipMomentum + shipAcceleration;
+
+		if(shipMomentum > shipMaxSpeed) {
+			shipMomentum = shipMaxSpeed;
+		}
+
+
 	}
 	
 	else {
 		shipAcceleration = 0;
 		if (shipMomentum > 0) {
-			shipMomentum -= 1;
+			shipMomentum -= shipDecelerationFactor;
 		}
+
+		if(shipMomentum < 1) {
+			shipMomentum = 0;
+		}
+
+
 	}
 	
 	
@@ -499,7 +506,7 @@ function paintPlayerShip() {
 	c.translate(50, 70);
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
-	c.drawImage(geCurrentShipThrusterImage(), -50, 33, 100, 140);
+	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 140);
 	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
 }
@@ -677,21 +684,37 @@ function changeShipDirection(input) {
 
 
 
-function geCurrentShipThrusterImage() {
+function getCurrentShipThrusterImage() {
 
 	var currentShipThrusterImage = shipThrusterImage1;
 	
-	switch (thrustEffect) {
-	
-	case 0:		currentShipThrusterImage = shipThrusterImage1;
-				break;
-	case 1:		currentShipThrusterImage = shipThrusterImage2;
-				break;
-	case 2:		currentShipThrusterImage = shipThrusterImage3;
-				break;
-	case 3:		currentShipThrusterImage = shipThrusterImage2;
-				break;
+	if(shipMovingForwards == true) {
+		switch (thrustEffect) {
+		
+		case 0:		currentShipThrusterImage = shipThrusterImage1;
+					break;
+		case 1:		currentShipThrusterImage = shipThrusterImage2;
+					break;
+		case 2:		currentShipThrusterImage = shipThrusterImage3;
+					break;
+		case 3:		currentShipThrusterImage = shipThrusterImage2;
+					break;
+		}
+	} else {
+		switch (thrustEffect) {
+		
+		case 0:		currentShipThrusterImage = shipThrusterImage4;
+					break;
+		case 1:		currentShipThrusterImage = shipThrusterImage5;
+					break;
+		case 2:		currentShipThrusterImage = shipThrusterImage4;
+					break;
+		case 3:		currentShipThrusterImage = shipThrusterImage5;
+					break;
+		}
 	}
+
+
 
 	thrustEffect += 1;
 	
