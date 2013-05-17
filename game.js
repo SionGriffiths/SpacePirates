@@ -484,7 +484,7 @@ function paintPlayerShip() {
 	c.translate(50, 70);
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
-	c.drawImage(geCurrentShipThrusterImage(), -50, 45, 100, 140);
+	c.drawImage(geCurrentShipThrusterImage(), -50, 33, 100, 140);
 	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
 }
