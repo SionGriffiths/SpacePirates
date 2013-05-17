@@ -32,8 +32,7 @@ function keyEventFired(e) {
 	// W
 	case 87:	Game.movePlayerShip("Forwards");
 
-
-					Game.playThrust();
+				//Game.playThrust();
 
 				break;
 				
@@ -54,7 +53,7 @@ function keyEventFired(e) {
 				break;
 				
 	// SPACEBAR
-	case 32:	gameStart();
+	case 32:	Game.fireShipLaserPulse();
 				break;
 	}
 	
