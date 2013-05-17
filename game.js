@@ -12,6 +12,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
+
 var numOfImages = 5;
 var imageLoadProgress = 0;
 var shipImage;
@@ -29,6 +30,7 @@ var numOfStarColours;
 var shipX = 50; // Canvas x
 var shipY = 50; // Canvas y
 var shipDirection = 0; // Degrees
+
 var shipMomentum = 0; // 0 - 6
 var shipMomentumDirection = 0; // Degrees
 var shipAcceleration = 0; // 0 - 6
@@ -42,14 +44,19 @@ var shipTurningRight = false;
 var thrustEffect = 0;
 var currentShipThrusterImage;
 
+
+var TO_RADIANS = Math.PI / 180;
+var TO_DEGREES = 180 / Math.PI;
+
+
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
 var deployedMunitions = new Array();
 
+
 var previousDir;
 var previousMaps = new Array();
-
 
 
 
@@ -156,6 +163,7 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		shipImage.src = "images/ship2.png";
 	}, 200);
+
 	
 	
 	
@@ -163,15 +171,17 @@ Game.load = function() {
 		shipThrusterImage1 = new Image();
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage1.src = "images/thrust1.png";
-	}, 500);
+		shipThrusterImage1.src = "images/thrust2.png";
+	}, 600);
+
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage2.src = "images/thrust2.png";
-	}, 800);
+		shipThrusterImage2.src = "images/thrust4.png";
+	}, 900);
+
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
@@ -179,6 +189,7 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1100);
+
 
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -234,7 +245,27 @@ Game.update = function() {
 
 
 
+function updatePlayerShip() {
 
+	if (shipMovingForwards) {
+		if (shipAcceleration < 10) {
+			shipAcceleration += 1;
+		}
+			
+		shipMomentum = shipMomentum + shipAcceleration;
+	}
+	
+	else {
+		shipAcceleration = 0;
+		if (shipMomentum > 0) {
+			shipMomentum -= 1;
+		}
+	}
+	
+	updateShipCoordinates("Forwards");
+
+	
+}
 
 
 
@@ -346,7 +377,7 @@ function paintBackground(){
 	c.fillRect(0,0,canvasE.width, canvasE.height);
 	c.restore();
 	
-	addBlueRadialGradientFlare();
+	//addBlueRadialGradientFlare();
 	
 	updateStarPositions();
 	
@@ -372,7 +403,9 @@ function paintBackground(){
 
 // Initialize the stars with their random coordinates and size
 function initializeBackground(){
+	
 	backgroundStars = new Array();
+	
 	star = ".";
 	
 	backgroundStarColours = new Array();
@@ -410,6 +443,7 @@ function initializeBackground(){
 		previousMaps.push(backgroundStars);
 		
 	}	
+
 	
 	Game.printToDebugConsole(numOfStars + " stars created");
 	
@@ -426,25 +460,21 @@ function updateStarPositions(){
 
 
 
-
 function addBlueRadialGradientFlare(){
 	
 	c.save();
 	
 	// Create gradient
 	var grd = c.createRadialGradient(75,75,5,90,60,1200);
+
 	grd.addColorStop( 0.5, "#000000");
 	grd.addColorStop( 0.01, "#1C2FAD");
 
 	// Fill with gradient
 	c.fillStyle=grd;
 	c.fillRect(0,0,canvasE.width, canvasE.height);
-
 	c.restore();
 }
-
-
-
 
 
 // Paint the Ship
@@ -509,6 +539,7 @@ Game.stopMovePlayerShip = function(direction){
 }
 
 
+
 // Find the ships new coordinates when moving in a direction
 // new X = X * sin(angle) + Y * cos(angle) 
 // new Y= X * sin(angle) + Y * -cos(angle)
@@ -523,7 +554,7 @@ function updateShipCoordinates(input) {
 		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
 	}
-	
+
 	if (shipX <= -1) {
 		if (previousDir == "left") {
 			backgroundStars = [];
@@ -571,7 +602,6 @@ function updateShipCoordinates(input) {
 		previousDir = "down";
 		shipY = 2;
 	}
-
 	
 }
 
@@ -627,8 +657,15 @@ function geCurrentShipThrusterImage() {
 
 
 
+//sound playing
+
+Game.playThrust = function(){
+	
+	thrust.play();
+}
 
 
+ 
 
 
 
@@ -661,6 +698,5 @@ function fireLasorz() {
 
 
 }
-
 
 
