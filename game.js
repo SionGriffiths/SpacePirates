@@ -219,11 +219,12 @@ Game.load = function() {
 // Paint - GAMELOOP
 Game.paint = function() {
 	
-	//Game.printToDebugConsole("Painting");
 	clearCanvas();
 	paintBackground();
 	paintPlayerShip();
-	//Game.printToDebugConsole("Painting 2");
+	paintDeployedMunitions();
+	
+	
 }
 
 
@@ -243,29 +244,6 @@ Game.update = function() {
 
 
 
-
-
-function updatePlayerShip() {
-
-	if (shipMovingForwards) {
-		if (shipAcceleration < 10) {
-			shipAcceleration += 1;
-		}
-			
-		shipMomentum = shipMomentum + shipAcceleration;
-	}
-	
-	else {
-		shipAcceleration = 0;
-		if (shipMomentum > 0) {
-			shipMomentum -= 1;
-		}
-	}
-	
-	updateShipCoordinates("Forwards");
-
-	
-}
 
 
 
@@ -678,7 +656,14 @@ function paintDeployedMunitions() {
 	// Note, graphical missiles will need to
 	// maintain direction data and rotate the
 	// canvas for painting.
-
+	
+	for (var i = 0; i < deployedMunitions.length; i++) {
+	
+		deployedMunitions[i].draw();
+		
+	}
+	
+	
 }
 
 
@@ -692,11 +677,38 @@ function updateDeployedMunitions() {
 }
 
 
-function fireLasorz() {
+Game.fireShipLaserPulse = function() {
 
 	// Create a new munitions object with data
-
-
+	var deployedLaser = new Object();
+	
+	deployedLaser.name = "RoundRedLaserPulse";
+	deployedLaser.x = shipX + 50;
+	deployedLaser.y = shipY + 10;
+	deployedLaser.direction = shipDirection;
+	deployedLaser.numOfAnimations = 4;
+	deployedLaser.currentAnimation = 1;
+	
+	deployedLaser.draw = function() {
+			c.save();
+			var gradient = c.createRadialGradient(this.x, this.y, 5, this.x, this.y, 15);
+			gradient.addColorStop(0,"red");
+			gradient.addColorStop(1,"transparent");
+			c.fillStyle = gradient;
+			c.fillRect(this.x - 20, this.y -20, 40, 40);
+			c.restore();
+			//Game.printToDebugConsole("Painting munition" + this.x + " " + this.y);
+	}
+	
+	
+	// deployedLaser.animations = new Array();
+	// deployedLaser.animations[0] = 
+	
+	deployedMunitions.push(deployedLaser);
+	
+	Game.printToDebugConsole("One lasor object added");
+	Game.printToDebugConsole("Total deployedMunitions = " + deployedMunitions.length);
+	
 }
 
 
