@@ -494,6 +494,7 @@ Game.stopMovePlayerShip = function(direction){
 }
 
 
+
 // Find the ships new coordinates when moving in a direction
 // new X = X * sin(angle) + Y * cos(angle) 
 // new Y= X * sin(angle) + Y * -cos(angle)
@@ -563,8 +564,15 @@ function geCurrentShipThrusterImage() {
 
 
 
+//sound playing
+
+Game.playThrust = function(){
+	
+	thrust.play();
+}
 
 
+ 
 
 
 

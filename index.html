@@ -35,9 +35,11 @@
 <!--  -->
 <!--  JavaScript Scripts -->
 <!--  -->
+
 <script type="text/javascript" src="game.js"></script>
 <script type="text/javascript" src="keyboard.js"></script>
 <script type="text/javascript" src="utilities.js"></script>
+
 
 </head>
 <!-- End Head-->
@@ -118,7 +120,7 @@
 		setInterval(function() {
 			Game.paint();
 			Game.update();
-
+			
 		}, waitTime);
 	};
 	
@@ -131,6 +133,14 @@
 	
 	
 	</script>
+	
+	<!--Sounds -->
+	
+	<audio id="thrust">
+        <source src="sounds/thrust.mp3" type="audio/mpeg" />
+        Your browser does not support the audio tag.
+    </audio>
+	
 	
 </body>
 <!-- End Body -->
