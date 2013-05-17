@@ -31,6 +31,10 @@ function keyEventFired(e) {
 	
 	// W
 	case 87:	Game.movePlayerShip("Forwards");
+<<<<<<< HEAD
+=======
+					Game.playThrust();
+>>>>>>> origin/SionBranch
 				break;
 				
 	// S
