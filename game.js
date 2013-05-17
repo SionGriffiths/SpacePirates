@@ -509,34 +509,55 @@ function paintPlayerShip() {
 
 
 Game.movePlayerShip = function(direction){
-
-	Game.printToDebugConsole("Moving Ship");
+	if (fuel > 0) {
+		Game.printToDebugConsole("Moving Ship");
 	
 	
-	if (direction == "Forwards") {
-		shipMovingForwards = true;
+		if (direction == "Forwards") {
+			shipMovingForwards = true;
 		
-		fuel = fuel - (fuel / 100);
-		if (fuel < 1) {
-			fuel = 0;
+			fuel = fuel - (fuel / 100);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+			
 		}
-		Game.printToDebugConsole("Fuel = " + fuel + "%");
+	
+	
+		else if (direction == "Backwards") {
+			shipMovingForwards = false;
+			
+			fuel = fuel - (fuel / 150);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+		}
+	
+		else if (direction == "Left") {
+			shipTurningLeft = true;
 		
-	}
+			fuel = fuel - (fuel / 400);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+		}
 	
-	
-	else if (direction == "Backwards") {
-		shipMovingForwards = false;
+		else if (direction == "Right") {
+			shipTurningRight = true;
+		
+			fuel = fuel - (fuel / 400);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+		}
+	} else {
+		Game.printToDebugConsole("Fuel is at " + fuel + "%");
+		Game.printToDebugConsole("Ship cannot fly");
 	}
-	
-	else if (direction == "Left") {
-		shipTurningLeft = true;
-	}
-	
-	else if (direction == "Right") {
-		shipTurningRight = true;
-	}
-
 }
 
 
