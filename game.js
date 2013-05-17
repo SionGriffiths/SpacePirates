@@ -13,12 +13,18 @@ var canvasWidth;
 var canvasHeight;
 
 
+<<<<<<< HEAD
 var numOfImages = 5;
+=======
+var numOfImages = 7;
+>>>>>>> origin/Joe's-Branch
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
 var shipThrusterImage2;
 var shipThrusterImage3;
+var shipThrusterImage4;
+var shipThrusterImage5;
 var shipGunImage1;
 
 var backgroundStars = new Array();
@@ -34,7 +40,10 @@ var shipDirection = 0; // Degrees
 var shipMomentum = 0; // 0 - 6
 var shipMomentumDirection = 0; // Degrees
 var shipAcceleration = 0; // 0 - 6
+var shipAccelerationFactor = 0.1;
+var shipDecelerationFactor = 0.5;
 var shipThrustPower = 1;
+var shipMaxSpeed = 30;
 var shipMovingForwards = false;
 var shipMovementModerator = 1;
 
@@ -58,6 +67,7 @@ var deployedMunitions = new Array();
 var previousDir;
 var previousMaps = new Array();
 
+var fuel = 100;
 
 
 // Initialize the canvas
@@ -190,6 +200,23 @@ Game.load = function() {
 		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1100);
 
+<<<<<<< HEAD
+=======
+	setTimeout(function() {
+		shipThrusterImage4 = new Image();
+		shipThrusterImage4.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		shipThrusterImage4.src = "images/thrust0.png";
+	}, 300);
+
+	setTimeout(function() {
+		shipThrusterImage5 = new Image();
+		shipThrusterImage5.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		shipThrusterImage5.src = "images/thrust1.png";
+	}, 500);
+
+>>>>>>> origin/Joe's-Branch
 
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -220,13 +247,19 @@ Game.load = function() {
 Game.paint = function() {
 	
 	clearCanvas();
+
 	paintBackground();
+	paintFuelGuage();
 	paintPlayerShip();
+<<<<<<< HEAD
 	paintDeployedMunitions();
 	
 	
+=======
+	
+	//Game.printToDebugConsole("Painting 2");
+>>>>>>> origin/Joe's-Branch
 }
-
 
 
 
@@ -240,12 +273,48 @@ Game.paint = function() {
 // Paint - GAMELOOP
 Game.update = function() {
 	updatePlayerShip();
+	paintFuelGuage();
 }
 
 
 
+function paintFuelGuage() {
+	c.save();
+	c.strokeStyle = "red";
+	c.strokeRect(10, canvasHeight - 30, 100, 10);
+	c.fillStyle = "red";
+	c.fillRect(10, canvasHeight - 30, fuel, 10);
+	c.restore();
+}
 
 
+<<<<<<< HEAD
+=======
+
+//function updatePlayerShip() {
+
+//	if (shipMovingForwards) {
+	//	if (shipAcceleration < 10) {
+		//	shipAcceleration += 1;
+		//}
+			
+		//shipMomentum = shipMomentum + shipAcceleration;
+	//}
+	
+	//else {
+		//shipAcceleration = 0;
+		//if (shipMomentum > 0) {
+			//shipMomentum -= 1;
+		//}
+	//}
+	
+	//updateShipCoordinates("Forwards");
+
+	
+//}
+
+
+>>>>>>> origin/Joe's-Branch
 
 
 
@@ -258,17 +327,29 @@ function updatePlayerShip() {
 
 	if (shipMovingForwards) {
 		if (shipAcceleration <= 5) {
-			shipAcceleration += 1;
+			shipAcceleration += shipAccelerationFactor;
 		}
 		
 		shipMomentum = shipMomentum + shipAcceleration;
+
+		if(shipMomentum > shipMaxSpeed) {
+			shipMomentum = shipMaxSpeed;
+		}
+
+
 	}
 	
 	else {
 		shipAcceleration = 0;
 		if (shipMomentum > 0) {
-			shipMomentum -= 1;
+			shipMomentum -= shipDecelerationFactor;
 		}
+
+		if(shipMomentum < 1) {
+			shipMomentum = 0;
+		}
+
+
 	}
 	
 	
@@ -371,6 +452,8 @@ function paintBackground(){
 	c.restore();
 	}
 	
+
+	
 	
 	
 }
@@ -462,7 +545,7 @@ function paintPlayerShip() {
 	c.translate(50, 70);
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
-	c.drawImage(geCurrentShipThrusterImage(), -50, 45, 100, 140);
+	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 140);
 	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
 }
@@ -472,27 +555,55 @@ function paintPlayerShip() {
 
 
 Game.movePlayerShip = function(direction){
-
-	Game.printToDebugConsole("Moving Ship");
+	if (fuel > 0) {
+		Game.printToDebugConsole("Moving Ship");
 	
 	
-	if (direction == "Forwards") {
-		shipMovingForwards = true;
+		if (direction == "Forwards") {
+			shipMovingForwards = true;
+		
+			fuel = fuel - (fuel / 100);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+			
+		}
+	
+	
+		else if (direction == "Backwards") {
+			shipMovingForwards = false;
+			
+			fuel = fuel - (fuel / 150);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+		}
+	
+		else if (direction == "Left") {
+			shipTurningLeft = true;
+		
+			fuel = fuel - (fuel / 400);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+		}
+	
+		else if (direction == "Right") {
+			shipTurningRight = true;
+		
+			fuel = fuel - (fuel / 400);
+			if (fuel < 1) {
+				fuel = 0;
+			}
+			Game.printToDebugConsole("Fuel = " + fuel + "%");
+		}
+	} else {
+		Game.printToDebugConsole("Fuel is at " + fuel + "%");
+		Game.printToDebugConsole("Ship cannot fly");
 	}
-	
-	
-	else if (direction == "Backwards") {
-		shipMovingForwards = false;
-	}
-	
-	else if (direction == "Left") {
-		shipTurningLeft = true;
-	}
-	
-	else if (direction == "Right") {
-		shipTurningRight = true;
-	}
-
 }
 
 
@@ -526,12 +637,22 @@ function updateShipCoordinates(input) {
 	if (input == "Forwards") {
 		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+<<<<<<< HEAD
+=======
+		
+>>>>>>> origin/Joe's-Branch
 	}
 	
 	else if (input == "Backwards") {
 		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
 	}
+<<<<<<< HEAD
+=======
+	
+	
+	
+>>>>>>> origin/Joe's-Branch
 
 	if (shipX <= -1) {
 		if (previousDir == "left") {
@@ -608,21 +729,37 @@ function changeShipDirection(input) {
 
 
 
-function geCurrentShipThrusterImage() {
+function getCurrentShipThrusterImage() {
 
 	var currentShipThrusterImage = shipThrusterImage1;
 	
-	switch (thrustEffect) {
-	
-	case 0:		currentShipThrusterImage = shipThrusterImage1;
-				break;
-	case 1:		currentShipThrusterImage = shipThrusterImage2;
-				break;
-	case 2:		currentShipThrusterImage = shipThrusterImage3;
-				break;
-	case 3:		currentShipThrusterImage = shipThrusterImage2;
-				break;
+	if(shipMovingForwards == true) {
+		switch (thrustEffect) {
+		
+		case 0:		currentShipThrusterImage = shipThrusterImage1;
+					break;
+		case 1:		currentShipThrusterImage = shipThrusterImage2;
+					break;
+		case 2:		currentShipThrusterImage = shipThrusterImage3;
+					break;
+		case 3:		currentShipThrusterImage = shipThrusterImage2;
+					break;
+		}
+	} else {
+		switch (thrustEffect) {
+		
+		case 0:		currentShipThrusterImage = shipThrusterImage4;
+					break;
+		case 1:		currentShipThrusterImage = shipThrusterImage5;
+					break;
+		case 2:		currentShipThrusterImage = shipThrusterImage4;
+					break;
+		case 3:		currentShipThrusterImage = shipThrusterImage5;
+					break;
+		}
 	}
+
+
 
 	thrustEffect += 1;
 	
@@ -636,12 +773,21 @@ function geCurrentShipThrusterImage() {
 
 
 //sound playing
+<<<<<<< HEAD
+
+Game.playThrust = function(){
+	
+	thrust.play();
+}
+=======
+>>>>>>> origin/Joe's-Branch
 
 Game.playThrust = function(){
 	
 	thrust.play();
 }
 
+ 
 
  
 
