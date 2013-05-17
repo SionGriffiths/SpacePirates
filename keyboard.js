@@ -32,12 +32,9 @@ function keyEventFired(e) {
 	// W
 	case 87:	Game.movePlayerShip("Forwards");
 
-<<<<<<< HEAD
-				//Game.playThrust();
-=======
 
-					//Game.playThrust();
->>>>>>> origin/Joe's-Branch
+				//Game.playThrust();
+
 
 				break;
 				

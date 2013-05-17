@@ -13,11 +13,8 @@ var canvasWidth;
 var canvasHeight;
 
 
-<<<<<<< HEAD
-var numOfImages = 5;
-=======
+
 var numOfImages = 7;
->>>>>>> origin/Joe's-Branch
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
@@ -200,8 +197,7 @@ Game.load = function() {
 		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1100);
 
-<<<<<<< HEAD
-=======
+
 	setTimeout(function() {
 		shipThrusterImage4 = new Image();
 		shipThrusterImage4.onload = updateProgressBar();
@@ -216,7 +212,6 @@ Game.load = function() {
 		shipThrusterImage5.src = "images/thrust1.png";
 	}, 500);
 
->>>>>>> origin/Joe's-Branch
 
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -251,14 +246,8 @@ Game.paint = function() {
 	paintBackground();
 	paintFuelGuage();
 	paintPlayerShip();
-<<<<<<< HEAD
 	paintDeployedMunitions();
 	
-	
-=======
-	
-	//Game.printToDebugConsole("Painting 2");
->>>>>>> origin/Joe's-Branch
 }
 
 
@@ -287,34 +276,6 @@ function paintFuelGuage() {
 	c.restore();
 }
 
-
-<<<<<<< HEAD
-=======
-
-//function updatePlayerShip() {
-
-//	if (shipMovingForwards) {
-	//	if (shipAcceleration < 10) {
-		//	shipAcceleration += 1;
-		//}
-			
-		//shipMomentum = shipMomentum + shipAcceleration;
-	//}
-	
-	//else {
-		//shipAcceleration = 0;
-		//if (shipMomentum > 0) {
-			//shipMomentum -= 1;
-		//}
-	//}
-	
-	//updateShipCoordinates("Forwards");
-
-	
-//}
-
-
->>>>>>> origin/Joe's-Branch
 
 
 
@@ -637,22 +598,15 @@ function updateShipCoordinates(input) {
 	if (input == "Forwards") {
 		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
-<<<<<<< HEAD
-=======
-		
->>>>>>> origin/Joe's-Branch
+
 	}
 	
 	else if (input == "Backwards") {
 		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
 	}
-<<<<<<< HEAD
-=======
+
 	
-	
-	
->>>>>>> origin/Joe's-Branch
 
 	if (shipX <= -1) {
 		if (previousDir == "left") {
@@ -773,15 +727,6 @@ function getCurrentShipThrusterImage() {
 
 
 //sound playing
-<<<<<<< HEAD
-
-Game.playThrust = function(){
-	
-	thrust.play();
-}
-=======
->>>>>>> origin/Joe's-Branch
-
 Game.playThrust = function(){
 	
 	thrust.play();
