@@ -12,11 +12,8 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-<<<<<<< HEAD
-var numOfImages = 4;
-=======
+
 var numOfImages = 5;
->>>>>>> origin/SionBranch
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
@@ -33,13 +30,7 @@ var numOfStarColours;
 var shipX = 50; // Canvas x
 var shipY = 50; // Canvas y
 var shipDirection = 0; // Degrees
-<<<<<<< HEAD
-var shipMomentum = 0; // 0 - 10
-var shipMomentumDirection = 0; // Degrees
-var shipAcceleration = 0;
-var shipThrustPower = 12;
-var shipMovingForwards = false;
-=======
+
 var shipMomentum = 0; // 0 - 6
 var shipMomentumDirection = 0; // Degrees
 var shipAcceleration = 0; // 0 - 6
@@ -52,17 +43,17 @@ var shipTurningRight = false;
 
 var thrustEffect = 0;
 var currentShipThrusterImage;
->>>>>>> origin/SionBranch
+
 
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
-<<<<<<< HEAD
+
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
-=======
+
 var deployedMunitions = new Array();
->>>>>>> origin/SionBranch
+
 
 var previousDir;
 var previousMaps = new Array();
@@ -171,11 +162,8 @@ Game.load = function() {
 		shipImage.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipImage.src = "images/ship2.png";
-<<<<<<< HEAD
-	}, 300);
-=======
 	}, 200);
->>>>>>> origin/SionBranch
+
 	
 	
 	
@@ -183,37 +171,25 @@ Game.load = function() {
 		shipThrusterImage1 = new Image();
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
-<<<<<<< HEAD
 		shipThrusterImage1.src = "images/thrust2.png";
 	}, 600);
-=======
-		shipThrusterImage1.src = "images/thrust1.png";
-	}, 500);
->>>>>>> origin/SionBranch
+
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
-<<<<<<< HEAD
 		shipThrusterImage2.src = "images/thrust4.png";
 	}, 900);
-=======
-		shipThrusterImage2.src = "images/thrust2.png";
-	}, 800);
->>>>>>> origin/SionBranch
+
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
-<<<<<<< HEAD
-		shipThrusterImage3.src = "images/thrust12.png";
-	}, 1200);
-=======
 		shipThrusterImage3.src = "images/thrust3.png";
 	}, 1100);
->>>>>>> origin/SionBranch
+
 
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -483,97 +459,31 @@ function updateStarPositions(){
 }
 
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> origin/SionBranch
 function addBlueRadialGradientFlare(){
 	
 	c.save();
 	
 	// Create gradient
-<<<<<<< HEAD
-	var grd = c.createRadialGradient(75,75,5,90,60,2000);
-=======
 	var grd = c.createRadialGradient(75,75,5,90,60,1200);
->>>>>>> origin/SionBranch
+
 	grd.addColorStop( 0.5, "#000000");
 	grd.addColorStop( 0.01, "#1C2FAD");
 
 	// Fill with gradient
 	c.fillStyle=grd;
 	c.fillRect(0,0,canvasE.width, canvasE.height);
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> origin/SionBranch
 	c.restore();
 }
 
 
-
-<<<<<<< HEAD
-=======
-
-
 // Paint the Ship
->>>>>>> origin/SionBranch
 function paintPlayerShip() {
 	c.save();
 	c.translate(shipX, shipY);
 	c.translate(50, 70);
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
-<<<<<<< HEAD
-	c.restore();
-}
-
-
-
-
-
-Game.movePlayerShip = function(direction){
-
-	Game.printToDebugConsole("Moving Ship");
-	
-	
-	if (direction == "Forwards") {
-		shipMovingForwards = true;
-	}
-	
-	
-	else if (direction == "Backwards") {
-		shipMovingForwards = false;
-	}
-	
-	else if (direction == "Left") {
-		changeShipDirection("Left");
-	}
-	
-	else if (direction == "Right") {
-		changeShipDirection("Right");
-	}
-
-}
-
-
-
-
-Game.stopMovePlayerShip = function(direction){
-
-	Game.printToDebugConsole("Stop Moving Ship");
-	
-	
-	if (direction == "Forwards") {
-		shipMovingForwards = false;
-	}
-
-}
-
-
-=======
 	c.drawImage(geCurrentShipThrusterImage(), -50, 45, 100, 140);
 	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
@@ -630,7 +540,6 @@ Game.stopMovePlayerShip = function(direction){
 
 
 
->>>>>>> origin/SionBranch
 // Find the ships new coordinates when moving in a direction
 // new X = X * sin(angle) + Y * cos(angle) 
 // new Y= X * sin(angle) + Y * -cos(angle)
@@ -639,20 +548,13 @@ function updateShipCoordinates(input) {
 	if (input == "Forwards") {
 		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
-<<<<<<< HEAD
-		
-		
-=======
->>>>>>> origin/SionBranch
 	}
 	
 	else if (input == "Backwards") {
 		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
 		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
 	}
-	
-<<<<<<< HEAD
-	
+
 	if (shipX <= -1) {
 		if (previousDir == "left") {
 			backgroundStars = [];
@@ -701,8 +603,6 @@ function updateShipCoordinates(input) {
 		shipY = 2;
 	}
 	
-=======
->>>>>>> origin/SionBranch
 }
 
 // Change the angle the ship is facing
@@ -726,9 +626,6 @@ function changeShipDirection(input) {
 		}
 	}
 
-<<<<<<< HEAD
-}r
-=======
 }
 
 
@@ -803,5 +700,3 @@ function fireLasorz() {
 }
 
 
-
->>>>>>> origin/SionBranch
