@@ -12,12 +12,13 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 4;
+var numOfImages = 5;
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
 var shipThrusterImage2;
 var shipThrusterImage3;
+var shipGunImage1;
 
 var backgroundStars = new Array();
 var numOfStars = 80;
@@ -39,12 +40,12 @@ var shipTurningLeft = false;
 var shipTurningRight = false;
 
 var thrustEffect = 0;
-// var nextThrustImage = shipThrusterImage1;
 var currentShipThrusterImage;
 
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
+var deployedMunitions = new Array();
 
 
 
@@ -151,7 +152,7 @@ Game.load = function() {
 		shipImage.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipImage.src = "images/ship2.png";
-	}, 300);
+	}, 200);
 	
 	
 	
@@ -160,22 +161,28 @@ Game.load = function() {
 		shipThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipThrusterImage1.src = "images/thrust1.png";
-	}, 600);
+	}, 500);
 	
 	setTimeout(function() {
 		shipThrusterImage2 = new Image();
 		shipThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipThrusterImage2.src = "images/thrust2.png";
-	}, 900);
+	}, 800);
 	
 	setTimeout(function() {
 		shipThrusterImage3 = new Image();
 		shipThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		shipThrusterImage3.src = "images/thrust3.png";
-	}, 1200);
+	}, 1100);
 
+	setTimeout(function() {
+		shipGunImage1 = new Image();
+		shipGunImage1.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		shipGunImage1.src = 'images/gun3.png';
+	}, 1200);
 	
 	// Call the game to run, after finished loading
 	setTimeout(function() {
@@ -241,7 +248,7 @@ function updatePlayerShip() {
 		if (shipAcceleration <= 5) {
 			shipAcceleration += 1;
 		}
-			
+		
 		shipMomentum = shipMomentum + shipAcceleration;
 	}
 	
@@ -254,6 +261,8 @@ function updatePlayerShip() {
 	
 	
 	updateShipCoordinates("Forwards");
+	
+	
 	
 	shipMovementModerator = 1;
 	}
@@ -413,19 +422,21 @@ function updateStarPositions(){
 }
 
 
+
+
 function addBlueRadialGradientFlare(){
 	
 	c.save();
 	
 	// Create gradient
-	var grd = c.createRadialGradient(75,75,5,90,60,2000);
+	var grd = c.createRadialGradient(75,75,5,90,60,1200);
 	grd.addColorStop( 0.5, "#000000");
 	grd.addColorStop( 0.01, "#1C2FAD");
 
 	// Fill with gradient
 	c.fillStyle=grd;
 	c.fillRect(0,0,canvasE.width, canvasE.height);
-	
+
 	c.restore();
 }
 
@@ -441,6 +452,7 @@ function paintPlayerShip() {
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
 	c.drawImage(geCurrentShipThrusterImage(), -50, 45, 100, 140);
+	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
 }
 
@@ -574,6 +586,37 @@ Game.playThrust = function(){
 
  
 
+
+
+
+function paintDeployedMunitions() {
+
+	// For each item in the munitions array,
+	// paint it at it's x and y coordinates.
+	
+	// Note, graphical missiles will need to
+	// maintain direction data and rotate the
+	// canvas for painting.
+
+}
+
+
+function updateDeployedMunitions() {
+
+	// For each item in the munitions array,
+	// get it and update its x and y.
+	// Perhaps change its graphic properties for
+	// animation effect too.
+
+}
+
+
+function fireLasorz() {
+
+	// Create a new munitions object with data
+
+
+}
 
 
 
