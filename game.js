@@ -377,7 +377,7 @@ function paintBackground(){
 	c.fillRect(0,0,canvasE.width, canvasE.height);
 	c.restore();
 	
-	addBlueRadialGradientFlare();
+	//addBlueRadialGradientFlare();
 	
 	updateStarPositions();
 	
