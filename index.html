@@ -119,6 +119,26 @@
 	<!-- Game Script -->
 	<script>
 	
+	
+	// Set the canvas to full screen, giving max resolution
+	// whilst maintaining aspect ratio
+	function init() {
+		
+		canvas = document.getElementById("maincanvas");
+		canvas.width = document.width;
+		canvas.height = document.height;
+		//canvasW = canvas.width;
+		//canvasH = canvas.height;
+
+		//if ( canvas.getContext ) {
+		//	setup();
+		//	setInterval( run , 33 );
+		//}
+	}
+
+	init();
+	
+	
 	Game.run = function() {
 		setInterval(function() {
 			Game.paint();
@@ -132,9 +152,7 @@
 	Game.initialize();
 	Game.load();
 	
-	
-	
-	
+
 	</script>
 	
 	<!--Sounds -->

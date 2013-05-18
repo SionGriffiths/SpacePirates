@@ -52,7 +52,10 @@ function movePlayerShip(direction){
 	
 	
 		else if (direction == "Backwards") {
+			
 			shipMovingForwards = false;
+			
+			shipMomentum /= 1.5;
 			
 			fuel = fuel - (fuel / 150);
 			if (fuel < 1) {
