@@ -250,7 +250,7 @@ function changeShipDirection(input) {
 			shipDirection = 360;
 		}
 		else {
-			shipDirection -= 7;
+			shipDirection -= 3;
 		}
 	}
 	
@@ -259,7 +259,7 @@ function changeShipDirection(input) {
 			shipDirection = 0;
 		}
 		else {
-			shipDirection += 7;
+			shipDirection += 3;
 		}
 	}
 }
