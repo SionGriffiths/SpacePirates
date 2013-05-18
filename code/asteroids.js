@@ -88,6 +88,10 @@ this.detectCollisions = function() {
 			
 		if (collisionOccured) {
 			Game.printToDebugConsole("Asteroid Collision!");
+
+			this.direction = deployedMunitions[i].direction -90;
+			this.Speed += 0.1;
+
 			deployedMunitions.splice(i, 1);
 		}
 	}
