@@ -9,15 +9,13 @@
 function Asteroid() {	
 
 	this.direction = Math.floor(Math.random()*351);
-	this.x = 100 + Math.floor(Math.random()*251);
-	this.y = 250 + Math.floor(Math.random()*201);
-	this.Scale = 50 + Math.floor(Math.random()*41);
-	this.Speed = (1+Math.floor(Math.random()*4))/15;
-	this.collisionRadius = 30;
+	this.x = 100 + Math.floor(Math.random()*901);
+	this.y = 150 + Math.floor(Math.random()*601);
+	this.Scale = 50 + Math.floor(Math.random()*101);
+	this.Speed = (1+Math.floor(Math.random()*4))/11;
+	this.Size = this.Scale/2;
+	this.collisionRadius = this.Size*0.7;
 	addAsteroid(this);
-
-
-
 
 
   
@@ -27,7 +25,13 @@ this.draw = function() {
 	c.translate(this.x, this.y);
 	c.translate(this.Scale, this.Scale);
 	c.rotate(this.direction * TO_RADIANS);
-	c.drawImage(asteroidImage1, -this.Scale, -this.Scale, this.Scale, this.Scale);
+	c.drawImage(asteroidImage1, -this.Size, -this.Size, this.Scale, this.Scale);
+	if(toggleDebug==true) {
+		c.beginPath();
+		c.strokeStyle = 'green';
+		c.arc(0,0,this.collisionRadius,0,2*Math.PI);		
+		c.stroke();
+	}
 	c.restore();
 }
 
@@ -52,13 +56,11 @@ this.update = function() {
 		this.y = 1;
 	}
 
-	//this.x = this.x + this.Speed * Math.cos(this.Direction * TO_RADIANS);
-	//this.y = this.y + this.Speed * Math.sin(this.Direction * TO_RADIANS);
+	this.x = this.x + this.Speed * Math.cos(this.direction * TO_RADIANS);
+	this.y = this.y + this.Speed * Math.sin(this.direction * TO_RADIANS);
 
-	this.x += 0.5 ;
-	this.y += 0.5 ;
 
-	//this.Direction += 0.1;
+	//this.direction += 0.1;
 	//this.Scale += 0.02;
 
 	//Game.printToDebugConsole("Updating Asteroid" + this.Speed + " " + this.x + " " + this.y);
@@ -72,12 +74,21 @@ this.detectCollisions = function() {
 		var collisionOccured = liesWithinRadius(
 			deployedMunitions[i].x,
 			deployedMunitions[i].y,
-			this.x,
-			this.y,
+			this.x + this.Scale,
+			this.y + this.Scale,
 			this.collisionRadius);
+			if(toggleDebug==true) {
+				c.save();
+				c.beginPath();
+				c.strokeStyle = 'pink';
+				c.arc(this.x + this.Scale,this.y + this.Scale,this.collisionRadius,0,2*Math.PI);		
+				c.stroke();
+				c.restore();
+			}
 			
 		if (collisionOccured) {
 			Game.printToDebugConsole("Asteroid Collision!");
+			deployedMunitions.splice(i, 1);
 		}
 	}
 	

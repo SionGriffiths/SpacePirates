@@ -64,6 +64,10 @@ function keyEventFired(e) {
 
 	case 79:    var tempAsteroid = new Asteroid();
 				break; 
+
+	case 89:    DebugToggle();
+				break;
+
 	}
 }
 
