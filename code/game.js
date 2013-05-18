@@ -240,17 +240,17 @@ Game.stopMovePlayerShip = function(direction) {
 //sound playing
 Game.playThrust = function(){
 	
-	//thrust.play();
+	thrust.play();
 }
 Game.playPewPewPew = function(){
 	
-	//if(pewN==1) {pew1.play();}
-	//if(pewN==2) {pew2.play();}
-	//if(pewN==3) {pew3.play();}
+	if(pewN==1) {pew1.play();}
+	if(pewN==2) {pew2.play();}
+	if(pewN==3) {pew3.play();}
 	
-	//pewN += 1;
+	pewN += 1;
 
-	//if(pewN == 4) { pewN = 1;}
+	if(pewN == 4) { pewN = 1;}
 	
 }
 
