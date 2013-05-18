@@ -33,7 +33,7 @@ function keyEventFired(e) {
 	case 87:	Game.movePlayerShip("Forwards");
 
 
-					//Game.playThrust();
+					Game.playThrust();
 
 
 				break;
