@@ -32,7 +32,12 @@ function updateDeployedMunitions() {
 
 	for (var i = 0; i < deployedMunitions.length; i++) {
 		deployedMunitions[i].update();
+		if (deployedMunitions[i].expiryCounter >= deployedMunitions[i].lifetime) {
+		   deployedMunitions.splice(i, 1);
+		}
 	}	
+
+	
 }
 
 
@@ -51,6 +56,9 @@ function fireShipLaserPulse() {
 	
 	deployedLaser.numberOfAnimations = 4;
 	deployedLaser.nextAnimationCalc = 0;
+
+	deployedLaser.lifetime = 240;
+	deployedLaser.expiryCounter = 0;
 	
 	deployedLaser.animations = new Array();
 	deployedLaser.animations[0] = 0.5;
@@ -85,6 +93,7 @@ function fireShipLaserPulse() {
 			this.x = this.x + this.speed * Math.cos((this.direction - 90) * TO_RADIANS);
 			this.y = this.y + this.speed * Math.sin((this.direction - 90) * TO_RADIANS);
 
+			this.expiryCounter += 1;
 	}
 		
 	deployedMunitions.push(deployedLaser);
