@@ -31,20 +31,23 @@ body {
     Referenced using 'id' */
 #wrapper {
     height: 100%;
+    width: 100%;
     min-height: 400px;
 }
 
 /* Set the style for the Header div, referenced using class */
 .header {
+    position: fixed;
+    z-index: 900;
     height: 10%;
     width: 100%;
-    background: #111;
     color: #fff;
     min-height: 50px;
 }
 
 /* Set the style for the Nav (sidebar) div, referenced using class */
 .nav {
+    display: none;
     width: 20%;
     height: 90%;
     float: left;
@@ -69,9 +72,8 @@ body {
 
 /* Set the style for the Main section div, referenced using class */
 .main {
-    width: 80%;
-    height: 90%;
-    float: left;
+    width: 100%;
+    height: 100%;
     background: #eee;
 }
 
@@ -97,13 +99,9 @@ body {
 /* Configure the canvas, and set a background image */
 canvas {
 	float: center;
-	max-width: 98%;
-	min-width: 98%; 
-	max-height: 98%;
-	min-height: 98%;
+	width: 100%;
+    height: 100%;
 	background:url(images/backgrounds/space2.jpg);
 	background-size: 100%;
 	outline: none;
 }
-
-canvas, img { display:block; margin:1em auto; border:1px solid black; }

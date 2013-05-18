@@ -10,9 +10,11 @@ var asteroidY = 250 + Math.floor(Math.random()*201);
 var asteroidScale = 50 + Math.floor(Math.random()*41);
 var asteroidSpeed = (1+Math.floor(Math.random()*4))/15;
 
+
   
 // Paint the Asteroid
 function paintAsteroid() {
+
 	c.save();
 	c.translate(asteroidX, asteroidY);
 	c.translate(asteroidScale, asteroidScale);
@@ -22,6 +24,7 @@ function paintAsteroid() {
 }
 
 function updateAsteroid() {
+	
 	if (asteroidX <= (1 - asteroidScale)) {
 		asteroidprevDir = "right";
 		asteroidX = canvasWidth;

@@ -157,10 +157,10 @@ function updatePlayerShip() {
 function paintPlayerShip() {
 	c.save();
 	c.translate(shipX, shipY);
-	c.translate(50, 70);
+	c.translate(50, 50);
 	c.rotate(shipDirection * TO_RADIANS);
-	c.drawImage(shipImage, -50, -70, 100, 140);
-	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 140);
+	c.drawImage(shipImage, -50, -50, 100, 100);
+	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 100);
 	c.restore();
 }
 
