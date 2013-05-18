@@ -4,11 +4,42 @@
 //=============================================
 
 
+/*
+Author: Alex
+
+Returns a boolean of whether a point lies within a radius of
+another point. Useful for collision detection.
+*/
+function liesWithinRadius(checkPointX, checkPointY, centerX, centerY, radius) {
+
+	return (Math.pow((checkPointX-centerX),2) + Math.pow((checkPointY-centerY),2) < Math.pow(radius,2));
+
+}
 
 
 
 
 
+/*
+Author: Alex
+
+Finds the angle in degrees between one set of x and y values and another.
+Parameters: originX, originY, targetX, targetY.
+Returns: number in DEGREES
+*/
+function findAngleBetweenTwoPoints(x1, y1, x2, y2) {
+
+	var relativeX = x2 - x1;
+	var relativeY = y2 - y1;
+
+	var tangent = Math.atan2(-relativeY, relativeX);
+
+	if (tangent < 0) {
+	   tangent += 2 * Math.PI;
+	}
+	
+	return (tangent * TO_DEGREES);
+}
 
 
 

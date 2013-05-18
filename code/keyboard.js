@@ -56,9 +56,15 @@ function keyEventFired(e) {
 	case 32:	Game.fireShipLaserPulse();
 				Game.playPewPewPew();
 				break;
+		
+	// P - place an enemy ship - development convenience
+	case 80:	EnemyShip.instantiate(500, 300);
+				break;
 	}
 	
 }
+
+
 
 function keyEventOver(e) {
 	
