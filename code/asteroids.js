@@ -92,7 +92,7 @@ this.detectCollisions = function() {
 			this.direction = deployedMunitions[i].direction -90;
 			this.Speed += 0.1;
 
-			deployedMunitions.splice(i, 1);
+			deployedMunitions[i].destroyed = true;
 		}
 	}
 	

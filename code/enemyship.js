@@ -98,10 +98,6 @@ EnemyShip.detectCollisions = function() {
 			deployedMunitions[i].destroyed = true;
 		}
 		
-		if (deployedMunitions[i].destroySequence == 5) {
-			deployedMunitions.splice(i, 1);
-		}
-		
 	}
 	
 }
