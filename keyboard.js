@@ -32,6 +32,8 @@ function keyEventFired(e) {
 	// W
 	case 87:	Game.movePlayerShip("Forwards");
 
+					//Game.playThrust();
+
 				break;
 				
 	// S
