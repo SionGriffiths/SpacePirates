@@ -162,6 +162,7 @@ Game.paint = function() {
 	paintBackground();
 	paintFuelGuage();
 	paintPlayerShip();
+	paintEnemyShips();
 	paintDeployedMunitions();
 	paintAsteroid();
 	
@@ -171,6 +172,7 @@ Game.paint = function() {
 Game.update = function() {
 		
 	updatePlayerShip();
+	updateEnemyShips();
 	paintFuelGuage();
 	updateDeployedMunitions();
 	updateAsteroid();
@@ -258,4 +260,11 @@ Game.fireShipLaserPulse = function() {
 	fireShipLaserPulse();
 }
 
+// Method resides in enemyship.js
+//Game.paintEnemyShips = function() {
+//	paintEnemyShips();
+//}
+
+
+Game.enemyShips = new Array();
 
