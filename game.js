@@ -14,7 +14,7 @@ var canvasHeight;
 
 
 
-var numOfImages = 7;
+var numOfImages = 8;
 var imageLoadProgress = 0;
 var shipImage;
 var shipThrusterImage1;
@@ -49,6 +49,14 @@ var shipTurningRight = false;
 
 var thrustEffect = 0;
 var currentShipThrusterImage;
+
+
+var asteroidprevDir;
+var asteroidDirection = Math.floor(Math.random()*351);
+var asteroidX = 100 + Math.floor(Math.random()*251);
+var asteroidY = 250 + Math.floor(Math.random()*201);
+var asteroidScale = 50 + Math.floor(Math.random()*41);
+var asteroidSpeed = (1+Math.floor(Math.random()*4))/15;
 
 
 var TO_RADIANS = Math.PI / 180;
@@ -219,6 +227,13 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		shipGunImage1.src = 'images/gun3.png';
 	}, 1200);
+
+	setTimeout(function() {
+		asteroidImage1 = new Image();
+		asteroidImage1.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		asteroidImage1.src = "images/asteroid1.png";
+	}, 600);
 	
 	// Call the game to run, after finished loading
 	setTimeout(function() {
@@ -247,6 +262,7 @@ Game.paint = function() {
 	paintFuelGuage();
 	paintPlayerShip();
 	paintDeployedMunitions();
+	paintAsteroid();
 	
 }
 
@@ -265,6 +281,7 @@ Game.update = function() {
 	updatePlayerShip();
 	paintFuelGuage();
 	updateDeployedMunitions();
+	updateAsteroid();
 	
 }
 
@@ -737,7 +754,40 @@ Game.playThrust = function(){
 
  
 
- 
+  
+// Paint the Asteroid
+function paintAsteroid() {
+	c.save();
+	c.translate(asteroidX, asteroidY);
+	c.translate(asteroidScale, asteroidScale);
+	c.rotate(asteroidDirection * TO_RADIANS);
+	c.drawImage(asteroidImage1, -asteroidScale, -asteroidScale, asteroidScale, asteroidScale);
+	c.restore();
+}
+
+function updateAsteroid() {
+	if (asteroidX <= (1 - asteroidScale)) {
+		asteroidprevDir = "right";
+		asteroidX = canvasWidth;
+	} else if (asteroidX >= canvasWidth) {
+		
+		asteroidprevDir = "left";
+		asteroidX = 1;
+	} else if (asteroidY <= (1 - asteroidScale)) {
+
+		asteroidprevDir = "up";
+		asteroidY = canvasHeight;
+	} else if (asteroidY >= canvasHeight) {
+		
+		asteroidprevDir = "down";
+		asteroidY = 1;
+	}
+
+	asteroidX = asteroidX + asteroidSpeed * Math.cos(asteroidDirection * TO_RADIANS);
+	asteroidY = asteroidY + asteroidSpeed * Math.sin(asteroidDirection * TO_RADIANS);
+	//asteroidDirection += 0.1;
+	//asteroidScale += 0.02;
+}
 
 
 
