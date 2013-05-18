@@ -36,3 +36,7 @@ var previousDir;
 var previousMaps = new Array();
 
 var fuel = 100;
+
+var pewN = 1;
+
+var toggleDebug = false;

@@ -16,8 +16,8 @@ function paintDeployedMunitions() {
 	
 		c.save();
 		c.translate(deployedMunitions[i].x, deployedMunitions[i].y);
-		c.translate(20, 20);
 		c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+		c.translate(0, -50);
 		deployedMunitions[i].draw();
 		c.restore();
 	}	
@@ -48,8 +48,17 @@ function fireShipLaserPulse() {
 	
 	deployedLaser.name = "RoundRedLaserPulse";
 
-	deployedLaser.x = shipX + 20;
-	deployedLaser.y = shipY + 20;
+	c.save();
+	c.translate(shipX, shipY);
+
+	c.translate(0, 0);
+
+	c.rotate(shipDirection * TO_RADIANS);
+	
+	deployedLaser.x = shipX;
+	deployedLaser.y = shipY;
+
+	c.restore();
 
 	deployedLaser.direction = shipDirection;
 	deployedLaser.speed = 6 + shipMomentum;
@@ -73,11 +82,12 @@ function fireShipLaserPulse() {
 	
 	deployedLaser.draw = function() {
 			//c.save();
-			var gradient = c.createRadialGradient(-40, -40, this.innerSize, -40, -40, this.outerSize);
+
+			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
 			gradient.addColorStop(0,"red");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-60, -60, 40, 40);
+			c.fillRect(-20, -20, 40, 40);
 			//c.restore();
 	}
 	

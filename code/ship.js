@@ -12,8 +12,8 @@ var shipThrusterImage4;
 var shipThrusterImage5;
 var shipGunImage1;
 
-var shipX = 50; // Canvas x
-var shipY = 50; // Canvas y
+var shipX = 250; // Canvas x
+var shipY = 150; // Canvas y
 var shipDirection = 0; // Degrees
 
 var shipMomentum = 0; // 0 - 6
@@ -156,11 +156,22 @@ function updatePlayerShip() {
 // Paint the Ship
 function paintPlayerShip() {
 	c.save();
-	c.translate(shipX, shipY);
-	c.translate(50, 50);
+	c.translate(shipX, shipY);	
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -50, 100, 100);
 	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 100);
+	if(toggleDebug==true) {
+		c.fillStyle="green";
+		c.fillRect(-5,-5,10,10);
+		c.strokeStyle = 'yellow';
+		c.moveTo(0,0);
+		c.lineTo(0,-60);
+		c.stroke();	
+		c.beginPath();
+		c.arc(0,0,40,0,2*Math.PI);
+		c.strokeStyle = 'red';
+		c.stroke();
+	}	
 	c.restore();
 }
 

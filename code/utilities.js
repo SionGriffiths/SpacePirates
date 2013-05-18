@@ -77,3 +77,15 @@ function printToDebugConsole(message){
     messageLog.splice(0,1);
   }
 }
+
+
+
+function DebugToggle(){ 
+  if(toggleDebug == false) {
+    toggleDebug = true;
+    console.log('Debug ON');
+  } else if(toggleDebug == true) {
+    toggleDebug = false;
+    console.log('Debug OFF');
+  }
+}
