@@ -270,15 +270,6 @@ Game.update = function() {
 
 
 
-
-
-
-
-
-
-
-
-
 function paintFuelGuage() {
 	c.save();
 	c.strokeStyle = "red";
