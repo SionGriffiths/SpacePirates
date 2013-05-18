@@ -101,7 +101,7 @@ canvas {
 	min-width: 98%; 
 	max-height: 98%;
 	min-height: 98%;
-	background:url(space2.jpg);
+	background:url(images/backgrounds/space2.jpg);
 	background-size: 100%;
 	outline: none;
 }

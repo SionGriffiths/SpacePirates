@@ -58,3 +58,22 @@ function drawRoundRect(ctx, x, y, width, height, radius, fill, stroke) {
   }
   ctx.restore();
 }
+
+
+
+function printToDebugConsole(message){
+  
+  messageLog.push(message);
+  
+  for (var i = messageLog.length - 1; i > -1; i--){
+   messageLogString = messageLogString + "<br  />" + messageLog[i];
+  }
+  
+  document.getElementById("debug").innerHTML = messageLogString;
+
+  messageLogString = " ";
+  
+  if (messageLog.length >= 15) {
+    messageLog.splice(0,1);
+  }
+}
