@@ -261,9 +261,21 @@ Game.paint = function() {
 
 // Paint - GAMELOOP
 Game.update = function() {
+		
 	updatePlayerShip();
 	paintFuelGuage();
+	updateDeployedMunitions();
+	
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -329,7 +341,7 @@ function updatePlayerShip() {
 		changeShipDirection("Right");
 	}
 	
-	updateShipThrusters();
+	
 }
 
 
@@ -404,13 +416,13 @@ function paintBackground(){
 	
 	
 	for (var i = 0; i < backgroundStars.length; i++){
-	c.save();
+		c.save();
 		c.fillStyle = backgroundStars[i][3];
 		c.font = backgroundStars[i][2] + "px arial";
 		c.shadowColor = "white";
 		c.shadowBlur = backgroundStars[i][2] / 10;
 		c.fillText(star, backgroundStars[i][0], backgroundStars[i][1]);
-	c.restore();
+		c.restore();
 	}
 	
 
@@ -507,7 +519,6 @@ function paintPlayerShip() {
 	c.rotate(shipDirection * TO_RADIANS);
 	c.drawImage(shipImage, -50, -70, 100, 140);
 	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 140);
-	//c.drawImage(shipGunImage1, -65, -90, 100, 140);
 	c.restore();
 }
 
@@ -750,12 +761,23 @@ function paintDeployedMunitions() {
 	
 	for (var i = 0; i < deployedMunitions.length; i++) {
 	
+		c.save();
+		c.translate(deployedMunitions[i].x, deployedMunitions[i].y);
+		c.translate(20, 20);
+		c.rotate(deployedMunitions[i].direction * TO_RADIANS);
 		deployedMunitions[i].draw();
-		
+		c.restore();
 	}
 	
 	
 }
+
+
+
+
+
+
+
 
 
 function updateDeployedMunitions() {
@@ -765,7 +787,13 @@ function updateDeployedMunitions() {
 	// Perhaps change its graphic properties for
 	// animation effect too.
 
+	
+	for (var i = 0; i < deployedMunitions.length; i++) {
+		deployedMunitions[i].update();
+	}
+	
 }
+
 
 
 Game.fireShipLaserPulse = function() {
@@ -774,30 +802,60 @@ Game.fireShipLaserPulse = function() {
 	var deployedLaser = new Object();
 	
 	deployedLaser.name = "RoundRedLaserPulse";
-	deployedLaser.x = shipX + 50;
-	deployedLaser.y = shipY + 10;
+
+	deployedLaser.x = shipX + 20;
+	deployedLaser.y = shipY + 20;
+
 	deployedLaser.direction = shipDirection;
-	deployedLaser.numOfAnimations = 4;
-	deployedLaser.currentAnimation = 1;
+	deployedLaser.speed = 6 + shipMomentum;
+	
+	deployedLaser.numberOfAnimations = 4;
+	deployedLaser.nextAnimationCalc = 0;
+	
+	deployedLaser.animations = new Array();
+	deployedLaser.animations[0] = 0.5;
+	deployedLaser.animations[1] = 1;
+	deployedLaser.animations[2] = 3;
+	deployedLaser.animations[3] = 5;
+	
+	deployedLaser.animationSize = 1;
+	deployedLaser.innerSize = 2;
+	deployedLaser.outerSize = 7;
+	
 	
 	deployedLaser.draw = function() {
-			c.save();
-			var gradient = c.createRadialGradient(this.x, this.y, 5, this.x, this.y, 15);
+			//c.save();
+			var gradient = c.createRadialGradient(-40, -40, this.innerSize, -40, -40, this.outerSize);
 			gradient.addColorStop(0,"red");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(this.x - 20, this.y -20, 40, 40);
-			c.restore();
-			//Game.printToDebugConsole("Painting munition" + this.x + " " + this.y);
+			c.fillRect(-60, -60, 40, 40);
+			//c.restore();
 	}
 	
 	
-	// deployedLaser.animations = new Array();
-	// deployedLaser.animations[0] = 
+	
+	deployedLaser.update = function() {
+
+			this.innerSize = (this.animationSize + this.animations[this.nextAnimationCalc]);
+			this.outerSize = (this.animationSize + 5 +(2 * this.animations[this.nextAnimationCalc]));
+			this.nextAnimationCalc += 1;
+			if (this.nextAnimationCalc >= this.numberOfAnimations) {
+				this.nextAnimationCalc = 0;
+			}
+			
+			this.x = this.x + this.speed * Math.cos((this.direction - 90) * TO_RADIANS);
+			this.y = this.y + this.speed * Math.sin((this.direction - 90) * TO_RADIANS);
+
+	}
+	
+	
+	
+	
 	
 	deployedMunitions.push(deployedLaser);
 	
-	Game.printToDebugConsole("One lasor object added");
+	Game.printToDebugConsole("One laser object added");
 	Game.printToDebugConsole("Total deployedMunitions = " + deployedMunitions.length);
 	
 }
