@@ -19,6 +19,14 @@ function paintDeployedMunitions() {
 		c.rotate(deployedMunitions[i].direction * TO_RADIANS);
 		c.translate(0, -50);
 		deployedMunitions[i].draw();
+		
+		if(toggleDebug==true) {
+			c.beginPath();
+			c.strokeStyle = 'blue';
+			c.arc(0,0,20,0,2*Math.PI);			
+			c.stroke();
+		}
+
 		c.restore();
 	}	
 }

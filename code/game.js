@@ -148,10 +148,20 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		asteroidImage1.src = "images/misc/asteroid1.png";
 	}, 600);	
+	
+
+
 	// Call the game to run, after finished loading
 	setTimeout(function() {
 		Game.run();
 	}, 1500);
+
+	var initialAsteroid1 = new Asteroid();
+	var initialAsteroid2 = new Asteroid();
+	var initialAsteroid3 = new Asteroid();
+	var initialAsteroid4 = new Asteroid();
+	var initialAsteroid5 = new Asteroid();
+
 }
 
 // Paint - GAMELOOP
@@ -160,12 +170,13 @@ Game.paint = function() {
 	clearCanvas();
 
 	paintBackground();
-	paintFuelGuage();
+	paintFuelGuage();	
+	paintDeployedMunitions();
+	paintAsteroids();
 	paintPlayerShip();
 	paintEnemyShips();
-	paintDeployedMunitions();
-	paintAsteroid();
-	
+
+	//console.log("Asteroids Array" + Game.asteroids.toString());
 }
 
 // Paint - GAMELOOP
@@ -175,7 +186,7 @@ Game.update = function() {
 	updateEnemyShips();
 	paintFuelGuage();
 	updateDeployedMunitions();
-	updateAsteroid();
+	updateAsteroids();
 	
 }
 
@@ -267,4 +278,4 @@ Game.fireShipLaserPulse = function() {
 
 
 Game.enemyShips = new Array();
-
+Game.asteroids = new Array();
