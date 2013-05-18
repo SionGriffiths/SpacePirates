@@ -12,7 +12,7 @@ another point. Useful for collision detection.
 */
 function liesWithinRadius(checkPointX, checkPointY, centerX, centerY, radius) {
 
-	return (Math.pow((checkPointX-centerX),2) + Math.pow((checkPointY-centerY),2) < Math.pow(radius,2));
+	return (Math.pow((checkPointX-centerX),2) + Math.pow((checkPointY-centerY),2) <= Math.pow(radius,2));
 
 }
 

@@ -20,7 +20,7 @@ EnemyShip.collisionRadius;
 EnemyShip.draw = function() {
 		c.save();
 		c.translate(this.x, this.y);
-		c.translate((this.width / 2), (this.height / 2));
+		//c.translate((this.width / 2), (this.height / 2));
 		c.rotate(this.direction * TO_RADIANS);
 		c.drawImage(this.image, -(this.width / 2), -(this.height / 2), this.width, this.height);
 		c.restore();
@@ -95,7 +95,13 @@ EnemyShip.detectCollisions = function() {
 			
 		if (collisionOccured) {
 			Game.printToDebugConsole("Collision!");
+			deployedMunitions[i].destroyed = true;
 		}
+		
+		if (deployedMunitions[i].destroySequence == 5) {
+			deployedMunitions.splice(i, 1);
+		}
+		
 	}
 	
 }

@@ -43,6 +43,9 @@ function updateDeployedMunitions() {
 		if (deployedMunitions[i].expiryCounter >= deployedMunitions[i].lifetime) {
 		   deployedMunitions.splice(i, 1);
 		}
+		else if (deployedMunitions[i].destroySequence > 10) {
+			deployedMunitions.splice(i, 1);
+		}
 	}	
 
 	
@@ -87,31 +90,66 @@ function fireShipLaserPulse() {
 	deployedLaser.innerSize = 2;
 	deployedLaser.outerSize = 7;
 	
+	deployedLaser.destroyed = false;
+	deployedLaser.destroySequence = 0;
+	
+	
 	
 	deployedLaser.draw = function() {
-			//c.save();
 
+		if (!(this.destroyed)) {
 			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
 			gradient.addColorStop(0,"red");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
 			c.fillRect(-20, -20, 40, 40);
-			//c.restore();
+		}
+		
+		else {
+			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			gradient.addColorStop(0,"red");
+			gradient.addColorStop(0.5, "orange");
+			gradient.addColorStop(1,"transparent");
+			c.fillStyle = gradient;
+			c.fillRect(-200, -200, 800, 800);
+		}
 	}
 	
 	deployedLaser.update = function() {
 
-			this.innerSize = (this.animationSize + this.animations[this.nextAnimationCalc]);
-			this.outerSize = (this.animationSize + 5 +(2 * this.animations[this.nextAnimationCalc]));
-			this.nextAnimationCalc += 1;
-			if (this.nextAnimationCalc >= this.numberOfAnimations) {
-				this.nextAnimationCalc = 0;
+			if (!(this.destroyed)) {
+			
+				this.innerSize = (this.animationSize + this.animations[this.nextAnimationCalc]);
+				this.outerSize = (this.animationSize + 5 +(2 * this.animations[this.nextAnimationCalc]));
+				this.nextAnimationCalc += 1;
+				
+				if (this.nextAnimationCalc >= this.numberOfAnimations) {
+					this.nextAnimationCalc = 0;
+				}
+				
+				this.x = this.x + this.speed * Math.cos((this.direction - 90) * TO_RADIANS);
+				this.y = this.y + this.speed * Math.sin((this.direction - 90) * TO_RADIANS);
+
+				this.expiryCounter += 1;
+				
 			}
 			
-			this.x = this.x + this.speed * Math.cos((this.direction - 90) * TO_RADIANS);
-			this.y = this.y + this.speed * Math.sin((this.direction - 90) * TO_RADIANS);
-
-			this.expiryCounter += 1;
+			else {
+			
+				this.innerSize = (this.animationSize + this.animations[this.nextAnimationCalc]);
+				this.outerSize = (this.animationSize + 5 +(2 * this.animations[this.nextAnimationCalc]));
+				this.nextAnimationCalc += 1;
+				
+				if (this.nextAnimationCalc >= this.numberOfAnimations) {
+					this.nextAnimationCalc = 0;
+				}
+				
+				this.innerSize *= 3;
+				this.outerSize *= 6;
+				
+				this.destroySequence += 1;
+				
+			}
 	}
 		
 	deployedMunitions.push(deployedLaser);
