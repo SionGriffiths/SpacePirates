@@ -164,8 +164,9 @@ Game.paint = function() {
 	paintPlayerShip();
 	paintEnemyShips();
 	paintDeployedMunitions();
-	paintAsteroid();
-	
+	paintAsteroids();
+
+	//console.log("Asteroids Array" + Game.asteroids.toString());
 }
 
 // Paint - GAMELOOP
@@ -175,7 +176,7 @@ Game.update = function() {
 	updateEnemyShips();
 	paintFuelGuage();
 	updateDeployedMunitions();
-	updateAsteroid();
+	updateAsteroids();
 	
 }
 
@@ -267,4 +268,4 @@ Game.fireShipLaserPulse = function() {
 
 
 Game.enemyShips = new Array();
-
+Game.asteroids = new Array();

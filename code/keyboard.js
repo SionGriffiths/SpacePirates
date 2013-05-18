@@ -60,8 +60,11 @@ function keyEventFired(e) {
 	// P - place an enemy ship - development convenience
 	case 80:	EnemyShip.instantiate(500, 300);
 				break;
+
+
+	case 79:    var tempAsteroid = new Asteroid();
+				break; 
 	}
-	
 }
 
 
