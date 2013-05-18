@@ -1,5 +1,6 @@
+===================================
 SpacePirates
-============
+===================================
 
 A JS/HTML canvas game.
 
@@ -8,9 +9,9 @@ Simple game built using Javascript and the HTML5 canvas; latest stable build can
 http://apps.alexjollands.com/spacemining/
 
 
-================================
+===================================
 Instructions
-================================
+===================================
 
 Press TAB to bring focus to the Canvas (EventListeners then respond)
 
@@ -21,9 +22,9 @@ Press SPACEBAR to fire lasers.
 (Press P to initiate an enemy ship sequence - Soon!)
 
 
-
+===================================
 DEBUGGING: 
-
+===================================
 Game.printToDebugConsole(message) now prints to console.log.
 
 To view this, open the game in Chrome.
