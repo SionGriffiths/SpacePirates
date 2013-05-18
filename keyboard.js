@@ -35,8 +35,12 @@ function keyEventFired(e) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				//Game.playThrust();
 
+=======
+					Game.playThrust();
+>>>>>>> c2c7d794950ae7c75e1ab1da18769ea0590e164f
 =======
 					Game.playThrust();
 >>>>>>> c2c7d794950ae7c75e1ab1da18769ea0590e164f

@@ -289,7 +289,6 @@ function paintFuelGuage() {
 }
 
 
-
 function updatePlayerShip() {
 
 	// Only calculate and move one in 3 game loops
