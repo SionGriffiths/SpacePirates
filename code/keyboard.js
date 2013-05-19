@@ -9,7 +9,7 @@ var canvasElement;
 
 // Add event listeners to the canvas
 function setupEventListeners() {
-	canvasElement = document.getElementById('maincanvas');
+	canvasElement = document;
 	canvasElement.addEventListener( "keydown", keyEventFired, true);
 	canvasElement.addEventListener( "keyup", keyEventOver, true);
 	Game.printToDebugConsole("Added EventListeners to Canvas");
