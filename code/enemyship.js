@@ -45,8 +45,8 @@ EnemyShip.instantiate = function(initialX, initialY) {
 	this.direction = 0;
 	this.momentum = 0;
 
-	this.nextLocationX = shipX;
-	this.nextLocationY = shipY;
+	this.nextLocationX = Ship.X;
+	this.nextLocationY = Ship.Y;
 	
 	this.collisionRadius = 80;
 	
@@ -82,8 +82,8 @@ EnemyShip.faceTowardsPlayerShip = function() {
 			this.direction = 359;
 		}
 	}
-	this.nextLocationX = shipX;
-	this.nextLocationY = shipY;
+	this.nextLocationX = Ship.X;
+	this.nextLocationY = Ship.Y;
 }
 
 

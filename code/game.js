@@ -16,8 +16,8 @@ Game.initialize = function() {
 	canvasWidth = canvasE.width;
 	canvasHeight = canvasE.height;
 
-	shipX = canvasWidth / 2;
-	shipY = canvasHeight / 2;
+	Ship.X = canvasWidth / 2;
+	Ship.Y = canvasHeight / 2;
 	
 	Game.printToDebugConsole("Initializing background");
 	
@@ -104,40 +104,40 @@ Game.load = function() {
 	// Slow down the loading of the images, purely for the graphical effect
 	// This will obviously be changed for the larger application :D
 	setTimeout(function() {
-		shipImage = new Image();
-		shipImage.onload = updateProgressBar();
+		Ship.shipImage = new Image();
+		Ship.shipImage.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipImage.src = "images/ships/ship2.png";
+		Ship.shipImage.src = "images/ships/ship2.png";
 	}, 200);	
 	setTimeout(function() {
-		shipThrusterImage1 = new Image();
-		shipThrusterImage1.onload = updateProgressBar();
+		Ship.ThrusterImage1 = new Image();
+		Ship.ThrusterImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage1.src = "images/thrust/thrust2.png";
+		Ship.ThrusterImage1.src = "images/thrust/thrust2.png";
 	}, 600);
 	setTimeout(function() {
-		shipThrusterImage2 = new Image();
-		shipThrusterImage2.onload = updateProgressBar();
+		Ship.ThrusterImage2 = new Image();
+		Ship.ThrusterImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage2.src = "images/thrust/thrust4.png";
+		Ship.ThrusterImage2.src = "images/thrust/thrust4.png";
 	}, 900);	
 	setTimeout(function() {
-		shipThrusterImage3 = new Image();
-		shipThrusterImage3.onload = updateProgressBar();
+		Ship.ThrusterImage3 = new Image();
+		Ship.ThrusterImage3.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage3.src = "images/thrust/thrust3.png";
+		Ship.ThrusterImage3.src = "images/thrust/thrust3.png";
 	}, 1100);
 	setTimeout(function() {
-		shipThrusterImage4 = new Image();
-		shipThrusterImage4.onload = updateProgressBar();
+		Ship.ThrusterImage4 = new Image();
+		Ship.ThrusterImage4.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage4.src = "images/thrust/thrust0.png";
+		Ship.ThrusterImage4.src = "images/thrust/thrust0.png";
 	}, 300);
 	setTimeout(function() {
-		shipThrusterImage5 = new Image();
-		shipThrusterImage5.onload = updateProgressBar();
+		Ship.ThrusterImage5 = new Image();
+		Ship.ThrusterImage5.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		shipThrusterImage5.src = "images/thrust/thrust1.png";
+		Ship.ThrusterImage5.src = "images/thrust/thrust1.png";
 	}, 500);
 	setTimeout(function() {
 		shipGunImage1 = new Image();
@@ -187,7 +187,7 @@ Game.paint = function() {
 	paintFuelGuage();	
 	paintDeployedMunitions();
 	paintAsteroids();
-	paintPlayerShip();
+	Ship.paint();
 	paintEnemyShips();
 
 	//console.log("Asteroids Array" + Game.asteroids.toString());
@@ -197,7 +197,7 @@ Game.paint = function() {
 Game.update = function() {
 	
 
-	updatePlayerShip();
+	Ship.update();
 	updateEnemyShips();
 	paintFuelGuage();
 	updateDeployedMunitions();
@@ -251,10 +251,10 @@ function clearCanvas() {
 
 // Methods reside in ship.js
 Game.movePlayerShip = function(direction) {
-	movePlayerShip(direction);
+	Ship.move(direction);
 } 
 Game.stopMovePlayerShip = function(direction) {
-	stopMovePlayerShip(direction);
+	Ship.stopMove(direction);
 }
 
 
@@ -295,19 +295,19 @@ Game.fireShipLaserPulse = function(munitionsType) {
 	
 	if (munitionsType == 0) {
 	
-		fireShipLaserPulse("RedLaser", shipX, shipY, shipDirection, "PlayerShip", shipMomentum);
+		fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum);
 	
 	}
 	
 	else if (munitionsType == 1) {
 	
-		fireShipLaserPulse("BlueLaser", shipX, shipY, shipDirection, "PlayerShip", shipMomentum);
+		fireShipLaserPulse("BlueLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum);
 	
 	}
 	
 	else if (munitionsType == 2) {
 	
-		fireShipLaserPulse("GreenLaser", shipX, shipY, shipDirection, "PlayerShip", shipMomentum);
+		fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum);
 	
 	}
 	

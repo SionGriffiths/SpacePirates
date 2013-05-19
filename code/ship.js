@@ -2,7 +2,6 @@
 // Ship 
 //=============================================
 
-
 // Ship Vars
 var shipImage;
 var shipThrusterImage1;
@@ -12,39 +11,45 @@ var shipThrusterImage4;
 var shipThrusterImage5;
 var shipGunImage1;
 
-var shipX = 250; // Canvas x
-var shipY = 150; // Canvas y
-var shipDirection = 0; // Degrees
-
-var shipMomentum = 0; // 0 - 6
-var shipMomentumDirection = 0; // Degrees
-var shipAcceleration = 0; // 0 - 6
-var shipAccelerationFactor = 0.1;
-var shipDecelerationFactor = 0.5;
-var shipThrustPower = 1;
-var shipMaxSpeed = 30;
-var shipMovingForwards = false;
-var shipMovementModerator = 1;
-
-var shipTurningLeft = false;
-var shipTurningRight = false;
-
-var thrustEffect = 0;
-var currentShipThrusterImage;
-var lastAsteroidHit;
-
-var shipShieldActive = false;
-var shipShieldTimer = 0;
+var Ship = new Object();
 
 
 
-function movePlayerShip(direction){
+Ship.shipImage;
+
+Ship.X = 250; // Canvas x
+Ship.Y = 150; // Canvas y
+Ship.Direction = 0; // Degrees
+
+Ship.Momentum = 0; // 0 - 6
+Ship.MomentumDirection = 0; // Degrees
+Ship.Acceleration = 0; // 0 - 6
+Ship.AccelerationFactor = 0.1;
+Ship.DecelerationFactor = 0.5;
+Ship.ThrustPower = 1;
+Ship.MaxSpeed = 30;
+Ship.MovingForwards = false;
+Ship.MovementModerator = 1;
+
+Ship.TurningLeft = false;
+Ship.TurningRight = false;
+
+Ship.thrustEffect = 0;
+Ship.currentShipThrusterImage;
+Ship.lastAsteroidHit;
+
+Ship.ShieldActive = false;
+Ship.ShieldTimer = 0;
+
+
+
+Ship.move = function(direction){
 	if (fuel > 0) {
 
 		//Game.printToDebugConsole("Moving Ship");	
 	
 		if (direction == "Forwards") {
-			shipMovingForwards = true;
+			Ship.MovingForwards = true;
 		
 			fuel = fuel - (fuel / 100);
 			if (fuel < 1) {
@@ -56,9 +61,9 @@ function movePlayerShip(direction){
 	
 		else if (direction == "Backwards") {
 			
-			shipMovingForwards = false;
+			this.MovingForwards = false;
 			
-			shipMomentum /= 1.5;
+			this.Momentum /= 1.5;
 			
 			fuel = fuel - (fuel / 150);
 			if (fuel < 1) {
@@ -68,7 +73,7 @@ function movePlayerShip(direction){
 		}
 	
 		else if (direction == "Left") {
-			shipTurningLeft = true;
+			this.TurningLeft = true;
 		
 			fuel = fuel - (fuel / 400);
 			if (fuel < 1) {
@@ -78,7 +83,7 @@ function movePlayerShip(direction){
 		}
 	
 		else if (direction == "Right") {
-			shipTurningRight = true;
+			this.TurningRight = true;
 		
 			fuel = fuel - (fuel / 400);
 			if (fuel < 1) {
@@ -94,92 +99,87 @@ function movePlayerShip(direction){
 
 
 
-function stopMovePlayerShip(direction) {
+Ship.stopMove = function(direction) {
 
 	//Game.printToDebugConsole("Stop Moving Ship");	
 	
 	if (direction == "Forwards") {
-		shipMovingForwards = false;
+		this.MovingForwards = false;
 	}
 
 	if (direction == "Left") {
-		shipTurningLeft = false;
+		this.TurningLeft = false;
 	}
 	
 	if (direction == "Right") {
-		shipTurningRight = false;
+		this.TurningRight = false;
 	}
 }
 
 
-function updatePlayerShip() {
+Ship.update = function() {
 
 	// Only calculate and move one in 3 game loops
-	shipMovementModerator += 1;
+	this.MovementModerator += 1;
 	
-	if (shipMovementModerator == 3) {
+	if (this.MovementModerator == 3) {
 
-	if (shipMovingForwards) {
-		if (shipAcceleration <= 5) {
-			shipAcceleration += shipAccelerationFactor;
+	if (this.MovingForwards) {
+		if (this.Acceleration <= 5) {
+			this.Acceleration += this.AccelerationFactor;
 		}
 		
-		shipMomentum = shipMomentum + shipAcceleration;
+		this.Momentum = this.Momentum + this.Acceleration;
 
-		if(shipMomentum > shipMaxSpeed) {
-			shipMomentum = shipMaxSpeed;
+		if(this.Momentum > this.MaxSpeed) {
+			this.Momentum = this.MaxSpeed;
 		}
-
-
-	}
-	
+	}	
 	else {
-		shipAcceleration = 0;
-		if (shipMomentum > 0) {
-			shipMomentum -= shipDecelerationFactor;
+		this.Acceleration = 0;
+		if (this.Momentum > 0) {
+			this.Momentum -= this.DecelerationFactor;
 		}
 
-		if(shipMomentum < 1) {
-			shipMomentum = 0;
+		if(this.Momentum < 1) {
+			this.Momentum = 0;
 		}
-
-
 	}	
 	
-	updateShipCoordinates("Forwards");	
+	this.updateCoordinates("Forwards");	
 	
-	shipMovementModerator = 1;
+	this.MovementModerator = 1;
 	}
 	
-	if (shipTurningLeft) {
-		changeShipDirection("Left");
+	if (this.TurningLeft) {
+		this.changeDirection("Left");
 	}
 	
-	else if (shipTurningRight) {
-		changeShipDirection("Right");
+	else if (this.TurningRight) {
+		this.changeDirection("Right");
 	}
 	
-	if (shipShieldActive) {
-		shipShieldTimer += 1;
+	if (this.ShieldActive) {
+		this.ShieldTimer += 1;
 		
-		if (shipShieldTimer > 40) {
-			shipShieldActive = false;
-			shipShieldTimer = 0;
+		if (this.ShieldTimer > 40) {
+			this.ShieldActive = false;
+			this.ShieldTimer = 0;
 		}
 	}
 	
-	playerShipCollisionDetection();	
+	this.CollisionDetection();	
 }
 
 
 
 // Paint the Ship
-function paintPlayerShip() {
+Ship.paint = function() {
 	c.save();
-	c.translate(shipX, shipY);	
-	c.rotate(shipDirection * TO_RADIANS);
+	c.translate(this.X, this.Y);	
+	c.rotate(this.Direction * TO_RADIANS);
 	
-	if (shipShieldActive) {
+	if (this.ShieldActive) {
 		c.save();
 		c.scale(1, 1.5);
 		c.beginPath();
@@ -194,8 +194,8 @@ function paintPlayerShip() {
 		c.restore();
 	}
 	
-	c.drawImage(shipImage, -50, -50, 100, 100);
-	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 100);
+	c.drawImage(this.shipImage, -50, -50, 100, 100);
+	c.drawImage(this.getCurrentThrusterImage(), -50, 33, 100, 100);
 	if(toggleDebug==true) {
 		c.fillStyle="green";
 		c.fillRect(-5,-5,10,10);
@@ -211,25 +211,25 @@ function paintPlayerShip() {
 	c.restore();
 }
 
-// Find the ships new coordinates when moving in a direction
+// Find the this.s new coordinates when moving in a direction
 // new X = X * sin(angle) + Y * cos(angle) 
 // new Y= X * sin(angle) + Y * -cos(angle)
-function updateShipCoordinates(input) {
+Ship.updateCoordinates = function(input) {
 	
 	if (input == "Forwards") {
-		shipX = shipX + shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
-		shipY = shipY + shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+		this.X = this.X + this.Momentum * Math.cos((this.Direction - 90) * TO_RADIANS);
+		this.Y = this.Y + this.Momentum * Math.sin((this.Direction - 90) * TO_RADIANS);
 
 	}
 	
 	else if (input == "Backwards") {
-		shipX = shipX - shipMomentum * Math.cos((shipDirection - 90) * TO_RADIANS);
-		shipY = shipY - shipMomentum * Math.sin((shipDirection - 90) * TO_RADIANS);
+		this.X = this.X - this.Momentum * Math.cos((this.Direction - 90) * TO_RADIANS);
+		this.Y = this.Y - this.Momentum * Math.sin((this.Direction - 90) * TO_RADIANS);
 	}
 
 	
 
-	if (shipX <= -1) {
+	if (this.X <= -1) {
 		if (previousDir == "left") {
 			backgroundStars = [];
 			backgroundStars = previousMaps[previousMaps.length - 3];
@@ -238,8 +238,8 @@ function updateShipCoordinates(input) {
 			initializeBackground();
 		}
 		previousDir = "right";
-		shipX = canvasWidth - 2;
-	} else if (shipX >= canvasWidth) {
+		this.X = canvasWidth - 2;
+	} else if (this.X >= canvasWidth) {
 		if (previousDir == "right") {
 			backgroundStars = [];
 			backgroundStars = previousMaps[previousMaps.length - 2];
@@ -250,8 +250,8 @@ function updateShipCoordinates(input) {
 		}
 		
 		previousDir = "left";
-		shipX = 2;
-	} else if (shipY <= -1) {
+		this.X = 2;
+	} else if (this.Y <= -1) {
 		if (previousDir == "down") {
 			backgroundStars = [];
 			backgroundStars = previousMaps[previousMaps.length - 2];
@@ -262,8 +262,8 @@ function updateShipCoordinates(input) {
 		}
 		
 		previousDir = "up";
-		shipY = canvasHeight - 2;
-	} else if (shipY >= canvasHeight) {
+		this.Y = canvasHeight - 2;
+	} else if (this.Y >= canvasHeight) {
 		if (previousDir == "up") {
 			backgroundStars = [];
 			backgroundStars = previousMaps[previousMaps.length - 2];
@@ -274,93 +274,93 @@ function updateShipCoordinates(input) {
 		}
 		
 		previousDir = "down";
-		shipY = 2;
+		this.Y = 2;
 	}	
 }
 
-// Change the angle the ship is facing
-function changeShipDirection(input) {
+// Change the angle the this. is facing
+Ship.changeDirection = function(input) {
 
 	if (input == "Left") {
-		if ( shipDirection <= 0 ) {
-			shipDirection = 360;
+		if ( this.Direction <= 0 ) {
+			this.Direction = 360;
 		}
 		else {
-			shipDirection -= 3;
+			this.Direction -= 3;
 		}
 	}
 	
 	if (input == "Right") {
-		if (shipDirection >= 360) {
-			shipDirection = 0;
+		if (this.Direction >= 360) {
+			this.Direction = 0;
 		}
 		else {
-			shipDirection += 3;
+			this.Direction += 3;
 		}
 	}
 }
 
 
 
-function getCurrentShipThrusterImage() {
+Ship.getCurrentThrusterImage = function() {
 
-	var currentShipThrusterImage = shipThrusterImage1;
+	var currentThrusterImage = this.ThrusterImage1;
 	
-	if(shipMovingForwards == true) {
-		switch (thrustEffect) {
+	if(this.MovingForwards == true) {
+		switch (this.thrustEffect) {
 		
-		case 0:		currentShipThrusterImage = shipThrusterImage1;
+		case 0:		this.currentThrusterImage = this.ThrusterImage1;
 					break;
-		case 1:		currentShipThrusterImage = shipThrusterImage2;
+		case 1:		this.currentThrusterImage = this.ThrusterImage2;
 					break;
-		case 2:		currentShipThrusterImage = shipThrusterImage3;
+		case 2:		this.currentThrusterImage = this.ThrusterImage3;
 					break;
-		case 3:		currentShipThrusterImage = shipThrusterImage2;
+		case 3:		this.currentThrusterImage = this.ThrusterImage2;
 					break;
 		}
 	} else {
-		switch (thrustEffect) {
+		switch (this.thrustEffect) {
 		
-		case 0:		currentShipThrusterImage = shipThrusterImage4;
+		case 0:		this.currentThrusterImage = this.ThrusterImage4;
 					break;
-		case 1:		currentShipThrusterImage = shipThrusterImage5;
+		case 1:		this.currentThrusterImage = this.ThrusterImage5;
 					break;
-		case 2:		currentShipThrusterImage = shipThrusterImage4;
+		case 2:		this.currentThrusterImage = this.ThrusterImage4;
 					break;
-		case 3:		currentShipThrusterImage = shipThrusterImage5;
+		case 3:		this.currentThrusterImage = this.ThrusterImage5;
 					break;
 		}
 	}
 
 
 
-	thrustEffect += 1;
+	this.thrustEffect += 1;
 	
-	if (thrustEffect == 4) { 
-		thrustEffect = 0; 
+	if (this.thrustEffect == 4) { 
+		this.thrustEffect = 0; 
 	}
 	
-	return currentShipThrusterImage;
+	return currentThrusterImage;
 }
 
 
 
-function playerShipCollisionDetection(){
+Ship.CollisionDetection = function(){
 
-	//shipShieldActive = false;
+	//this.ShieldActive = false;
 
 
 	for (var i = 0; i < Game.asteroids.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			Game.asteroids[i].x + Game.asteroids[i].Scale ,
 			Game.asteroids[i].y + Game.asteroids[i].Scale,
-			shipX,
-			shipY,
+			this.X,
+			this.Y,
 			80);
 			
 		if (collisionOccured) {
 		
-			shipShieldActive = true;
+			this.ShieldActive = true;
 		
 		
 			if (!(Game.asteroids[i].recentlyHit)) {
@@ -371,7 +371,7 @@ function playerShipCollisionDetection(){
 			//c.save();
 			//c.beginPath();
 			//c.strokeStyle = 'violet';
-			//c.arc(shipX,shipY,60,0,2*Math.PI);		
+			//c.arc(this.X,this.Y,60,0,2*Math.PI);		
 			//c.stroke();
 			//c.restore();
 	
@@ -381,7 +381,7 @@ function playerShipCollisionDetection(){
 	
 	
 			// Bounce Asteroid
-			var allignedDirection = shipDirection - 90;
+			var allignedDirection = this.Direction - 90;
 			if (allignedDirection < 0) { allignedDirection += 360; }
 			var newAsteroidDirection;
 			
@@ -396,8 +396,8 @@ function playerShipCollisionDetection(){
 
 			Game.asteroids[i].direction = newAsteroidDirection;
 
-			if (shipMomentum > 0) {
-				Game.asteroids[i].Speed += (shipMomentum / 2);
+			if (this.Momentum > 0) {
+				Game.asteroids[i].Speed += (this.Momentum / 2);
 			}
 
 			}
@@ -407,7 +407,7 @@ function playerShipCollisionDetection(){
 			c.save();
 			c.beginPath();
 			c.strokeStyle = 'orange';
-			c.arc(shipX,shipY,60,0,2*Math.PI);		
+			c.arc(this.X,this.Y,60,0,2*Math.PI);		
 			c.stroke();
 			c.restore();
 		}
