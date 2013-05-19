@@ -19,7 +19,10 @@ function paintBackground(){
 	c.fillRect(0,0,canvasE.width, canvasE.height);
 	c.restore();
 	
-	//addBlueRadialGradientFlare();
+	if (toggleSunEffect) {
+		addSunFlare();
+	}
+	
 	
 	updateStarPositions();	
 	
@@ -83,15 +86,15 @@ function updateStarPositions(){
 	// with the largest (closest) ones moving more.
 }
 
-function addBlueRadialGradientFlare(){
+function addSunFlare(){
 	
 	c.save();
 	
 	// Create gradient
-	var grd = c.createRadialGradient(75,75,5,90,60,1200);
-
-	grd.addColorStop( 0.5, "#000000");
-	grd.addColorStop( 0.01, "#1C2FAD");
+	var grd = c.createRadialGradient(75,75,5,90,60,1500);
+	grd.addColorStop( 0.2, "rgba(247, 209, 84, 1)");
+	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.3)"); 
+	grd.addColorStop( 0.8, "transparent");
 
 	// Fill with gradient
 	c.fillStyle=grd;

@@ -41,3 +41,5 @@ var pewN = 1;
 
 var toggleDebug = false;
 var instructionsDisplayed = true;
+
+var toggleSunEffect = true;
