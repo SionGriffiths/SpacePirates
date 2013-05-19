@@ -153,7 +153,9 @@ function updatePlayerShip() {
 	
 	else if (shipTurningRight) {
 		changeShipDirection("Right");
-	}	
+	}
+
+	playerShipCollisionDetection();	
 }
 
 // Paint the Ship
@@ -308,4 +310,41 @@ function getCurrentShipThrusterImage() {
 	}
 	
 	return currentShipThrusterImage;
+}
+
+
+
+function playerShipCollisionDetection(){
+
+	for (var i = 0; i < Game.asteroids.length; i++) {
+		var collisionOccured = liesWithinRadius(
+			Game.asteroids[i].x + Game.asteroids[i].Scale ,
+			Game.asteroids[i].y + Game.asteroids[i].Scale,
+			shipX,
+			shipY,
+			60);
+			
+		if (collisionOccured) {
+			Game.printToDebugConsole("Ship Collision!");
+			// Flash Shield Up
+			c.save();
+			c.beginPath();
+			c.strokeStyle = 'violet';
+			c.arc(shipX,shipY,60,0,2*Math.PI);		
+			c.stroke();
+			c.restore();
+			// Slow Asteroid
+			Game.asteroids[i].direction = Game.asteroids[i].direction + shipDirection;
+		}
+
+		if(toggleDebug==true) {
+			c.save();
+			c.beginPath();
+			c.strokeStyle = 'orange';
+			c.arc(shipX,shipY,60,0,2*Math.PI);		
+			c.stroke();
+			c.restore();
+		}
+	}
+	
 }
