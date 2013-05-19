@@ -255,6 +255,8 @@ Game.playThrust = function(){
 }
 Game.playPewPewPew = function(){
 	
+	
+	
 	if(pewN==1) {pew1.play();}
 	if(pewN==2) {pew2.play();}
 	if(pewN==3) {pew3.play();}
