@@ -138,7 +138,8 @@ function toggleInstructions() {
 	
 	document.getElementById('instructions').innerHTML = "<p> Start (TAB)....." + 
 		"Move (W, S, A, D).....Lasers (Spacebar).....EnemyShip (P).....Asteroid (O)....." +
-			"ToggleDebug (Y).....ToggleInstructions (T)</p>";
+			"ToggleDebug (Y).....ToggleInstructions (T)</p>" + 
+				"<p> Lasers: Red (Spacebar).....Blue (B).....Green (G) </p>";
 
 	}
 

@@ -52,10 +52,21 @@ function keyEventFired(e) {
 	case 27:	gameRunning = false;
 				break;
 				
-	// SPACEBAR
-	case 32:	Game.fireShipLaserPulse();
+	// SPACEBAR - Red Laser
+	case 32:	Game.fireShipLaserPulse(0);
 				Game.playPewPewPew();
 				break;
+				
+	// B - Blue Laser
+	case 66:	Game.fireShipLaserPulse(1);
+				Game.playPewPewPew();
+				break;
+				
+	// G - Green Laser
+	case 71:	Game.fireShipLaserPulse(2);
+				Game.playPewPewPew();
+				break;
+		
 		
 	// P - place an enemy ship - development convenience
 	case 80:	EnemyShip.instantiate(500, 300);

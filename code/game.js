@@ -280,8 +280,32 @@ Game.playPewPewPew = function(){
 
 
 // Methods reside in munitions.js
-Game.fireShipLaserPulse = function() {
-	fireShipLaserPulse();
+Game.fireShipLaserPulse = function(munitionsType) {
+	
+	
+	
+	if (munitionsType == 0) {
+	
+		fireShipLaserPulse("RedLaser", shipX, shipY, shipDirection, "PlayerShip", shipMomentum);
+	
+	}
+	
+	else if (munitionsType == 1) {
+	
+		fireShipLaserPulse("BlueLaser", shipX, shipY, shipDirection, "PlayerShip", shipMomentum);
+	
+	}
+	
+	else if (munitionsType == 2) {
+	
+		fireShipLaserPulse("GreenLaser", shipX, shipY, shipDirection, "PlayerShip", shipMomentum);
+	
+	}
+	
+	// munitionsType, originX, originY, targetDirection, aggressor, aggressorMomentum
+	
+	
+	
 }
 
 // Method resides in enemyship.js
