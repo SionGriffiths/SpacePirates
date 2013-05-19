@@ -62,7 +62,8 @@ function keyEventFired(e) {
 				break;
 
 
-	case 79:    var tempAsteroid = new Asteroid();
+	case 79:    var randAst = [1];
+				var tempAsteroid = new Asteroid(randAst);
 				break; 
 
 	case 89:    DebugToggle();
