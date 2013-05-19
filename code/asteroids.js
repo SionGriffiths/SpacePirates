@@ -31,7 +31,7 @@ function Asteroid(paras) {
 	this.spinDir = Math.floor(Math.random()*2);
 	this.spinFactor = (1+Math.floor(Math.random()*4))/100;
 
-	this.hit = false;
+	this.hit = 0;
 
 	if(typeof paras[3] == 'undefined') {
 		this.Speed = (1+Math.floor(Math.random()*4))/11;
@@ -123,35 +123,37 @@ this.detectCollisions = function() {
 			this.x + this.Scale,
 			this.y + this.Scale,
 			this.collisionRadius);
-			if(toggleDebug==true) {
-				c.save();
-				c.beginPath();
-				c.strokeStyle = 'pink';
-				c.arc(this.x + this.Scale,this.y + this.Scale,this.collisionRadius,0,2*Math.PI);		
-				c.stroke();
-				c.restore();
-			}
+
+		if(toggleDebug==true) {
+			c.save();
+			c.beginPath();
+			c.strokeStyle = 'pink';
+			c.arc(this.x + this.Scale,this.y + this.Scale,this.collisionRadius,0,2*Math.PI);		
+			c.stroke();
+			c.restore();
+		}
 			
 		if (collisionOccured) {
 			Game.printToDebugConsole("Asteroid Collision!");
 
 			if(this.aType==1) {
-				if(this.hit==false){
+				if(this.hit>19){
 					
-					newAst = [0, this.x+this.Size, this.y+this.Size, 4];
+					newAst = [0, this.x+this.Size, this.y+this.Size, 2];
 					var babyAsteroid1 = new Asteroid(newAst);
 					var babyAsteroid2 = new Asteroid(newAst);
-				}
-				
-
+				} else {
+					this.direction = deployedMunitions[i].direction -90;
+					this.Speed += 0.1;
+				}			
+				this.hit += 1;
 			} else {
 				this.direction = deployedMunitions[i].direction -90;
 				this.Speed += 0.1;
+				this.hit += 2;
 			}
-			this.hit = true;
-
-
-
+			
+			
 			deployedMunitions[i].destroyed = true;
 		}
 	}
@@ -176,7 +178,7 @@ function updateAsteroids() {
 
 		Game.asteroids[i].update();
 		Game.asteroids[i].detectCollisions();
-		if(Game.asteroids[i].hit == true) {
+		if(Game.asteroids[i].hit > 20) {
 			Game.asteroids.splice(i, 1);
 		}
 	}
