@@ -15,9 +15,6 @@ Game.initialize = function() {
 	
 	canvasWidth = canvasE.width;
 	canvasHeight = canvasE.height;
-
-	shipX = canvasWidth / 2;
-	shipY = canvasHeight / 2;
 	
 	Game.printToDebugConsole("Initializing background");
 	
@@ -195,8 +192,7 @@ Game.paint = function() {
 
 // Paint - GAMELOOP
 Game.update = function() {
-	
-
+		
 	updatePlayerShip();
 	updateEnemyShips();
 	paintFuelGuage();
