@@ -39,7 +39,11 @@ function Asteroid(paras) {
 		this.Speed = paras[3];
 	}
 
-
+	this.recentlyHit = false;
+	this.recentHitCounter = 0;
+	this.maxSpeed = Math.floor(Math.random() * 6);
+	
+	
 	addAsteroid(this);
 
 
@@ -113,6 +117,22 @@ this.update = function() {
 	}
 	
 
+	// Used to bounce asteroid off objects, without insanity
+	if (this.recentlyHit) {
+	
+		this.recentHitCounter += 1;
+		
+		if (this.recentHitCounter > (this.Size * 1.5)) {
+			this.recentHitCounter = 0;
+			this.recentlyHit = false;
+		}
+	
+	}
+	
+	if (this.Speed > this.maxSpeed) {
+		this.Speed -= 0.05;
+	}
+	
 	//Game.printToDebugConsole("Updating Asteroid" + this.Speed + " " + this.x + " " + this.y);
 }
 

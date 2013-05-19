@@ -31,7 +31,7 @@ var shipTurningRight = false;
 
 var thrustEffect = 0;
 var currentShipThrusterImage;
-
+var lastAsteroidHit;
 
 
 
@@ -325,7 +325,12 @@ function playerShipCollisionDetection(){
 			60);
 			
 		if (collisionOccured) {
-			Game.printToDebugConsole("Ship Collision!");
+		
+			if (!(Game.asteroids[i].recentlyHit)) {
+			
+			Game.asteroids[i].recentlyHit = true;
+		
+			//Game.printToDebugConsole("Ship Collision!");
 			// Flash Shield Up
 			c.save();
 			c.beginPath();
@@ -334,7 +339,45 @@ function playerShipCollisionDetection(){
 			c.stroke();
 			c.restore();
 			// Slow Asteroid
-			Game.asteroids[i].direction = Game.asteroids[i].direction + shipDirection;
+			//Game.printToDebugConsole("AsteroidDir: " + Game.asteroids[i].direction);
+			//Game.printToDebugConsole("ShipDir: " + shipDirection);
+			
+			var allignedDirection = shipDirection - 90;
+			if (allignedDirection < 0) { allignedDirection += 360; }
+			
+			//var difference = (Math.abs(Game.asteroids[i].direction - allignedDirection));
+			
+			var newAsteroidDirection;
+			
+			if (allignedDirection > Game.asteroids[i].direction) {
+				newAsteroidDirection = Game.asteroids[i].direction - (Math.floor(Math.random() * 180));
+			}
+			
+			else {
+				newAsteroidDirection = Game.asteroids[i].direction + (Math.floor(Math.random() * 180));
+			}
+			
+			
+			
+			
+			
+			
+			//newAsteroidDirection = Game.asteroids[i].direction - 180;
+			if (newAsteroidDirection < 0) { newAsteroidDirection += 360; }
+			
+			//Game.printToDebugConsole("AllignedShip: " + allignedDirection);
+			//Game.printToDebugConsole("Difference: " + difference);
+			//Game.printToDebugConsole("NewDirection: " + newAsteroidDirection);
+			
+			Game.asteroids[i].direction = newAsteroidDirection;
+			
+			
+			
+			if (shipMomentum > 0) {
+				Game.asteroids[i].Speed += (shipMomentum / 2);
+			}
+
+			}
 		}
 
 		if(toggleDebug==true) {
