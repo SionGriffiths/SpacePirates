@@ -72,16 +72,19 @@ function keyEventFired(e) {
 	case 80:	EnemyShip.instantiate(500, 300);
 				break;
 
-
+	// O - Place an asteroid
 	case 79:    var randAst = [1];
 				var tempAsteroid = new Asteroid(randAst);
 				break; 
-
+	// Y - toggle debug graphics
 	case 89:    DebugToggle();
 				break;
-
+	// T - toggle instructions
 	case 84:	toggleInstructions();
 				break;
+	// L - toggle sun effect
+	case 76:	if (toggleSunEffect) { toggleSunEffect = false; }
+				else { toggleSunEffect = true; }
 	}
 }
 
