@@ -147,6 +147,12 @@ Game.load = function() {
 		asteroidImage1.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		asteroidImage1.src = "images/misc/asteroid1.png";
+	}, 600);
+	setTimeout(function() {
+		asteroidImage2 = new Image();
+		asteroidImage2.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		asteroidImage2.src = "images/misc/asteroid2.png";
 	}, 600);	
 	
 
@@ -156,11 +162,16 @@ Game.load = function() {
 		Game.run();
 	}, 1500);
 
-	var initialAsteroid1 = new Asteroid();
-	var initialAsteroid2 = new Asteroid();
-	var initialAsteroid3 = new Asteroid();
-	var initialAsteroid4 = new Asteroid();
-	var initialAsteroid5 = new Asteroid();
+	newAst = [];
+	newAst = [0];
+	var initialAsteroid1 = new Asteroid(newAst);
+	var initialAsteroid2 = new Asteroid(newAst);
+	var initialAsteroid3 = new Asteroid(newAst);
+	var initialAsteroid4 = new Asteroid(newAst);
+	newAst = [1];
+	var initialAsteroid5 = new Asteroid(newAst);
+	var initialAsteroid6 = new Asteroid(newAst);
+	var initialAsteroid7 = new Asteroid(newAst);
 
 }
 
