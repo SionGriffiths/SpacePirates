@@ -190,3 +190,4 @@ function addAsteroid(asteroid){
 	//window.alert(Game.asteroids[0].x);
 
 }
+
