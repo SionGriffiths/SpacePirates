@@ -127,23 +127,14 @@ function DebugToggle(){
 
 function toggleInstructions() {
 
-	if (instructionsDisplayed) {
-	
+	if (instructionsDisplayed) {	
 		instructionsDisplayed = false;
-		document.getElementById('instructions').innerHTML = " ";
-	
-	}
-	
-	else {
-	
+		document.getElementById('instructions').style.display('none');	
+	}	
+	else {	
 	instructionsDisplayed = true;
-	
-	document.getElementById('instructions').innerHTML = "<p> Start (TAB)....." + 
-		"Move (W, S, A, D).....EnemyShip (P).....Asteroid (O)....." +
-			"Toggle Debug (Y).....Toggle Instructions (T)</p>" + 
-				"<p> Toggle Sound (J).....Toggle Sun-Effect (L).....Lasers: Red (Spacebar).....Blue (B).....Green (G) </p>";
-
+	document.getElementById('instructions').style.display('block');
 	}
-
 
 }
+
