@@ -91,9 +91,9 @@ function addSunFlare(){
 	c.save();
 	
 	// Create gradient
-	var grd = c.createRadialGradient(75,75,5,90,60,1500);
-	grd.addColorStop( 0.2, "rgba(250, 209, 84, 0.6)");
-	//grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.2)"); 
+	var grd = c.createRadialGradient(15,15,5,90,60,1500);
+	grd.addColorStop( 0.2, "rgba(247, 209, 84, 0.8)");
+	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.3)"); 
 	grd.addColorStop( 0.8, "transparent");
 
 	// Fill with gradient
