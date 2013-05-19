@@ -120,3 +120,27 @@ function DebugToggle(){
     console.log('Debug OFF');
   }
 }
+
+
+
+function toggleInstructions() {
+
+	if (instructionsDisplayed) {
+	
+		instructionsDisplayed = false;
+		document.getElementById('instructions').innerHTML = " ";
+	
+	}
+	
+	else {
+	
+	instructionsDisplayed = true;
+	
+	document.getElementById('instructions').innerHTML = "<p> Start (TAB)....." + 
+		"Move (W, S, A, D).....Lasers (Spacebar).....EnemyShip (P).....Asteroid (O)....." +
+			"ToggleDebug (Y).....ToggleInstructions (T)</p>";
+
+	}
+
+
+}

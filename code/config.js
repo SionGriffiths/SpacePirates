@@ -40,3 +40,4 @@ var fuel = 100;
 var pewN = 1;
 
 var toggleDebug = false;
+var instructionsDisplayed = true;

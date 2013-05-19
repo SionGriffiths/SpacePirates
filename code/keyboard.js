@@ -68,6 +68,8 @@ function keyEventFired(e) {
 	case 89:    DebugToggle();
 				break;
 
+	case 84:	toggleInstructions();
+				break;
 	}
 }
 
