@@ -43,3 +43,4 @@ var toggleDebug = false;
 var instructionsDisplayed = true;
 
 var toggleSunEffect = true;
+var toggleSound = true;

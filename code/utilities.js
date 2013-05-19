@@ -137,9 +137,9 @@ function toggleInstructions() {
 	instructionsDisplayed = true;
 	
 	document.getElementById('instructions').innerHTML = "<p> Start (TAB)....." + 
-		"Move (W, S, A, D).....Lasers (Spacebar).....EnemyShip (P).....Asteroid (O)....." +
-			"ToggleDebug (Y).....ToggleInstructions (T)</p>" + 
-				"<p> ToggleSunEffect (L).....Lasers: Red (Spacebar).....Blue (B).....Green (G) </p>";
+		"Move (W, S, A, D).....EnemyShip (P).....Asteroid (O)....." +
+			"Toggle Debug (Y).....Toggle Instructions (T)</p>" + 
+				"<p> Toggle Sound (J).....Toggle Sun-Effect (L).....Lasers: Red (Spacebar).....Blue (B).....Green (G) </p>";
 
 	}
 

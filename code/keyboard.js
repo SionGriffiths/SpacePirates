@@ -76,15 +76,23 @@ function keyEventFired(e) {
 	case 79:    var randAst = [1];
 				var tempAsteroid = new Asteroid(randAst);
 				break; 
+				
 	// Y - toggle debug graphics
 	case 89:    DebugToggle();
 				break;
+				
 	// T - toggle instructions
 	case 84:	toggleInstructions();
 				break;
+				
 	// L - toggle sun effect
 	case 76:	if (toggleSunEffect) { toggleSunEffect = false; }
 				else { toggleSunEffect = true; }
+				
+	// J - toggle sound effects
+	case 74:	if (toggleSound) { toggleSound = false; }
+				else { toggleSound = true; }
+	
 	}
 }
 
