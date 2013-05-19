@@ -22,7 +22,7 @@ function Asteroid(paras) {
 		this.Scale = this.Scale * 0.8;
 	}
 	this.scaleWarp = 4 + Math.floor(Math.random()*9);
-	this.scaleWarpFactor = (1+Math.floor(Math.random()*10))/400;
+	this.scaleWarpFactor = (1+Math.floor(Math.random()*10))/200;
 	this.scaleDir = Math.floor(Math.random()*2);
 	
 	this.Size = this.Scale/2;
@@ -57,10 +57,14 @@ this.draw = function() {
 	}
 	c.drawImage(this.graphic, -this.Size, -this.Size, this.Scale, this.Scale);
 	if(toggleDebug==true) {
+		c.fillStyle="green";
+		c.fillRect(-5,-5,10,10);
 		c.beginPath();
 		c.strokeStyle = 'green';
 		c.arc(0,0,this.collisionRadius,0,2*Math.PI);		
 		c.stroke();
+		c.font="30px Arial";
+		c.fillText(this.hit,10,20);
 	}
 	c.restore();
 }
