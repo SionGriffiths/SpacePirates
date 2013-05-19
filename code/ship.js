@@ -33,6 +33,9 @@ var thrustEffect = 0;
 var currentShipThrusterImage;
 var lastAsteroidHit;
 
+var shipShieldActive = false;
+var shipShieldTimer = 0;
+
 
 
 function movePlayerShip(direction){
@@ -88,6 +91,7 @@ function movePlayerShip(direction){
 		//Game.printToDebugConsole("Ship cannot fly");
 	}
 }
+
 
 
 function stopMovePlayerShip(direction) {
@@ -154,15 +158,42 @@ function updatePlayerShip() {
 	else if (shipTurningRight) {
 		changeShipDirection("Right");
 	}
-
+	
+	if (shipShieldActive) {
+		shipShieldTimer += 1;
+		
+		if (shipShieldTimer > 40) {
+			shipShieldActive = false;
+			shipShieldTimer = 0;
+		}
+	}
+	
 	playerShipCollisionDetection();	
 }
+
+
 
 // Paint the Ship
 function paintPlayerShip() {
 	c.save();
 	c.translate(shipX, shipY);	
 	c.rotate(shipDirection * TO_RADIANS);
+	
+	if (shipShieldActive) {
+		c.save();
+		c.scale(1, 1.5);
+		c.beginPath();
+		c.arc(0,0,40,0,2*Math.PI);
+		var grd = c.createRadialGradient(0,0,5,0,0,70);
+		grd.addColorStop(0.2,"rgba(255,255,255, 0.1)");
+		grd.addColorStop(0.9, "white");
+		c.fillStyle = grd;
+		c.strokeStyle = "white";
+		c.stroke();
+		c.fill();
+		c.restore();
+	}
+	
 	c.drawImage(shipImage, -50, -50, 100, 100);
 	c.drawImage(getCurrentShipThrusterImage(), -50, 33, 100, 100);
 	if(toggleDebug==true) {
@@ -176,7 +207,7 @@ function paintPlayerShip() {
 		c.arc(0,0,40,0,2*Math.PI);
 		c.strokeStyle = 'red';
 		c.stroke();
-	}	
+	}
 	c.restore();
 }
 
@@ -316,63 +347,55 @@ function getCurrentShipThrusterImage() {
 
 function playerShipCollisionDetection(){
 
+	//shipShieldActive = false;
+
+
 	for (var i = 0; i < Game.asteroids.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			Game.asteroids[i].x + Game.asteroids[i].Scale ,
 			Game.asteroids[i].y + Game.asteroids[i].Scale,
 			shipX,
 			shipY,
-			60);
+			80);
 			
 		if (collisionOccured) {
+		
+			shipShieldActive = true;
+		
 		
 			if (!(Game.asteroids[i].recentlyHit)) {
 			
 			Game.asteroids[i].recentlyHit = true;
 		
-			//Game.printToDebugConsole("Ship Collision!");
 			// Flash Shield Up
-			c.save();
-			c.beginPath();
-			c.strokeStyle = 'violet';
-			c.arc(shipX,shipY,60,0,2*Math.PI);		
-			c.stroke();
-			c.restore();
-			// Slow Asteroid
-			//Game.printToDebugConsole("AsteroidDir: " + Game.asteroids[i].direction);
-			//Game.printToDebugConsole("ShipDir: " + shipDirection);
+			//c.save();
+			//c.beginPath();
+			//c.strokeStyle = 'violet';
+			//c.arc(shipX,shipY,60,0,2*Math.PI);		
+			//c.stroke();
+			//c.restore();
+	
 			
+			// DISPLAY SHIELD
+	
+	
+	
+			// Bounce Asteroid
 			var allignedDirection = shipDirection - 90;
 			if (allignedDirection < 0) { allignedDirection += 360; }
-			
-			//var difference = (Math.abs(Game.asteroids[i].direction - allignedDirection));
-			
 			var newAsteroidDirection;
 			
 			if (allignedDirection > Game.asteroids[i].direction) {
 				newAsteroidDirection = Game.asteroids[i].direction - (Math.floor(Math.random() * 180));
 			}
-			
 			else {
 				newAsteroidDirection = Game.asteroids[i].direction + (Math.floor(Math.random() * 180));
 			}
 			
-			
-			
-			
-			
-			
-			//newAsteroidDirection = Game.asteroids[i].direction - 180;
 			if (newAsteroidDirection < 0) { newAsteroidDirection += 360; }
-			
-			//Game.printToDebugConsole("AllignedShip: " + allignedDirection);
-			//Game.printToDebugConsole("Difference: " + difference);
-			//Game.printToDebugConsole("NewDirection: " + newAsteroidDirection);
-			
+
 			Game.asteroids[i].direction = newAsteroidDirection;
-			
-			
-			
+
 			if (shipMomentum > 0) {
 				Game.asteroids[i].Speed += (shipMomentum / 2);
 			}
