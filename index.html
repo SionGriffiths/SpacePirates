@@ -79,9 +79,27 @@
             <h1 id="gametitle" onclick="DebugToggle()">Space Mining Pirates</h1>
         </div>
         
-        <div class="logotext"></div>
-        <div class="logographic"></div>
         
+        <!--  -->
+        <!--  Sidebar  -->
+        <!--  -->
+        <div class="nav">
+		
+		<p id="debugtitle">
+		Debug Console
+		</p>
+		<br  />
+		<p>
+			
+		Press TAB to bring focus to the Canvas.
+		Then W A S D to move. Spacebar = Lasorz.
+		</p>
+		
+		<div id="debug">
+		
+		</div>
+		
+		</div>
         
         
         
@@ -114,7 +132,7 @@
 		
 		canvas = document.getElementById("maincanvas");
 		canvas.width = document.width;
-		canvas.height = document.body.offsetHeight;
+		canvas.height = document.height;
 		//canvasW = canvas.width;
 		//canvasH = canvas.height;
 
