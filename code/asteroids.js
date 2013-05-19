@@ -14,7 +14,7 @@ function Asteroid() {
 	this.Scale = 50 + Math.floor(Math.random()*101);
 	this.Speed = (1+Math.floor(Math.random()*4))/11;
 	this.Size = this.Scale/2;
-	this.collisionRadius = this.Size*0.7;
+	this.collisionRadius = this.Size;
 	addAsteroid(this);
 
 
