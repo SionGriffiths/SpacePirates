@@ -120,7 +120,9 @@ function DebugToggle(){
     console.log('Debug OFF');
   }
 }
+ 
 
+ 
 
 
 function toggleInstructions() {
