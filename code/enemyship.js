@@ -207,8 +207,13 @@ function updateEnemyShips() {
 	
 		// Only chooses zero for now, as only one object
 		// is created, the same one :D
-		Game.enemyShips[0].update();
-		Game.enemyShips[0].detectCollisions();
+		
+		if (Game.enemyShips.length > 0) {
+			Game.enemyShips[0].update();
+			Game.enemyShips[0].detectCollisions();
+		}
+		
+
 	//}
 }
 

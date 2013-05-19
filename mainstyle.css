@@ -45,6 +45,18 @@ body {
     min-height: 50px;
 }
 
+#instructions {
+    position: absolute;
+    z-index: 800;
+	top: 100%;
+	margin-top: -70px;
+	text-align: center;
+    height: 10%;
+    width: 100%;
+    color: #fff;
+    min-height: 50px;
+}
+
 /* Set the style for the Nav (sidebar) div, referenced using class */
 .nav {
     display: none;
