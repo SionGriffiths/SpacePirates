@@ -10,6 +10,7 @@ var canvasElement;
 // Add event listeners to the canvas
 function setupEventListeners() {
 	canvasElement = document;
+	canvasElement.addEventListener( "keypress", keyEventQuickPress, true);
 	canvasElement.addEventListener( "keydown", keyEventFired, true);
 	canvasElement.addEventListener( "keyup", keyEventOver, true);
 	Game.printToDebugConsole("Added EventListeners to Canvas");
@@ -22,6 +23,40 @@ function setupEventListeners() {
 //=========================================================================
 // Fire actions based on keyEvents
 //=========================================================================
+function keyEventQuickPress(e) {
+
+	var input = e.keyCode;
+	Game.printToDebugConsole(input);
+	
+	switch (input) {
+	
+	// SPACEBAR - Red Laser
+	case 32:	//Game.firePlayerShipLaserPulse(0);
+				//Game.playerFiringMunitions = true;
+				//Game.playerMunitionsType = 0;
+				//Game.printToDebugConsole("Red Press");
+				break;
+				
+	// B - Blue Laser
+	case 98:	//Game.firePlayerShipLaserPulse(1);
+				//Game.playerFiringMunitions = true;
+				//Game.playerMunitionsType = 1;
+				//Game.printToDebugConsole("Blue Press");
+				break;
+				
+	// G - Green Laser
+	case 103:	//Game.firePlayerShipLaserPulse(2);
+				//Game.playerFiringMunitions = true;
+				//Game.playerMunitionsType = 2;
+				//Game.printToDebugConsole("Green Press");
+				break;
+
+	}
+}
+
+
+
+
 function keyEventFired(e) {
 	
 	var input = e.keyCode;
@@ -53,23 +88,27 @@ function keyEventFired(e) {
 				break;
 				
 	// SPACEBAR - Red Laser
-	case 32:	Game.fireShipLaserPulse(0);
-				Game.playPewPewPew();
+	case 32:	//if (Game.playerFiringMunitions == false) {Game.firePlayerShipLaserPulse(0);}
+				Game.playerFiringMunitions = true;
+				Game.playerMunitionsType = 0;
 				break;
 				
 	// B - Blue Laser
-	case 66:	Game.fireShipLaserPulse(1);
-				Game.playPewPewPew();
+	case 66:	//if (Game.playerFiringMunitions == false) {Game.firePlayerShipLaserPulse(1);}
+				Game.playerFiringMunitions = true;
+				Game.playerMunitionsType = 1;
 				break;
 				
 	// G - Green Laser
-	case 71:	Game.fireShipLaserPulse(2);
-				Game.playPewPewPew();
+	case 71:	//if (Game.playerFiringMunitions == false) {Game.firePlayerShipLaserPulse(2);}
+				Game.playerFiringMunitions = true;
+				Game.playerMunitionsType = 2;
 				break;
 		
 		
 	// P - place an enemy ship - development convenience
-	case 80:	EnemyShip.instantiate(500, 300);
+	case 80:	enemyShip = new EnemyShip();
+				enemyShip.instantiate(0, 0);
 				break;
 
 	// O - Place an asteroid
@@ -93,10 +132,6 @@ function keyEventFired(e) {
 	case 74:	if (toggleSound) { toggleSound = false; }
 				else { toggleSound = true; }
 	
-	// K - PLANET! :D
-	case 75:	var newPlanet = new Planet();
-				break;
-				
 	}
 }
 
@@ -122,6 +157,18 @@ function keyEventOver(e) {
 					
 	// D
 	case 68:	Game.stopMovePlayerShip("Right");
+				break;
+				
+	// SPACEBAR - Red Laser
+	case 32:	Game.playerFiringMunitions = false;
+				break;
+				
+	// B - Blue Laser
+	case 66:	Game.playerFiringMunitions = false;
+				break;
+				
+	// G - Green Laser
+	case 71:	Game.playerFiringMunitions = false;
 				break;
 	}
 	

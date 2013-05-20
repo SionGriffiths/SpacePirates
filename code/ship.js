@@ -40,7 +40,7 @@ Ship.lastAsteroidHit;
 
 Ship.ShieldActive = false;
 Ship.ShieldTimer = 0;
-
+Ship.gunTurret = 0; // 0 or 1 - left or right turret
 
 
 Ship.move = function(direction){
@@ -378,6 +378,116 @@ Ship.updateCoordinates = function(input) {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	var movementInitiated = false;
+	
+	if (this.X > (gameMap.currentX + gameMap.boundaryRadiusX)) {
+		gameMap.currentX += (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Right";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	
+	if (this.X < (gameMap.currentX - gameMap.boundaryRadiusX)) {
+		gameMap.currentX -= (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Left";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	
+	if (this.Y > (gameMap.currentY + gameMap.boundaryRadiusY)) {
+		gameMap.currentY += (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Down";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	
+	if (this.Y < (gameMap.currentY - gameMap.boundaryRadiusY)) {
+		gameMap.currentY -= (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Up";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	if (!movementInitiated) {
+		gameMap.boundaryShift = false;
+	}
+	*/
+	
+/*
+	if (this.X <= -1) {
+		if (previousDir == "left") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 3];
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		previousDir = "right";
+		this.X = canvasWidth - 2;
+	} else if (this.X >= canvasWidth) {
+		if (previousDir == "right") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		
+		previousDir = "left";
+		this.X = 2;
+	} else if (this.Y <= -1) {
+		if (previousDir == "down") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else { 
+			initializeBackground();
+		}
+		
+		previousDir = "up";
+		this.Y = canvasHeight - 2;
+	} else if (this.Y >= canvasHeight) {
+		if (previousDir == "up") {
+			backgroundStars = [];
+			backgroundStars = previousMaps[previousMaps.length - 2];
+			previousMaps.splice(previousMaps.length - 2);
+			previousMaps.push(backgroundStars);
+		} else {
+			initializeBackground();
+		}
+		
+		previousDir = "down";
+		this.Y = 2;
+	}	
+	*/
 }
 
 // Change the angle the this. is facing
@@ -450,31 +560,6 @@ Ship.getCurrentThrusterImage = function() {
 Ship.CollisionDetection = function(){
 
 	//this.ShieldActive = false;
-	for (var i = 0; i < Game.planets.length; i++) {
-		var collisionOccured = liesWithinRadius(
-			Game.planets[i].x,
-			Game.planets[i].y,
-			this.X,
-			this.Y,
-			Game.planets[i].Size);
-			if(toggleDebug==true) {
-				c.save();
-				c.beginPath();
-				c.strokeStyle = 'blue';
-				c.arc(gameMap.translateX(Game.planets[i].x),gameMap.translateY(Game.planets[i].y),Game.planets[i].Size,0,2*Math.PI);		
-				c.stroke();
-				c.restore();
-			}
-		if (collisionOccured) {
-			console.log('PLANET HAPPENED! :D');
-			this.Momentum += Game.planets[i].massFactor;
-
-			if(this.Y>Game.planets[i].y) {this.Direction +=4;}
-			if(this.Y<Game.planets[i].y) {this.Direction -= 4;}
-			if(this.X<Game.planets[i].x) {this.Direction +=4;}
-			if(this.X>Game.planets[i].x) {this.Direction -= 4;}
-		}
-	}
 
 
 	for (var i = 0; i < Game.asteroids.length; i++) {
@@ -534,7 +619,7 @@ Ship.CollisionDetection = function(){
 			c.save();
 			c.beginPath();
 			c.strokeStyle = 'orange';
-			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60,0,2*Math.PI);		
+			c.arc(this.X,this.Y,60,0,2*Math.PI);		
 			c.stroke();
 			c.restore();
 		}

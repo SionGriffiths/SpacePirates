@@ -4,6 +4,8 @@
 
 // Instantiate variables
 
+var clockCycle = 1; // (1 - 60) based on game cycles per second (fps).
+
 var canvasE;
 var c;
 var fps = 60;
@@ -11,7 +13,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 19;
+var numOfImages = 11;
 var imageLoadProgress = 0;
 
 

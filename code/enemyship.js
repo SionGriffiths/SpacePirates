@@ -1,23 +1,23 @@
 
-var EnemyShip = new Object();
+function EnemyShip() {
 
-EnemyShip.x;
-EnemyShip.y;
+this.x;
+this.y;
 	
-EnemyShip.type;
-EnemyShip.strength;
-EnemyShip.speed;
-EnemyShip.width;
-EnemyShip.height;	
-EnemyShip.image;	
-EnemyShip.direction;
-EnemyShip.momentum;
-EnemyShip.nextLocationX;
-EnemyShip.nextLocationY;
-EnemyShip.collisionRadius;
+this.type;
+this.strength;
+this.speed;
+this.width;
+this.height;	
+this.image;	
+this.direction;
+this.momentum;
+this.nextLocationX;
+this.nextLocationY;
+this.collisionRadius;
 
 
-EnemyShip.draw = function() {
+this.draw = function() {
 		c.save();
 		c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 		c.rotate(this.direction * TO_RADIANS);
@@ -27,7 +27,7 @@ EnemyShip.draw = function() {
 
 
 
-EnemyShip.instantiate = function(initialX, initialY) {
+this.instantiate = function(initialX, initialY) {
 
 	this.x = initialX;
 	this.y = initialY;
@@ -61,7 +61,7 @@ EnemyShip.instantiate = function(initialX, initialY) {
 }
 
 
-EnemyShip.faceTowardsPlayerShip = function() {
+this.faceTowardsPlayerShip = function() {
 	var angleDegree = findAngleBetweenTwoPoints(this.x, this.y, this.nextLocationX, this.nextLocationY);
 	var faceDirection = 360 - angleDegree - 90;
 	
@@ -70,13 +70,35 @@ EnemyShip.faceTowardsPlayerShip = function() {
 	}
 	
 	if (faceDirection > this.direction) {
+	
+		
+	
+		if ((Math.abs(faceDirection - this.direction)) > 258) {
+			this.direction += 357;
+		}
+	
+		if ((Math.abs(faceDirection - this.direction)) > 15) {
+			this.direction += 3;
+		}
+	
 		this.direction += 1;
+		
 		if (this.direction > 359) {
 			this.direction = 0;
 		}
 	}
 	else {
+	
+		if ((Math.abs(faceDirection - this.direction)) > 258) {
+			this.direction -= 357;
+		}
+	
+		if ((Math.abs(faceDirection - this.direction)) > 15) {
+			this.direction -= 3;
+		}
+	
 		this.direction -= 1;
+		
 		if (this.direction < 0){
 			this.direction = 359;
 		}
@@ -92,7 +114,7 @@ EnemyShip.faceTowardsPlayerShip = function() {
 
 
 
-EnemyShip.trackOntoScreen = function() {
+this.trackOntoScreen = function() {
 
 	switch (this.AISequenceCounter) {
 	
@@ -151,9 +173,29 @@ EnemyShip.trackOntoScreen = function() {
 
 
 
+this.engagePlayerShipStationary = function() {
+
+	switch (this.AISequenceCounter) {
+	
+		// Face the player ship
+		case 0:	break;	
+		
+		// Fire weapons
+		case 1:	break;
+
+		
+	
+	}
+
+}
 
 
-EnemyShip.update = function() {
+
+
+
+
+
+this.update = function() {
 
 	switch (this.AISequence) {
 	
@@ -161,14 +203,15 @@ EnemyShip.update = function() {
 				break;
 	case 2:		this.trackOntoScreen();
 				break;
-	
+	case 3:		this.engagePlayerShipStationary();
+				break;
 	}
 	
 	
 }
 
 
-EnemyShip.detectCollisions = function() {
+this.detectCollisions = function() {
 	
 	for (var i = 0; i < deployedMunitions.length; i++) {
 		var collisionOccured = liesWithinRadius(
@@ -179,12 +222,24 @@ EnemyShip.detectCollisions = function() {
 			this.collisionRadius);
 			
 		if (collisionOccured) {
-			Game.printToDebugConsole("Collision!");
 			deployedMunitions[i].destroyed = true;
 		}
 		
 	}
 	
+}
+
+
+this.fireLaserPulse = function() {
+
+
+
+}
+
+
+
+
+// End of EnemyShip Object defintion
 }
 
 
@@ -194,7 +249,6 @@ function paintEnemyShips(){
 
 	for (var i = 0; i < Game.enemyShips.length; i++) {
 		Game.enemyShips[i].draw();
-		//Game.enemyShips[i].update();
 	}
 
 }
