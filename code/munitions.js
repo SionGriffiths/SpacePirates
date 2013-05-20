@@ -2,14 +2,14 @@
 // Munitions
 //=============================================
 
-function RedLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum) {
+function RedLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret) {
 
 	this.name = "RedLaser";
 	this.x = originX;
 	this.y = originY;
 	this.direction = targetDirection;
 	this.origin = aggressor;
-	this.speed = 6 + aggressorMomentum;
+	this.speed = 11 + (aggressorMomentum / 2);
 	this.numberOfAnimations = 4;
 	this.nextAnimationCalc = 0;
 	this.lifetime = 240;
@@ -24,6 +24,8 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 	this.outerSize = 7;
 	this.destroyed = false;
 	this.destroySequence = 0;
+	this.gunTurret = turret;
+	this.fireRate = 100; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
 	
 	this.draw = function() {
 
@@ -85,14 +87,14 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 
 }
 
-function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum) {
+function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret) {
 	
 	this.name = "BlueLaser";
 	this.x = originX;
 	this.y = originY;
 	this.direction = targetDirection;
 	this.origin = aggressor;
-	this.speed = 10 + aggressorMomentum;
+	this.speed = 4 + (aggressorMomentum / 4);
 	this.numberOfAnimations = 4;
 	this.nextAnimationCalc = 0;
 	this.lifetime = 240;
@@ -107,6 +109,8 @@ function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggress
 	this.outerSize = 7;
 	this.destroyed = false;
 	this.destroySequence = 0;
+	this.gunTurret = turret;
+	this.fireRate = 1000; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
 	
 	this.draw = function() {
 
@@ -168,14 +172,14 @@ function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggress
 
 }
 
-function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, aggressorMomentum){
+function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret){
 
 	this.name = "GreenLaser";
 	this.x = originX;
 	this.y = originY;
 	this.direction = targetDirection;
 	this.origin = aggressor;
-	this.speed = 4 + aggressorMomentum;
+	this.speed = 8 + (aggressorMomentum / 2);
 	this.numberOfAnimations = 6;
 	this.nextAnimationCalc = 0;
 	this.lifetime = 240;
@@ -192,6 +196,8 @@ function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, a
 	this.outerSize = 7;
 	this.destroyed = false;
 	this.destroySequence = 0;
+	this.gunTurret = turret;
+	this.fireRate = 500; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
 	
 	this.draw = function() {
 		
@@ -317,20 +323,63 @@ function paintDeployedMunitions() {
 	
 	for (var i = 0; i < deployedMunitions.length; i++) {
 	
-		c.save();
-		c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
-		c.rotate(deployedMunitions[i].direction * TO_RADIANS);
-		c.translate(0, -50);
-		deployedMunitions[i].draw();
-		
-		if(toggleDebug==true) {
-			c.beginPath();
-			c.strokeStyle = 'blue';
-			c.arc(0,0,20,0,2*Math.PI);			
-			c.stroke();
-		}
+		if (deployedMunitions[i].origin == "PlayerShip"){ 
+			
+			if (deployedMunitions[i].gunTurret == 0) {
+			
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(-18, -15);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
 
-		c.restore();
+				c.restore();
+			}
+			
+			else if (deployedMunitions[i].gunTurret == 1){
+			
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(18, -15);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+			}
+			
+			else {
+			
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(0, -50);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+			
+			}
+		}
 	}	
 }
 
@@ -355,15 +404,15 @@ function updateDeployedMunitions() {
 }
 
 
-function fireShipLaserPulse(munitionsType, originX, originY, targetDirection, aggressor, aggressorMomentum) {
+function fireShipLaserPulse(munitionsType, originX, originY, targetDirection, aggressor, aggressorMomentum, turret) {
 
 	switch (munitionsType) {
 	
-	case "RedLaser": 	var deployedMunition = new RedLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum);
+	case "RedLaser": 	var deployedMunition = new RedLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
 						break;
-	case "BlueLaser":	var deployedMunition = new BlueLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum);
+	case "BlueLaser":	var deployedMunition = new BlueLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
 						break;
-	case "GreenLaser":	var deployedMunition = new GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, aggressorMomentum);
+	case "GreenLaser":	var deployedMunition = new GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
 						//var secondaryMunition = new GreenLaserPulseMunition(originX + 5, originY + 5, targetDirection, aggressor, aggressorMomentum);
 						//deployedMunitions.push(secondaryMunition);
 						break;

@@ -143,6 +143,10 @@
 			Game.paint();
 			Game.update();
 			
+			clockCycle += 1;
+			if (clockCycle > fps) { clockCycle = 1; }
+		
+			
 		}, waitTime);
 	};
 	

@@ -253,6 +253,7 @@ Game.paint = function() {
 	Ship.paint();
 	paintEnemyShips();
 	paintFuel();
+	
 
 	//console.log("Asteroids Array" + Game.asteroids.toString());
 
@@ -280,6 +281,7 @@ Game.update = function() {
 	updateDeployedMunitions();
 	updateAsteroids();
 	updateFuel();
+	fireNewMunitions();
 }
 
 
@@ -365,41 +367,98 @@ Game.playPewPewPew = function(){
 }
 
 
+
+
 // Methods reside in munitions.js
-Game.fireShipLaserPulse = function(munitionsType) {
+Game.firePlayerShipLaserPulse = function(munitionsType) {
 	
 	
+		if (munitionsType == 0) {
+		
+			if (Ship.gunTurret == 0) {
+				Ship.gunTurret = 1;
+				fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			}
+			else {
+				Ship.gunTurret = 0;
+				fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			}
+			
+		
+		}
+		
+		else if (munitionsType == 1) {
+			fireShipLaserPulse("BlueLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, 2);
+		}
+		
+		else if (munitionsType == 2) {
+			if (Ship.gunTurret == 0) {
+				Ship.gunTurret = 1;
+				fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			}
+			else {
+				Ship.gunTurret = 0;
+				fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			}
+			
+		
+		}
 	
-	if (munitionsType == 0) {
-	
-		fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum);
-	
-	}
-	
-	else if (munitionsType == 1) {
-	
-		fireShipLaserPulse("BlueLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum);
-	
-	}
-	
-	else if (munitionsType == 2) {
-	
-		fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum);
-	
-	}
-	
-	// munitionsType, originX, originY, targetDirection, aggressor, aggressorMomentum
-	
-	
+	Game.playPewPewPew();
 	
 }
-
-// Method resides in enemyship.js
-//Game.paintEnemyShips = function() {
-//	paintEnemyShips();
-//}
 
 
 Game.enemyShips = new Array();
 Game.asteroids = new Array();
 Game.planets = new Array();
+Game.playerFiringMunitions = false;
+Game.playerMunitionsType = 0;
+
+
+var lastRedLaserFireDate = new Date();
+var lastRedLaserFireTime = lastRedLaserFireDate.getTime();
+var lastBlueLaserFireDate = new Date();
+var lastBlueLaserFireTime = lastBlueLaserFireDate.getTime();
+var lastGreenLaserFireDate = new Date();
+var lastGreenLaserFireTime = lastGreenLaserFireDate.getTime();
+
+
+
+function fireNewMunitions() {
+
+	if (Game.playerFiringMunitions) {
+		
+		if (Game.playerMunitionsType == 0){
+			var newRedLaserFireDate = new Date();
+			var newRedLaserFireTime = newRedLaserFireDate.getTime();
+			if (Math.abs(newRedLaserFireTime - lastRedLaserFireTime) > 100) {
+				Game.firePlayerShipLaserPulse(Game.playerMunitionsType);
+				lastRedLaserFireTime = newRedLaserFireTime;
+			}
+		}
+		else if (Game.playerMunitionsType == 1){
+			var newBlueLaserFireDate = new Date();
+			var newBlueLaserFireTime = newBlueLaserFireDate.getTime();
+			if (Math.abs(newBlueLaserFireTime - lastBlueLaserFireTime) > 1000) {
+				Game.firePlayerShipLaserPulse(Game.playerMunitionsType);
+				lastBlueLaserFireTime = newBlueLaserFireTime;
+			}
+		}
+		else if (Game.playerMunitionsType == 2){
+			var newGreenLaserFireDate = new Date();
+			var newGreenLaserFireTime = newGreenLaserFireDate.getTime();
+			if (Math.abs(newGreenLaserFireTime - lastGreenLaserFireTime) > 800) {
+				Game.firePlayerShipLaserPulse(Game.playerMunitionsType);
+				lastGreenLaserFireTime = newGreenLaserFireTime;
+			}
+		}
+		
+		
+	}
+	
+	
+}
+
+
+

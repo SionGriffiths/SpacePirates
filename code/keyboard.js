@@ -53,18 +53,18 @@ function keyEventFired(e) {
 				break;
 				
 	// SPACEBAR - Red Laser
-	case 32:	Game.fireShipLaserPulse(0);
-				Game.playPewPewPew();
+	case 32:	Game.playerFiringMunitions = true;
+				Game.playerMunitionsType = 0;
 				break;
 				
 	// B - Blue Laser
-	case 66:	Game.fireShipLaserPulse(1);
-				Game.playPewPewPew();
+	case 66:	Game.playerFiringMunitions = true;
+				Game.playerMunitionsType = 1;
 				break;
 				
 	// G - Green Laser
-	case 71:	Game.fireShipLaserPulse(2);
-				Game.playPewPewPew();
+	case 71:	Game.playerFiringMunitions = true;
+				Game.playerMunitionsType = 2;
 				break;
 		
 		
@@ -123,6 +123,20 @@ function keyEventOver(e) {
 	// D
 	case 68:	Game.stopMovePlayerShip("Right");
 				break;
+				
+					
+	// SPACEBAR - Red Laser
+	case 32:	Game.playerFiringMunitions = false;
+				break;
+				
+	// B - Blue Laser
+	case 66:	Game.playerFiringMunitions = false;
+				break;
+				
+	// G - Green Laser
+	case 71:	Game.playerFiringMunitions = false;
+				break;
+	
 	}
 	
 }

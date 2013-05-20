@@ -40,7 +40,7 @@ Ship.lastAsteroidHit;
 
 Ship.ShieldActive = false;
 Ship.ShieldTimer = 0;
-
+Ship.gunTurret = 0; // 0 or 1 - left or right turret
 
 
 Ship.move = function(direction){

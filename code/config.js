@@ -4,6 +4,8 @@
 
 // Instantiate variables
 
+var clockCycle = 1; // (1 - 60) based on game cycles per second (fps).
+
 var canvasE;
 var c;
 var fps = 60;
