@@ -11,7 +11,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 9;
+var numOfImages = 11;
 var imageLoadProgress = 0;
 
 
@@ -28,6 +28,7 @@ var deployedMunitions = new Array();
 var previousDir;
 var previousMaps = new Array();
 
+var fuelCells = new Array();
 var fuel = 100;
 
 var pewN = 1;
