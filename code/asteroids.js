@@ -148,7 +148,7 @@ this.detectCollisions = function() {
 			this.x + this.Scale,
 			this.y + this.Scale,
 			this.collisionRadius);
-		
+
 		if(toggleDebug==true) {
 			c.save();
 			c.beginPath();
@@ -169,7 +169,7 @@ this.detectCollisions = function() {
 					var babyAsteroid2 = new Asteroid(newAst);
 					var doMakeFuel = Math.round(Math.random());
 					if(doMakeFuel) {
-					var newFuelCell = new FuelCell(1, newAst[1], newAst[2]);
+						var newFuelCell = new FuelCell(1, newAst[1], newAst[2]);
 					}
 				} else {
 					this.direction = deployedMunitions[i].direction -90;
@@ -184,7 +184,6 @@ this.detectCollisions = function() {
 			
 			
 			deployedMunitions[i].destroyed = true;
-			
 		}
 	}
 	
@@ -230,4 +229,3 @@ function addAsteroid(asteroid){
 	//window.alert(Game.asteroids[0].x);
 
 }
-

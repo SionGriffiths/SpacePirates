@@ -23,11 +23,12 @@ var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
 var deployedMunitions = new Array();
-var fuelCells = new Array();
+
 
 var previousDir;
 var previousMaps = new Array();
 
+var fuelCells = new Array();
 var fuel = 100;
 
 var pewN = 1;

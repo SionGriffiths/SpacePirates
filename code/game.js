@@ -156,7 +156,7 @@ Game.load = function() {
 		asteroidImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		asteroidImage2.src = "images/misc/asteroid2.png";
-	}, 600);
+	}, 600);	
 	setTimeout(function() {
 		fuelImage1 = new Image();
 		fuelImage1.onload = updateProgressBar();
@@ -169,7 +169,6 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		fuelImage2.src = "images/misc/darkmatter2.png";
 	}, 600);
-	
 
 
 	// Call the game to run, after finished loading

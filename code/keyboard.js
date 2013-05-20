@@ -84,11 +84,6 @@ function keyEventFired(e) {
 	// T - toggle instructions
 	case 84:	toggleInstructions();
 				break;
-<<<<<<< HEAD
-	
-	case 69:	var newfuelCell = new fuelCell(1, 40, 40);
-				break;
-=======
 				
 	// L - toggle sun effect
 	case 76:	if (toggleSunEffect) { toggleSunEffect = false; }
@@ -98,7 +93,6 @@ function keyEventFired(e) {
 	case 74:	if (toggleSound) { toggleSound = false; }
 				else { toggleSound = true; }
 	
->>>>>>> origin/master
 	}
 }
 
@@ -125,7 +119,6 @@ function keyEventOver(e) {
 	// D
 	case 68:	Game.stopMovePlayerShip("Right");
 				break;
-
 	}
 	
 }

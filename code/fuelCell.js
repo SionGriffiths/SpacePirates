@@ -38,7 +38,7 @@ function paintFuel() {
 function drawFuel(fuelpiece) {
 
 	c.save();
-	c.translate(fuelpiece.x, fuelpiece.y);
+	c.translate(gameMap.translateX(fuelpiece.x), gameMap.translateY(fuelpiece.y));
 	if (fuelpiece.fType == 0) {
 		fuelpiece.graphic = fuelImage1;
 	} else {
@@ -59,8 +59,8 @@ function detectFuelCollisions() {
 	for (var i = 0; i < fuelCells.length; i++) {
 		var thisFuelCell = fuelCells[i];
 	var  collisionOccured = liesWithinRadius(
-							shipX,
-							shipY,
+							Ship.X,
+							Ship.Y,
 							thisFuelCell.x + (thisFuelCell.size * 1.5),
 							thisFuelCell.y + (thisFuelCell.size * 1.5),
 							thisFuelCell.collisionRadius);
