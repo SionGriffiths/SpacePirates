@@ -93,6 +93,10 @@ function keyEventFired(e) {
 	case 74:	if (toggleSound) { toggleSound = false; }
 				else { toggleSound = true; }
 	
+	// K - PLANET! :D
+	case 75:	var newPlanet = new Planet();
+				break;
+				
 	}
 }
 

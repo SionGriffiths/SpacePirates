@@ -169,7 +169,54 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		fuelImage2.src = "images/misc/darkmatter2.png";
 	}, 600);
-
+	setTimeout(function() {
+		planetImage1 = new Image();
+		planetImage1.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage1.src = "images/planets/planet1.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage2 = new Image();
+		planetImage2.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage2.src = "images/planets/planet2.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage3 = new Image();
+		planetImage3.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage3.src = "images/planets/planet3.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage4 = new Image();
+		planetImage4.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage4.src = "images/planets/planet4.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage5 = new Image();
+		planetImage5.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage5.src = "images/planets/planet5.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage6 = new Image();
+		planetImage6.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage6.src = "images/planets/planet6.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage7 = new Image();
+		planetImage7.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage7.src = "images/planets/planet7.png";
+	}, 600);
+	setTimeout(function() {
+		planetImage8 = new Image();
+		planetImage8.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		planetImage8.src = "images/planets/planet8.png";
+	}, 600);
 
 	// Call the game to run, after finished loading
 	setTimeout(function() {
@@ -187,6 +234,10 @@ Game.load = function() {
 	var initialAsteroid6 = new Asteroid(newAst);
 	var initialAsteroid7 = new Asteroid(newAst);
 
+	setTimeout(function() {
+		for(var i = 0; i < 30; i++) { var tempPlanet = new Planet();}
+	}, 1000);
+	
 }
 
 // Paint - GAMELOOP
@@ -195,7 +246,8 @@ Game.paint = function() {
 	clearCanvas();
 
 	paintBackground();
-	paintFuelGuage();	
+	paintFuelGuage();
+	paintPlanets();		
 	paintDeployedMunitions();
 	paintAsteroids();
 	Ship.paint();
@@ -203,13 +255,26 @@ Game.paint = function() {
 	paintFuel();
 
 	//console.log("Asteroids Array" + Game.asteroids.toString());
+
+	if(toggleDebug == true){
+		c.save();
+		c.font="12px Verdana";
+		var pcount = "P:" + Game.planets.length;
+		var xandydisplay = "X: " + Math.round(Ship.X) + " Y:" + Math.round(Ship.Y);
+		c.fillStyle = "white";
+		c.fillText(pcount, 10, 50);
+		c.translate(0, 20);
+		c.fillText(xandydisplay, 10, 50);
+		c.restore();
+	}
+
 }
 
 // Paint - GAMELOOP
 Game.update = function() {
 	
-
 	Ship.update();
+	updatePlanets();
 	updateEnemyShips();
 	paintFuelGuage();
 	updateDeployedMunitions();
@@ -337,3 +402,4 @@ Game.fireShipLaserPulse = function(munitionsType) {
 
 Game.enemyShips = new Array();
 Game.asteroids = new Array();
+Game.planets = new Array();
