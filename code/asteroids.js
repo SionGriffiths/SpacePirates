@@ -167,10 +167,6 @@ this.detectCollisions = function() {
 					newAst = [0, this.x+this.Size, this.y+this.Size, 2];
 					var babyAsteroid1 = new Asteroid(newAst);
 					var babyAsteroid2 = new Asteroid(newAst);
-					var doMakeFuel = Math.round(Math.random());
-					if(doMakeFuel) {
-						var newFuelCell = new FuelCell(1, newAst[1], newAst[2]);
-					}
 				} else {
 					this.direction = deployedMunitions[i].direction -90;
 					this.Speed += 0.1;

@@ -19,8 +19,7 @@ EnemyShip.collisionRadius;
 
 EnemyShip.draw = function() {
 		c.save();
-		c.translate(this.x, this.y);
-		//c.translate((this.width / 2), (this.height / 2));
+		c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 		c.rotate(this.direction * TO_RADIANS);
 		c.drawImage(this.image, -(this.width / 2), -(this.height / 2), this.width, this.height);
 		c.restore();
@@ -98,16 +97,15 @@ EnemyShip.trackOntoScreen = function() {
 	switch (this.AISequenceCounter) {
 	
 	// Initially place the ship outside canvas view (even if player ship moving)
-	case 0:		this.x = 100 - document.getElementById('maincanvas').width;
-				this.y = document.getElementById('maincanvas').height / 2;
+	case 0:		this.x = gameMap.currentX - canvasWidth;
+				this.y = gameMap.currentY;
 				this.AISequenceCounter += 1;
 				Game.printToDebugConsole("Ship Placed");
 				break;
 				
 	// Choose a central point, and face it	
-	case 1:		this.nextLocationX = Math.floor(Math.random()*(document.getElementById('maincanvas').width / 2) + 50);
-				var oneSixthY = document.getElementById('maincanvas').height / 6;
-				this.nextLocationY = Math.floor((Math.random() * oneSixthY) + (4 * oneSixthY));
+	case 1:		this.nextLocationX = gameMap.currentX;
+				this.nextLocationY = 150 + gameMap.currentY + Math.floor((Math.random() * 150));
 				var angleDegree = findAngleBetweenTwoPoints(this.x, this.y, this.nextLocationX, this.nextLocationY);
 				var faceDirection = 360 - angleDegree - 90;
 				if (faceDirection < 0) {faceDirection += 360;}
