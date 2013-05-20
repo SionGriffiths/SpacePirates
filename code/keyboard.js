@@ -9,7 +9,7 @@ var canvasElement;
 
 // Add event listeners to the canvas
 function setupEventListeners() {
-	canvasElement = document.getElementById('maincanvas');
+	canvasElement = document;
 	canvasElement.addEventListener( "keydown", keyEventFired, true);
 	canvasElement.addEventListener( "keyup", keyEventOver, true);
 	Game.printToDebugConsole("Added EventListeners to Canvas");
@@ -52,28 +52,53 @@ function keyEventFired(e) {
 	case 27:	gameRunning = false;
 				break;
 				
-	// SPACEBAR
-	case 32:	Game.fireShipLaserPulse();
+	// SPACEBAR - Red Laser
+	case 32:	Game.fireShipLaserPulse(0);
 				Game.playPewPewPew();
 				break;
+				
+	// B - Blue Laser
+	case 66:	Game.fireShipLaserPulse(1);
+				Game.playPewPewPew();
+				break;
+				
+	// G - Green Laser
+	case 71:	Game.fireShipLaserPulse(2);
+				Game.playPewPewPew();
+				break;
+		
 		
 	// P - place an enemy ship - development convenience
 	case 80:	EnemyShip.instantiate(500, 300);
 				break;
 
-
+	// O - Place an asteroid
 	case 79:    var randAst = [1];
 				var tempAsteroid = new Asteroid(randAst);
 				break; 
-
+				
+	// Y - toggle debug graphics
 	case 89:    DebugToggle();
 				break;
-
+				
+	// T - toggle instructions
 	case 84:	toggleInstructions();
 				break;
+<<<<<<< HEAD
 	
 	case 69:	var newfuelCell = new fuelCell(1, 40, 40);
 				break;
+=======
+				
+	// L - toggle sun effect
+	case 76:	if (toggleSunEffect) { toggleSunEffect = false; }
+				else { toggleSunEffect = true; }
+				
+	// J - toggle sound effects
+	case 74:	if (toggleSound) { toggleSound = false; }
+				else { toggleSound = true; }
+	
+>>>>>>> origin/master
 	}
 }
 

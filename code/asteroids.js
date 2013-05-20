@@ -13,8 +13,8 @@ function Asteroid(paras) {
 	}
 	
 	this.direction = Math.floor(Math.random()*351);
-	if(typeof paras[1] == 'undefined'){ this.x = 100 + Math.floor(Math.random()*901);} else {this.x = paras[1];}
-	if(typeof paras[2] == 'undefined'){ this.y = 150 + Math.floor(Math.random()*601);} else {this.y = paras[2];}
+	if(typeof paras[1] == 'undefined'){ this.x = (gameMap.currentX - 400) + Math.floor(Math.random()*800);} else {this.x = paras[1];}
+	if(typeof paras[2] == 'undefined'){ this.y = (gameMap.currentY -150) + Math.floor(Math.random()*300);} else {this.y = paras[2];}
 	this.Scale = 50 + Math.floor(Math.random()*101);
 	if(paras[0]==1) {
 		this.Scale = this.Scale * 1.3;
@@ -22,7 +22,7 @@ function Asteroid(paras) {
 		this.Scale = this.Scale * 0.8;
 	}
 	this.scaleWarp = 4 + Math.floor(Math.random()*9);
-	this.scaleWarpFactor = (1+Math.floor(Math.random()*10))/400;
+	this.scaleWarpFactor = (1+Math.floor(Math.random()*10))/200;
 	this.scaleDir = Math.floor(Math.random()*2);
 	
 	this.Size = this.Scale/2;
@@ -39,7 +39,11 @@ function Asteroid(paras) {
 		this.Speed = paras[3];
 	}
 
-
+	this.recentlyHit = false;
+	this.recentHitCounter = 0;
+	this.maxSpeed = Math.floor(Math.random() * 6);
+	
+	
 	addAsteroid(this);
 
 
@@ -47,7 +51,7 @@ function Asteroid(paras) {
 // Paint the Asteroid
 this.draw = function() {
 	c.save();
-	c.translate(this.x, this.y);
+	c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 	c.translate(this.Scale, this.Scale);
 	c.rotate(this.direction + this.spin * TO_RADIANS);
 	if(this.aType==1) {
@@ -57,10 +61,14 @@ this.draw = function() {
 	}
 	c.drawImage(this.graphic, -this.Size, -this.Size, this.Scale, this.Scale);
 	if(toggleDebug==true) {
+		c.fillStyle="green";
+		c.fillRect(-5,-5,10,10);
 		c.beginPath();
 		c.strokeStyle = 'green';
 		c.arc(0,0,this.collisionRadius,0,2*Math.PI);		
 		c.stroke();
+		c.font="30px Arial";
+		c.fillText(this.hit,10,20);
 	}
 	c.restore();
 }
@@ -68,7 +76,7 @@ this.draw = function() {
 
 
 this.update = function() {
-	
+	/*
 	if (this.x <= (1 - this.Scale)) {
 		this.prevDir = "right";
 		this.x = canvasWidth;
@@ -86,6 +94,7 @@ this.update = function() {
 		this.y = 1;
 	}
 
+	*/
 	this.x = this.x + this.Speed * Math.cos(this.direction * TO_RADIANS);
 	this.y = this.y + this.Speed * Math.sin(this.direction * TO_RADIANS);
 
@@ -109,6 +118,22 @@ this.update = function() {
 	}
 	
 
+	// Used to bounce asteroid off objects, without insanity
+	if (this.recentlyHit) {
+	
+		this.recentHitCounter += 1;
+		
+		if (this.recentHitCounter > (this.Size * 1.5)) {
+			this.recentHitCounter = 0;
+			this.recentlyHit = false;
+		}
+	
+	}
+	
+	if (this.Speed > this.maxSpeed) {
+		this.Speed -= 0.05;
+	}	
+	
 	//Game.printToDebugConsole("Updating Asteroid" + this.Speed + " " + this.x + " " + this.y);
 }
 
@@ -184,6 +209,16 @@ function updateAsteroids() {
 		Game.asteroids[i].update();
 		Game.asteroids[i].detectCollisions();
 		if(Game.asteroids[i].hit > 20) {
+			Game.asteroids.splice(i, 1);
+		}
+		// If the asteroid has drifted WAY away from the current center
+		// of the screen, remove it.
+		var distanceX = Math.abs(Game.asteroids[i].x - gameMap.currentX);
+		if (distanceX > 3000) {
+			Game.asteroids.splice(i, 1);
+		}
+		var distanceY = Math.abs(Game.asteroids[i].y - gameMap.currentY);
+		if (distanceY > 3000) {
 			Game.asteroids.splice(i, 1);
 		}
 	}

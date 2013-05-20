@@ -15,13 +15,6 @@ var numOfImages = 11;
 var imageLoadProgress = 0;
 
 
-
-
-
-
-
-
-
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
@@ -41,3 +34,6 @@ var pewN = 1;
 
 var toggleDebug = false;
 var instructionsDisplayed = true;
+
+var toggleSunEffect = true;
+var toggleSound = true;

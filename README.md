@@ -17,9 +17,19 @@ Press TAB to bring focus to the Canvas (EventListeners then respond)
 
 Press W, A and D to move.
 
-Press SPACEBAR to fire lasers.
+Press SPACEBAR to fire RED lasers.
+Press B to fire BLUE lasers.
+Press G to fire GREEN lasers.
 
-(Press P to initiate an enemy ship sequence - Soon!)
+Press P to initiate an enemy ship sequence - ship navigates from off-screen to random coordinate (within range), 
+and then turns tracking the player's ship.
+
+Press O to place an asteroid randomly.
+
+Press T to toggle instructions.
+
+Press Y to toggle debug mode - very pretty!
+
 
 
 ===================================
