@@ -8,7 +8,6 @@ var numOfStars = 80;
 var star;
 var backgroundStarColours;
 var numOfStarColours;
-var sunTime = 9;
 
 // Background manager
 function paintBackground(){
@@ -19,14 +18,7 @@ function paintBackground(){
 	c.fillRect(0,0,canvasE.width, canvasE.height);
 	c.restore();
 	
-	sunTime += 0.02;
-	if(sunTime > 100) {sunTime = 100;}
 
-	if (toggleSunEffect) {
-		addSunFlare();
-	}
-	
-	
 	updateStarPositions();	
 	
 	for (var i = 0; i < backgroundStars.length; i++){
@@ -37,7 +29,11 @@ function paintBackground(){
 		c.shadowBlur = backgroundStars[i][2] / 10;
 		c.fillText(star, backgroundStars[i][0], backgroundStars[i][1]);
 		c.restore();
-	}	
+	}
+	
+	if (toggleSunEffect) {
+		addSunFlare();
+	}
 }
 
 // Initialize the stars with their random coordinates and size
@@ -141,8 +137,8 @@ function addSunFlare(){
 	
 	// Create gradient
 	var grd = c.createRadialGradient(gameMap.translateX(-100),gameMap.translateY(-100),5,gameMap.translateX(-100),gameMap.translateY(-100),800);
-	grd.addColorStop( 0.2, "rgba(247, 209, 84, 0.8)");
-	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.3)"); 
+	grd.addColorStop( 0.2, "rgba(247, 209, 84, 1)");
+	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.4)"); 
 	grd.addColorStop( 0.8, "transparent");
 
 	// Fill with gradient
