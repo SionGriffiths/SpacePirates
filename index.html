@@ -28,8 +28,11 @@
 <!--  -->
 <!--  JavaScript Scripts -->
 <!--  -->
+
 <script type="text/javascript" src="code/config.js"></script>
 <script type="text/javascript" src="code/utilities.js"></script>
+
+<script type="text/javascript" src="code/map.js"></script>
 
 <script type="text/javascript" src="code/background.js"></script>
 <script type="text/javascript" src="code/ship.js"></script>
@@ -125,6 +128,12 @@
 	}
 
 	init();
+	
+	
+	// The global reference to gameMap
+	var gameMap = new Map();
+	gameMap.initialize();
+	
 	
 	
 	Game.run = function() {

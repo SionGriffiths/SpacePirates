@@ -16,8 +16,8 @@ Game.initialize = function() {
 	canvasWidth = canvasE.width;
 	canvasHeight = canvasE.height;
 
-	Ship.X = canvasWidth / 2;
-	Ship.Y = canvasHeight / 2;
+	//Ship.X = 0;
+	//Ship.Y = 0;
 	
 	Game.printToDebugConsole("Initializing background");
 	

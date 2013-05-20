@@ -3,22 +3,22 @@
 //=============================================
 
 // Ship Vars
-var shipImage;
-var shipThrusterImage1;
-var shipThrusterImage2;
-var shipThrusterImage3;
-var shipThrusterImage4;
-var shipThrusterImage5;
-var shipGunImage1;
+//var shipImage;
+
 
 var Ship = new Object();
 
-
+Ship.ThrusterImage1;
+Ship.ThrusterImage2;
+Ship.ThrusterImage3;
+Ship.ThrusterImage4;
+Ship.ThrusterImage5;
+Ship.GunImage1;
 
 Ship.shipImage;
 
-Ship.X = 250; // Canvas x
-Ship.Y = 150; // Canvas y
+Ship.X = 0; // Game X
+Ship.Y = 0; // Game Y
 Ship.Direction = 0; // Degrees
 
 Ship.Momentum = 0; // 0 - 6
@@ -176,8 +176,11 @@ Ship.update = function() {
 // Paint the Ship
 Ship.paint = function() {
 	c.save();
-	c.translate(this.X, this.Y);	
+	c.translate(gameMap.translateX(this.X), gameMap.translateY(this.Y));
 	c.rotate(this.Direction * TO_RADIANS);
+	
+	//Game.printToDebugConsole("P GameXY: " + this.X + " " + this.Y);
+	//Game.printToDebugConsole("P CanvasXY: " + gameMap.translateX(this.X) + " " + gameMap.translateY(this.Y));
 	
 	if (this.ShieldActive) {
 		c.save();
@@ -196,6 +199,7 @@ Ship.paint = function() {
 	
 	c.drawImage(this.shipImage, -50, -50, 100, 100);
 	c.drawImage(this.getCurrentThrusterImage(), -50, 33, 100, 100);
+	
 	if(toggleDebug==true) {
 		c.fillStyle="green";
 		c.fillRect(-5,-5,10,10);
@@ -219,7 +223,8 @@ Ship.updateCoordinates = function(input) {
 	if (input == "Forwards") {
 		this.X = this.X + this.Momentum * Math.cos((this.Direction - 90) * TO_RADIANS);
 		this.Y = this.Y + this.Momentum * Math.sin((this.Direction - 90) * TO_RADIANS);
-
+		//Game.printToDebugConsole("U GameXY: " + this.X + " " + this.Y);
+		//Game.printToDebugConsole("U CanvasXY: " + gameMap.translateX(this.X) + " " + gameMap.translateY(this.Y));
 	}
 	
 	else if (input == "Backwards") {
@@ -228,7 +233,213 @@ Ship.updateCoordinates = function(input) {
 	}
 
 	
+	
+	
+	
+	var movementInitiated = false;
+	var movementModerator = 50 - (this.Momentum / 1.5);
+	gameMap.boundaryShiftDirectionX = " ";
+	gameMap.boundaryShiftDirectionY = " ";
+	
+	
+	if (this.X > gameMap.currentX) {
+		var difference = (this.X - gameMap.currentX);
+		
+		if (difference > 30) {
+			
+			gameMap.currentX += (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			
+			movementInitiated = true; 
+		}
+		
+		if (difference > gameMap.boundaryRadiusX) {
+			
+			gameMap.currentX += (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			
+			movementInitiated = true;
+		
+		
+		}
+		
+		if (difference > gameMap.boundaryRadiusX + 50) {
+			
+			gameMap.currentX += ((difference / movementModerator) / 2);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			
+			movementInitiated = true;
+		
+		
+		}
+		
+		
+		
+	}
 
+	if (this.X < gameMap.currentX) {
+		var difference = (gameMap.currentX - this.X);
+		
+		if (difference > 30) {
+		
+			gameMap.currentX -= (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Left";
+			
+			movementInitiated = true; 
+		}
+		
+		if (difference > gameMap.boundaryRadiusX) {
+			gameMap.currentX -= (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Left";
+			
+			movementInitiated = true; 
+		
+		}
+		
+		if (difference > gameMap.boundaryRadiusX + 50) {
+			gameMap.currentX -= ((difference / movementModerator) / 2);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Left";
+			
+			movementInitiated = true; 
+		
+		}
+		
+	}
+
+	if (this.Y > gameMap.currentY) {
+		var difference = (this.Y - gameMap.currentY);
+		
+		if (difference > 30) {
+			
+			gameMap.currentY += (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		}
+		
+		if (difference > gameMap.boundaryRadiusY) {
+		
+			gameMap.currentY += (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		
+		}
+		
+		if (difference > gameMap.boundaryRadiusY + 50) {
+		
+			gameMap.currentY += ((difference / movementModerator) / 2);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		
+		}
+	}
+	
+	if (this.Y < gameMap.currentY) {
+		var difference = (gameMap.currentY - this.Y);
+		
+		if (difference > 30) {
+			
+			gameMap.currentY -= (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		}
+		
+		if (difference > gameMap.boundaryRadiusY) {
+		
+			gameMap.currentY -= (difference / movementModerator);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		
+		}
+		
+		if (difference > gameMap.boundaryRadiusY + 50) {
+		
+			gameMap.currentY -= ((difference / movementModerator) / 2);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		
+		}
+		
+	}
+
+	if (!movementInitiated) {
+		gameMap.boundaryShift = false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	var movementInitiated = false;
+	
+	if (this.X > (gameMap.currentX + gameMap.boundaryRadiusX)) {
+		gameMap.currentX += (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Right";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	
+	if (this.X < (gameMap.currentX - gameMap.boundaryRadiusX)) {
+		gameMap.currentX -= (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Left";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	
+	if (this.Y > (gameMap.currentY + gameMap.boundaryRadiusY)) {
+		gameMap.currentY += (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Down";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	
+	if (this.Y < (gameMap.currentY - gameMap.boundaryRadiusY)) {
+		gameMap.currentY -= (this.Momentum / 1.5);
+		gameMap.boundaryShift = true;
+		gameMap.boundaryShiftDirection = "Up";
+		movementInitiated = true;
+	}
+	//else {
+	//	gameMap.boundaryShift = false;
+		//gameMap.boundaryShiftDirection = " ";
+	//}
+	if (!movementInitiated) {
+		gameMap.boundaryShift = false;
+	}
+	*/
+	
+/*
 	if (this.X <= -1) {
 		if (previousDir == "left") {
 			backgroundStars = [];
@@ -276,6 +487,7 @@ Ship.updateCoordinates = function(input) {
 		previousDir = "down";
 		this.Y = 2;
 	}	
+	*/
 }
 
 // Change the angle the this. is facing
@@ -304,30 +516,30 @@ Ship.changeDirection = function(input) {
 
 Ship.getCurrentThrusterImage = function() {
 
-	var currentThrusterImage = this.ThrusterImage1;
+	this.currentThrusterImage = this.ThrusterImage1;
 	
 	if(this.MovingForwards == true) {
 		switch (this.thrustEffect) {
 		
-		case 0:		this.currentThrusterImage = this.ThrusterImage1;
+		case 0:		this.currentShipThrusterImage = this.ThrusterImage1;
 					break;
-		case 1:		this.currentThrusterImage = this.ThrusterImage2;
+		case 1:		this.currentShipThrusterImage = this.ThrusterImage2;
 					break;
-		case 2:		this.currentThrusterImage = this.ThrusterImage3;
+		case 2:		this.currentShipThrusterImage = this.ThrusterImage3;
 					break;
-		case 3:		this.currentThrusterImage = this.ThrusterImage2;
+		case 3:		this.currentShipThrusterImage = this.ThrusterImage2;
 					break;
 		}
 	} else {
 		switch (this.thrustEffect) {
 		
-		case 0:		this.currentThrusterImage = this.ThrusterImage4;
+		case 0:		this.currentShipThrusterImage = this.ThrusterImage4;
 					break;
-		case 1:		this.currentThrusterImage = this.ThrusterImage5;
+		case 1:		this.currentShipThrusterImage = this.ThrusterImage5;
 					break;
-		case 2:		this.currentThrusterImage = this.ThrusterImage4;
+		case 2:		this.currentShipThrusterImage = this.ThrusterImage4;
 					break;
-		case 3:		this.currentThrusterImage = this.ThrusterImage5;
+		case 3:		this.currentShipThrusterImage = this.ThrusterImage5;
 					break;
 		}
 	}
@@ -340,7 +552,7 @@ Ship.getCurrentThrusterImage = function() {
 		this.thrustEffect = 0; 
 	}
 	
-	return currentThrusterImage;
+	return this.currentShipThrusterImage;
 }
 
 

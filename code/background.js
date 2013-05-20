@@ -87,6 +87,52 @@ function initializeBackground(){
 function updateStarPositions(){
 	// If the ship moves, move the stars very very slightly,
 	// with the largest (closest) ones moving more.
+	if (gameMap.boundaryShift) {
+	
+		for (var i = 0; i < backgroundStars.length; i++) {
+			
+			var movement = backgroundStars[i][2] / 45;
+			
+			switch (gameMap.boundaryShiftDirectionX) {
+			
+			case "Left": 	backgroundStars[i][0] += movement;
+							if ((backgroundStars[i][0] + 2) > canvasWidth) {
+								backgroundStars[i][0] = -2;
+								backgroundStars[i][1] = Math.floor(Math.random() * canvasHeight);
+							}
+							break;
+							
+			case "Right":	backgroundStars[i][0] -= movement;
+							if ((backgroundStars[i][0] - 2) < -2) {
+								backgroundStars[i][0] = canvasWidth + 2;
+								backgroundStars[i][1] = Math.floor(Math.random() * canvasHeight);
+							}
+							break;
+			}
+
+			switch (gameMap.boundaryShiftDirectionY) {
+			
+			case "Up":		backgroundStars[i][1] += movement;
+							if ((backgroundStars[i][1] + 2) > canvasHeight) {
+								backgroundStars[i][1] = -2;
+								backgroundStars[i][0] = Math.floor(Math.random() * canvasWidth);
+							}
+							break;
+							
+			case "Down":	backgroundStars[i][1] -= movement;
+							if ((backgroundStars[i][1] - 2) < -2) {
+								backgroundStars[i][1] = canvasHeight + 2;
+								backgroundStars[i][0] = Math.floor(Math.random() * canvasWidth);
+							}
+							break;
+			}
+			
+			//if ((backgroundStars[i][0] + 
+			
+		
+		}
+	}
+	
 }
 
 function addSunFlare(){
@@ -94,13 +140,13 @@ function addSunFlare(){
 	c.save();
 	
 	// Create gradient
-	var grd = c.createRadialGradient(sunTime*15,15,5,90,60,1500);
+	var grd = c.createRadialGradient(gameMap.translateX(-100),gameMap.translateY(-100),5,gameMap.translateX(-100),gameMap.translateY(-100),800);
 	grd.addColorStop( 0.2, "rgba(247, 209, 84, 0.8)");
 	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.3)"); 
 	grd.addColorStop( 0.8, "transparent");
 
 	// Fill with gradient
 	c.fillStyle=grd;
-	c.fillRect(0,0,canvasE.width, canvasE.height);
+	c.fillRect(gameMap.translateX(-800),gameMap.translateY(-800), 2000, 2000);
 	c.restore();
 }

@@ -15,13 +15,6 @@ var numOfImages = 9;
 var imageLoadProgress = 0;
 
 
-
-
-
-
-
-
-
 var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 

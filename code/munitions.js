@@ -318,7 +318,7 @@ function paintDeployedMunitions() {
 	for (var i = 0; i < deployedMunitions.length; i++) {
 	
 		c.save();
-		c.translate(deployedMunitions[i].x, deployedMunitions[i].y);
+		c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
 		c.rotate(deployedMunitions[i].direction * TO_RADIANS);
 		c.translate(0, -50);
 		deployedMunitions[i].draw();
