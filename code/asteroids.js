@@ -123,7 +123,7 @@ this.detectCollisions = function() {
 			this.x + this.Scale,
 			this.y + this.Scale,
 			this.collisionRadius);
-
+		
 		if(toggleDebug==true) {
 			c.save();
 			c.beginPath();
@@ -142,6 +142,7 @@ this.detectCollisions = function() {
 					newAst = [0, this.x+this.Size, this.y+this.Size, 2];
 					var babyAsteroid1 = new Asteroid(newAst);
 					var babyAsteroid2 = new Asteroid(newAst);
+					var newFuelCell = new FuelCell(1, 20, 20);
 				} else {
 					this.direction = deployedMunitions[i].direction -90;
 					this.Speed += 0.1;
@@ -155,6 +156,7 @@ this.detectCollisions = function() {
 			
 			
 			deployedMunitions[i].destroyed = true;
+			
 		}
 	}
 	

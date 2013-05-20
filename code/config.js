@@ -11,7 +11,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 9;
+var numOfImages = 11;
 var imageLoadProgress = 0;
 
 
@@ -30,7 +30,7 @@ var TO_RADIANS = Math.PI / 180;
 var TO_DEGREES = 180 / Math.PI;
 
 var deployedMunitions = new Array();
-
+var fuelCells = new Array();
 
 var previousDir;
 var previousMaps = new Array();

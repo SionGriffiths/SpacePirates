@@ -71,6 +71,9 @@ function keyEventFired(e) {
 
 	case 84:	toggleInstructions();
 				break;
+	
+	case 69:	var newfuelCell = new fuelCell(1, 40, 40);
+				break;
 	}
 }
 
@@ -97,6 +100,7 @@ function keyEventOver(e) {
 	// D
 	case 68:	Game.stopMovePlayerShip("Right");
 				break;
+
 	}
 	
 }

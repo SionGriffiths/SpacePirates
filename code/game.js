@@ -153,7 +153,19 @@ Game.load = function() {
 		asteroidImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		asteroidImage2.src = "images/misc/asteroid2.png";
-	}, 600);	
+	}, 600);
+	setTimeout(function() {
+		fuelImage1 = new Image();
+		fuelImage1.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		fuelImage1.src = "images/misc/darkmatter.png";
+	}, 600);
+	setTimeout(function() {
+		fuelImage2 = new Image();
+		fuelImage2.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		fuelImage2.src = "images/misc/darkmatter2.png";
+	}, 600);
 	
 
 
@@ -186,6 +198,7 @@ Game.paint = function() {
 	paintAsteroids();
 	paintPlayerShip();
 	paintEnemyShips();
+	paintFuel();
 
 	//console.log("Asteroids Array" + Game.asteroids.toString());
 }
@@ -198,7 +211,7 @@ Game.update = function() {
 	paintFuelGuage();
 	updateDeployedMunitions();
 	updateAsteroids();
-	
+	updateFuel();
 }
 
 
