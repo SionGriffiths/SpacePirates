@@ -32,7 +32,7 @@ function paintBackground(){
 	}
 	
 	if (toggleSunEffect) {
-		addSunFlare();
+		//addSunFlare();
 	}
 }
 
@@ -131,18 +131,18 @@ function updateStarPositions(){
 	
 }
 
-function addSunFlare(){
+// function addSunFlare(){
 	
-	c.save();
+// 	c.save();
 	
-	// Create gradient
-	var grd = c.createRadialGradient(gameMap.translateX(-100),gameMap.translateY(-100),5,gameMap.translateX(-100),gameMap.translateY(-100),800);
-	grd.addColorStop( 0.2, "rgba(247, 209, 84, 1)");
-	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.4)"); 
-	grd.addColorStop( 0.8, "transparent");
+// 	// Create gradient
+// 	var grd = c.createRadialGradient(gameMap.translateX(-100),gameMap.translateY(-100),5,gameMap.translateX(-100),gameMap.translateY(-100),800);
+// 	grd.addColorStop( 0.2, "rgba(247, 209, 84, 1)");
+// 	grd.addColorStop( 0.4, "rgba(240, 193, 38, 0.4)"); 
+// 	grd.addColorStop( 0.8, "transparent");
 
-	// Fill with gradient
-	c.fillStyle=grd;
-	c.fillRect(gameMap.translateX(-800),gameMap.translateY(-800), 2000, 2000);
-	c.restore();
-}
+// 	// Fill with gradient
+// 	c.fillStyle=grd;
+// 	c.fillRect(gameMap.translateX(-800),gameMap.translateY(-800), 2000, 2000);
+// 	c.restore();
+// }

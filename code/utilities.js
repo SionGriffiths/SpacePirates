@@ -138,3 +138,12 @@ function toggleInstructions() {
 
 }
 
+function getCirclePoints(centerX,centerY,radius,segments){
+  var totalPoints = new Array();
+  for(var i=0; i<segments; i++){
+    cx = centerX+radius*Math.sin(i*2*Math.PI/segments);
+    cy = centerY+radius*Math.cos(i*2*Math.PI/segments);
+    totalPoints.push({'x':cx,'y':cy});
+  }
+  return totalPoints;
+}
