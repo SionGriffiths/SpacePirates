@@ -217,7 +217,12 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		planetImage8.src = "images/planets/planet8.png";
 	}, 600);
-
+		setTimeout(function() {
+		sunImage2 = new Image();
+		sunImage2.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		sunImage2.src = "images/suns/sun2.png";
+	}, 700);
 
 
 	setTimeout(function() {
