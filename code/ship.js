@@ -24,10 +24,10 @@ Ship.Direction = 0; // Degrees
 Ship.Momentum = 0; // 0 - 6
 Ship.MomentumDirection = 0; // Degrees
 Ship.Acceleration = 0; // 0 - 6
-Ship.AccelerationFactor = 0.1;
+Ship.AccelerationFactor = 0.4;
 Ship.DecelerationFactor = 0.5;
 Ship.ThrustPower = 1;
-Ship.MaxSpeed = 30;
+Ship.MaxSpeed = 5;
 Ship.MovingForwards = false;
 Ship.MovementModerator = 1;
 
@@ -129,7 +129,7 @@ Ship.update = function() {
 			this.Acceleration += this.AccelerationFactor;
 		}
 		
-		this.Momentum = this.Momentum + this.Acceleration;
+		this.Momentum = this.Momentum + (this.Acceleration / 2);
 
 		if(this.Momentum > this.MaxSpeed) {
 			this.Momentum = this.MaxSpeed;

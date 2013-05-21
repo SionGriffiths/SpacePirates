@@ -124,16 +124,11 @@ function DebugToggle(){
 
  
 
-
 function toggleInstructions() {
 
 	if (instructionsDisplayed) {	
 		instructionsDisplayed = false;
-		document.getElementById('instructions').style.display('none');	
-	}	
-	else {	
-	instructionsDisplayed = true;
-	document.getElementById('instructions').style.display('block');
+		document.getElementById('instructions').style.display = "none";	
 	}
 
 }
