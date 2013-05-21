@@ -22,8 +22,8 @@ function SolarSystem() {
 	this.AsteroidsCount = 10+(1+Math.round(Math.random()*50));
 
 
-	this.InnerPlanetOrbit = this.Size/2.5;
-	this.OuterPlanetOrbit = this.Size/1.2;
+	this.InnerPlanetOrbit = this.Size/2.0;
+	this.OuterPlanetOrbit = this.Size;
 
 	this.InnerPlanetOrbitStep = (Math.PI*(this.InnerPlanetOrbit*2))/this.InnerPlanetCount;
 	this.OuterPlanetOrbitStep = (Math.PI*(this.OuterPlanetOrbit*2))/this.OuterPlanetCount;
@@ -32,13 +32,15 @@ function SolarSystem() {
 	this.InnerPlanets = Array();
 	this.InnerPlanetCoords = getCirclePoints(this.x,this.y,this.InnerPlanetOrbit,this.InnerPlanetCount);
 	for(var i = 1; i < this.InnerPlanetCount; i++){
-		var planetVars = Array(this.SolarSystemNumber,'random',this.InnerPlanetCoords[i-1].x,this.InnerPlanetCoords[i-1].y,200,this.InnerPlanetOrbit,this.InnerPlanetOrbitStep*i);
+		var PlanetOffset = Math.floor(Math.random()*300);
+		var planetVars = Array(this.SolarSystemNumber,'random',this.InnerPlanetCoords[i-1].x,this.InnerPlanetCoords[i-1].y,200,this.InnerPlanetOrbit-PlanetOffset,this.InnerPlanetOrbitStep*i);
 		this.InnerPlanets[i] = new Planet(planetVars);
 	}
 	this.OuterPlanets = Array();
 	this.OuterPlanetCoords = getCirclePoints(this.x,this.y,this.OuterPlanetOrbit,this.OuterPlanetCount);
 	for(var i = 1; i < this.OuterPlanetCount; i++){
-		var planetVars = Array(this.SolarSystemNumber,'random',this.OuterPlanetCoords[i-1].x,this.OuterPlanetCoords[i-1].y,400,this.OuterPlanetOrbit,this.OuterPlanetOrbitStep*i);
+		var PlanetOffset = Math.floor(Math.random()*500);
+		var planetVars = Array(this.SolarSystemNumber,'random',this.OuterPlanetCoords[i-1].x,this.OuterPlanetCoords[i-1].y,400,this.OuterPlanetOrbit-PlanetOffset,this.OuterPlanetOrbitStep*i);
 		this.OuterPlanets[i] = new Planet(planetVars);
 	}
 	this.Asteroids = Array();
