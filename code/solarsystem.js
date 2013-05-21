@@ -11,25 +11,38 @@ function SolarSystem() {
 	this.y = this.xandy[1];
 	this.Scale = 4000;
 	this.Size = this.Scale / 2;
+	this.colour = getStarColour(Math.floor(Math.random()*10));
+
+
+	if(Game.solarsystems.length>0) {this.SolarSystemNumber = Game.solarsystems.length;} else {this.SolarSystemNumber = 0;}
+
+
 	this.InnerPlanetCount = 2+(1+Math.round(Math.random()*4));
 	this.OuterPlanetCount = 2+(1+Math.round(Math.random()*6));
 	this.AsteroidsCount = 10+(1+Math.round(Math.random()*50));
-	this.colour = getStarColour(Math.floor(Math.random()*10));
-	
+
+
+	this.InnerPlanetOrbit = this.Size/2.5;
+	this.OuterPlanetOrbit = this.Size/1.2;
+
+	this.InnerPlanetOrbitStep = (Math.PI*(this.InnerPlanetOrbit*2))/this.InnerPlanetCount;
+	this.OuterPlanetOrbitStep = (Math.PI*(this.OuterPlanetOrbit*2))/this.OuterPlanetCount;
+
+
 	this.InnerPlanets = Array();
-	this.InnerPlanetCoords = getCirclePoints(this.x,this.y,this.Size/2.5,this.InnerPlanetCount);
+	this.InnerPlanetCoords = getCirclePoints(this.x,this.y,this.InnerPlanetOrbit,this.InnerPlanetCount);
 	for(var i = 1; i < this.InnerPlanetCount; i++){
-		var planetVars = Array('random',this.InnerPlanetCoords[i-1].x,this.InnerPlanetCoords[i-1].y,200);
+		var planetVars = Array(this.SolarSystemNumber,'random',this.InnerPlanetCoords[i-1].x,this.InnerPlanetCoords[i-1].y,200,this.InnerPlanetOrbit,this.InnerPlanetOrbitStep*i);
 		this.InnerPlanets[i] = new Planet(planetVars);
 	}
 	this.OuterPlanets = Array();
-	this.OuterPlanetCoords = getCirclePoints(this.x,this.y,this.Size/1.2,this.OuterPlanetCount);
+	this.OuterPlanetCoords = getCirclePoints(this.x,this.y,this.OuterPlanetOrbit,this.OuterPlanetCount);
 	for(var i = 1; i < this.OuterPlanetCount; i++){
-		var planetVars = Array('random',this.OuterPlanetCoords[i-1].x,this.OuterPlanetCoords[i-1].y,400);
+		var planetVars = Array(this.SolarSystemNumber,'random',this.OuterPlanetCoords[i-1].x,this.OuterPlanetCoords[i-1].y,400,this.OuterPlanetOrbit,this.OuterPlanetOrbitStep*i);
 		this.OuterPlanets[i] = new Planet(planetVars);
 	}
 	this.Asteroids = Array();
-	this.AsteroidsCoords = getCirclePoints(this.x,this.y,this.Size/1.9,this.AsteroidsCount);
+	this.AsteroidsCoords = getCirclePoints(this.x,this.y,this.Size/0.9,this.AsteroidsCount);
 	for(var i = 1; i < this.AsteroidsCount; i++){
 		var AstSize = Math.floor(Math.random()*2);
 		var AstOffset = Math.floor(Math.random()*200);
@@ -143,7 +156,7 @@ function getNewSolarSystemPosition() {
 									Game.solarsystems[i].y,
 									newX,
 									newY,
-									Game.solarsystems[i].Scale*0.9);
+									Game.solarsystems[i].Scale*1.3);
 
 				if (tooClose) {
 					theseXYOK = false;
@@ -165,5 +178,6 @@ function getNewSolarSystemPosition() {
 	}
 	totalTimesTried += timesTried;
 	//alert('Planet XY OK - Total Times Tried : ' + totalTimesTried + ' Planet Count ' + Game.planets.length);
+	console.log('SolarSystem XY OK - Total Times Tried : ' + totalTimesTried + ' SolarSystem Count ' + Game.solarsystems.length);
 	return Array(newX,newY);
 }
