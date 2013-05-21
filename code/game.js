@@ -303,7 +303,7 @@ Game.paint = function() {
 		c.font="12px Verdana";
 		c.fillStyle = "white";
 		c.translate(0, 20);
-		c.fillText("Percentage cycle time: " + cyclePercentage.toFixed(0), 10, 50);
+		c.fillText("Percentage cycle time: " + cyclePercentage.toFixed(0), 10, 350);
 		c.restore();
 	
 	}

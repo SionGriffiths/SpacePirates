@@ -6,6 +6,7 @@
 
 var clockCycle = 1; // (1 - 60) based on game cycles per second (fps).
 var cycleTime = 0;
+var cycleSwitch = 0;
 
 var z = 1.0;
 var canvasE;

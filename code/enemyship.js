@@ -21,7 +21,7 @@ this.draw = function() {
 		c.save();
 		c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 		c.rotate(this.direction * TO_RADIANS);
-		c.drawImage(this.image, -(this.width / 2), -(this.height / 2), this.width, this.height);
+		c.drawImage(this.image, -(this.width / 2)*z, -(this.height / 2)*z, this.width*z, this.height*z);
 		c.restore();
 }
 
