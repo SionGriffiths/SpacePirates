@@ -94,11 +94,17 @@ function keyEventFired(e) {
 	case 74:	if (toggleSound) { toggleSound = false; }
 				else { toggleSound = true; }
 	
-	// K - PLANET! :D
-	case 75:	//var newPlanet = new Planet();
+	// + - ZOOOOOOOOOM
+	case 187:	z += 0.25;
+				if(z>2.0){z=2.0;}
+				break;
+	case 189:	z -= 0.25;
+				if(z<0.25){z=0.05;}
 				break;
 
 	}
+
+
 }
 
 

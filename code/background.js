@@ -24,10 +24,10 @@ function paintBackground(){
 	for (var i = 0; i < backgroundStars.length; i++){
 		c.save();
 		c.fillStyle = backgroundStars[i][3];
-		c.font = backgroundStars[i][2] + "px arial";
+		c.font = backgroundStars[i][2]*z + "px arial";
 		c.shadowColor = "white";
 		c.shadowBlur = backgroundStars[i][2] / 10;
-		c.fillText(star, backgroundStars[i][0], backgroundStars[i][1]);
+		c.fillText(star, backgroundStars[i][0]*z, backgroundStars[i][1]*z);
 		c.restore();
 	}
 	
@@ -77,7 +77,7 @@ function initializeBackground(){
 		previousMaps.push(backgroundStars);
 		
 	}		
-	Game.printToDebugConsole(numOfStars + " stars created");	
+	//Game.printToDebugConsole(numOfStars + " stars created");	
 }
 
 function updateStarPositions(){

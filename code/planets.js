@@ -66,7 +66,7 @@ if(this.Size > 200) {
 
 this.OrbitPosition = paras[6]; 
 this.OrbitDistance = paras[5];
-this.OrbitSpeed = 0.05;
+this.OrbitSpeed = 0.02;
 this.plot = new Object();
 
 addPlanet(this);
@@ -77,13 +77,13 @@ this.draw = function() {
 	c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 	c.rotate(this.Spin * TO_RADIANS);
 
-	c.drawImage(this.image, -this.Size, -this.Size, this.Scale, this.Scale);	
+	c.drawImage(this.image, -this.Size*z, -this.Size*z, this.Scale*z, this.Scale*z);	
 	if(toggleDebug==true) {
 		c.fillStyle="blue";
 		c.fillRect(-5,-5,10,10);
 		c.beginPath();
 		c.strokeStyle = 'blue';
-		c.arc(0,0,this.Size,0,2*Math.PI);		
+		c.arc(0,0,this.Size*z,0,2*Math.PI);		
 		c.stroke();
 	}
 	c.restore();

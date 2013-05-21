@@ -18,7 +18,6 @@ Game.initialize = function() {
 
 	//Ship.X = 0;
 	//Ship.Y = 0;
-	
 	Game.printToDebugConsole("Initializing background");
 	
 	initializeBackground();
@@ -226,7 +225,7 @@ Game.load = function() {
 
 
 	setTimeout(function() {
-		for(var i = 0; i < 4; i++) { var initialSolarSystem = new SolarSystem();}		
+		for(var i = 0; i < 12; i++) { var initialSolarSystem = new SolarSystem();}		
 	}, 900);
 
 	// Call the game to run, after finished loading
@@ -274,10 +273,23 @@ Game.paint = function() {
 		c.font="12px Verdana";
 		var pcount = "P:" + Game.planets.length;
 		var xandydisplay = "X: " + Math.round(Ship.X) + " Y:" + Math.round(Ship.Y);
+		var astpaint = "Asteroids Painted: " + AsteroidsPainted;
+		var planpaint = "Planets Painted: " + PlanetsPainted;
 		c.fillStyle = "white";
 		c.fillText(pcount, 10, 50);
 		c.translate(0, 20);
 		c.fillText(xandydisplay, 10, 50);
+		c.translate(0, 20);
+		c.fillText(astpaint, 10, 50);
+		c.translate(0, 20);
+		c.fillText(planpaint, 10, 50);
+		c.restore();
+
+		c.save();
+		c.rect(10, 10, gameMap.canvasWidth-20, gameMap.canvasHeight-20);
+		c.lineWidth = 1;
+      	c.strokeStyle = 'blue';
+      	c.stroke();
 		c.restore();
 	}
 

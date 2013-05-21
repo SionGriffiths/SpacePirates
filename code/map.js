@@ -25,14 +25,14 @@ function Map() {
 	
 		// Return canvas x
 		var xPositionOnCanvas = -gameX;
-		return (this.gameXasCanvasX - xPositionOnCanvas - this.currentX);
+		return (this.gameXasCanvasX - xPositionOnCanvas*z - this.currentX*z);
 	}
 	
 	this.translateY = function(gameY) {
 	
 		// Return canvas y
 		var yPositionOnCanvas = -gameY;
-		return (this.gameYasCanvasY - yPositionOnCanvas - this.currentY);
+		return (this.gameYasCanvasY - yPositionOnCanvas*z - this.currentY*z);
 	}
 
 	
@@ -45,7 +45,7 @@ function Map() {
 		this.canvasHeight = this.canvasE.height;
 		
 		this.gameXasCanvasX =  this.canvasWidth / 2;
-		this.gameYasCanvasY = this.canvasHeight / 2;
+		this.gameYasCanvasY =  this.canvasHeight / 2;
 		
 		this.boundaryRadiusX = this.canvasWidth / 5;
 		this.boundaryRadiusY = this.canvasHeight / 5;

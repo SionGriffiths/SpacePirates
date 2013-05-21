@@ -184,10 +184,10 @@ Ship.paint = function() {
 	
 	if (this.ShieldActive) {
 		c.save();
-		c.scale(1, 1.5);
+		c.scale(1*z, 1.5*z);
 		c.beginPath();
-		c.arc(0,0,40,0,2*Math.PI);
-		var grd = c.createRadialGradient(0,0,5,0,0,70);
+		c.arc(0,0,40*z,0,2*Math.PI);
+		var grd = c.createRadialGradient(0,0,5,0,0,70*z);
 		grd.addColorStop(0.2,"rgba(255,255,255, 0.1)");
 		grd.addColorStop(0.9, "white");
 		c.fillStyle = grd;
@@ -197,18 +197,18 @@ Ship.paint = function() {
 		c.restore();
 	}
 	
-	c.drawImage(this.shipImage, -50, -50, 100, 100);
-	c.drawImage(this.getCurrentThrusterImage(), -50, 33, 100, 100);
+	c.drawImage(this.shipImage, -50*z, -50*z, 100*z, 100*z);
+	c.drawImage(this.getCurrentThrusterImage(), -50*z, 33*z, 100*z, 100*z);
 	
 	if(toggleDebug==true) {
 		c.fillStyle="green";
-		c.fillRect(-5,-5,10,10);
+		c.fillRect(-5*z,-5*z,10*z,10*z);
 		c.strokeStyle = 'yellow';
 		c.moveTo(0,0);
-		c.lineTo(0,-60);
+		c.lineTo(0,-60*z);
 		c.stroke();	
 		c.beginPath();
-		c.arc(0,0,40,0,2*Math.PI);
+		c.arc(0,0,40*z,0,2*Math.PI);
 		c.strokeStyle = 'red';
 		c.stroke();
 	}
@@ -229,7 +229,7 @@ Ship.updateCoordinates = function(input) {
 	
 	else if (input == "Backwards") {
 		this.X = this.X - this.Momentum * Math.cos((this.Direction - 90) * TO_RADIANS);
-		this.Y = this.Y - this.Momentum * Math.sin((this.Direction - 90) * TO_RADIANS);
+		this.Y = this.Y - this.Momenwum * Math.sin((this.Direction - 90) * TO_RADIANS);
 	}
 
 	
@@ -243,9 +243,9 @@ Ship.updateCoordinates = function(input) {
 	
 	
 	if (this.X > gameMap.currentX) {
-		var difference = (this.X - gameMap.currentX);
+		var difference = (this.X - gameMap.currentX)*z;
 		
-		if (difference > 30) {
+		if (difference > 30*z) {
 			
 			gameMap.currentX += (difference / movementModerator);
 			gameMap.boundaryShift = true;
@@ -281,9 +281,9 @@ Ship.updateCoordinates = function(input) {
 	}
 
 	if (this.X < gameMap.currentX) {
-		var difference = (gameMap.currentX - this.X);
+		var difference = (gameMap.currentX - this.X)*z;
 		
-		if (difference > 30) {
+		if (difference > 30*z) {
 		
 			gameMap.currentX -= (difference / movementModerator);
 			gameMap.boundaryShift = true;
@@ -313,9 +313,9 @@ Ship.updateCoordinates = function(input) {
 	}
 
 	if (this.Y > gameMap.currentY) {
-		var difference = (this.Y - gameMap.currentY);
+		var difference = (this.Y - gameMap.currentY)*z;
 		
-		if (difference > 30) {
+		if (difference > 30*z) {
 			
 			gameMap.currentY += (difference / movementModerator);
 			gameMap.boundaryShift = true;
@@ -343,9 +343,9 @@ Ship.updateCoordinates = function(input) {
 	}
 	
 	if (this.Y < gameMap.currentY) {
-		var difference = (gameMap.currentY - this.Y);
+		var difference = (gameMap.currentY - this.Y)*z;
 		
-		if (difference > 30) {
+		if (difference > 30*z) {
 			
 			gameMap.currentY -= (difference / movementModerator);
 			gameMap.boundaryShift = true;
@@ -454,12 +454,12 @@ Ship.CollisionDetection = function(){
 			Game.planets[i].y,
 			this.X,
 			this.Y,
-			Game.planets[i].Size);
+			Game.planets[i].Size*z);
 			if(toggleDebug==true) {
 				c.save();
 				c.beginPath();
 				c.strokeStyle = 'blue';
-				c.arc(gameMap.translateX(Game.planets[i].x),gameMap.translateY(Game.planets[i].y),Game.planets[i].Size,0,2*Math.PI);		
+				c.arc(gameMap.translateX(Game.planets[i].x),gameMap.translateY(Game.planets[i].y),Game.planets[i].Size*z,0,2*Math.PI);		
 				c.stroke();
 				c.restore();
 			}
@@ -481,7 +481,7 @@ Ship.CollisionDetection = function(){
 			Game.asteroids[i].y + Game.asteroids[i].Scale,
 			this.X,
 			this.Y,
-			80);
+			80*z);
 			
 		if (collisionOccured) {
 		
@@ -532,7 +532,15 @@ Ship.CollisionDetection = function(){
 			c.save();
 			c.beginPath();
 			c.strokeStyle = 'orange';
-			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60,0,2*Math.PI);		
+			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60*z,0,2*Math.PI);		
+			c.stroke();
+			c.restore();
+		}
+		if(z<0.26) {
+			c.save();
+			c.beginPath();
+			c.strokeStyle = 'orange';
+			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60*z,0,2*Math.PI);		
 			c.stroke();
 			c.restore();
 		}

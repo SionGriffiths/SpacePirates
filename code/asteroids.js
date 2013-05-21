@@ -12,10 +12,12 @@ function Asteroid(paras) {
 		this.aType = paras[0];
 	}
 	
+	this.inRange = true;
+
 	this.direction = Math.floor(Math.random()*351);
 	if(typeof paras[1] == 'undefined'){ this.x = (gameMap.currentX - 400) + Math.floor(Math.random()*800);} else {this.x = paras[1];}
 	if(typeof paras[2] == 'undefined'){ this.y = (gameMap.currentY -150) + Math.floor(Math.random()*300);} else {this.y = paras[2];}
-	this.Scale = 50 + Math.floor(Math.random()*101);
+	this.Scale = 30 + Math.floor(Math.random()*71);
 	if(paras[0]==1) {
 		this.Scale = this.Scale * 1.3;
 	} else {
@@ -50,27 +52,30 @@ function Asteroid(paras) {
   
 // Paint the Asteroid
 this.draw = function() {
-	c.save();
-	c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
-	c.translate(this.Scale, this.Scale);
-	c.rotate(this.direction + this.spin * TO_RADIANS);
-	if(this.aType==1) {
-		this.graphic = asteroidImage1;
-	} else {
-		this.graphic = asteroidImage2;
+	if(this.inRange == true) {
+		c.save();
+		c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
+		c.translate(this.Scale*z, this.Scale*z);
+		c.rotate(this.direction + this.spin * TO_RADIANS);
+		if(this.aType==1) {
+			this.graphic = asteroidImage1;
+		} else {
+			this.graphic = asteroidImage2;
+		}
+		c.drawImage(this.graphic, -this.Size*z, -this.Size*z, this.Scale*z, this.Scale*z);
+		if(toggleDebug==true) {
+			c.fillStyle="green";
+			c.fillRect(-5,-5,10,10);
+			c.beginPath();
+			c.strokeStyle = 'green';
+			c.arc(0,0,this.collisionRadius*z,0,2*Math.PI);		
+			c.stroke();
+			c.font="30px Arial";
+			c.fillText(this.hit,10,20);
+		}
+		c.restore();
+		AsteroidsPainted += 1;
 	}
-	c.drawImage(this.graphic, -this.Size, -this.Size, this.Scale, this.Scale);
-	if(toggleDebug==true) {
-		c.fillStyle="green";
-		c.fillRect(-5,-5,10,10);
-		c.beginPath();
-		c.strokeStyle = 'green';
-		c.arc(0,0,this.collisionRadius,0,2*Math.PI);		
-		c.stroke();
-		c.font="30px Arial";
-		c.fillText(this.hit,10,20);
-	}
-	c.restore();
 }
 
 
@@ -147,7 +152,7 @@ this.detectCollisions = function() {
 			deployedMunitions[i].y,
 			this.x + this.Scale,
 			this.y + this.Scale,
-			this.collisionRadius);
+			this.collisionRadius+10*z);
 
 		if(toggleDebug==true) {
 			c.save();
@@ -194,15 +199,17 @@ this.detectCollisions = function() {
 
 // Paint Asteroids objects, held in an array
 function paintAsteroids(){
-
+	AsteroidsPainted = 0;
 	for (var i = 0; i < Game.asteroids.length; i++) {
 		Game.asteroids[i].draw();
 		//Game.printToDebugConsole("How many a-droids: " + Game.asteroids.length);
+		
 	}
 }
 
 // Update Asteroids objects
 function updateAsteroids() {
+
 	for (var i = 0; i < Game.asteroids.length; i++) {
 
 		Game.asteroids[i].update();
@@ -211,15 +218,23 @@ function updateAsteroids() {
 			Game.asteroids.splice(i, 1);
 		}
 		// If the asteroid has drifted WAY away from the current center
-		// of the screen, remove it.
+		// of the screen, dont deal with it.
 		var distanceX = Math.abs(Game.asteroids[i].x - gameMap.currentX);
-		if (distanceX > 3000) {
-			Game.asteroids.splice(i, 1);
+		if (distanceX > (gameMap.canvasWidth/2)/z) {
+			Game.asteroids[i].inRange = false;
+			//Game.asteroids.splice(i, 1);
+		} else {
+			Game.asteroids[i].inRange = true;
 		}
 		var distanceY = Math.abs(Game.asteroids[i].y - gameMap.currentY);
-		if (distanceY > 3000) {
-			Game.asteroids.splice(i, 1);
+		if (distanceY > (gameMap.canvasHeight/2)/z) {
+			Game.asteroids[i].inRange = false;
+			//Game.asteroids.splice(i, 1);
+		} else {
+			Game.asteroids[i].inRange = true;
 		}
+		
+		
 	}
 }
 

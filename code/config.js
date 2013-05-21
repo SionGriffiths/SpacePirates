@@ -5,7 +5,7 @@
 // Instantiate variables
 
 var clockCycle = 1; // (1 - 60) based on game cycles per second (fps).
-
+var z = 1.0;
 var canvasE;
 var c;
 var fps = 60;
@@ -40,3 +40,6 @@ var instructionsDisplayed = true;
 
 var toggleSunEffect = true;
 var toggleSound = true;
+
+var AsteroidsPainted = 0;
+var PlanetsPainted = 0;

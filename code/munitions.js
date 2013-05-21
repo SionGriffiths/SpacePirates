@@ -30,20 +30,20 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 	this.draw = function() {
 
 		if (!(this.destroyed)) {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"red");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-20, -20, 40, 40);
+			c.fillRect(-20*z, -20*z, 40*z, 40*z);
 		}
 		
 		else {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"red");
 			gradient.addColorStop(0.5, "orange");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-200, -200, 800, 800);
+			c.fillRect(-200*z, -200*z, 800*z, 800*z);
 		}
 	}
 	
@@ -115,21 +115,21 @@ function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggress
 	this.draw = function() {
 
 		if (!(this.destroyed)) {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"blue");
 			gradient.addColorStop(0.5, "yellow");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-20, -20, 40, 40);
+			c.fillRect(-20*z, -20*z, 40*z, 40*z);
 		}
 		
 		else {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"blue");
 			gradient.addColorStop(0.5, "yellow");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-200, -200, 800, 800);
+			c.fillRect(-200*z, -200*z, 800*z, 800*z);
 		}
 	}
 	
@@ -202,37 +202,37 @@ function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, a
 	this.draw = function() {
 		
 		if (!(this.destroyed)) {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"green");
 			gradient.addColorStop(0.5, "#0E8016");
 			gradient.addColorStop(0.8, "#57FF62");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-20, -20, 40, 40);
-			var gradient = c.createRadialGradient(0, 15, this.innerSize, 0, 15, this.outerSize);
+			c.fillRect(-20*z, -20*z, 40*z, 40*z);
+			var gradient = c.createRadialGradient(0, 15, this.innerSize*z, 0, 15, this.outerSize*z);
 			gradient.addColorStop(0.1,"green");
 			gradient.addColorStop(0.5, "#0E8016");
 			gradient.addColorStop(0.9, "#8FFF96");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-20, -20, 40, 40);
-			var gradient = c.createRadialGradient(0, -15, this.innerSize, 0, -15, this.outerSize);
+			c.fillRect(-20*z, -20*z, 40*z, 40*z);
+			var gradient = c.createRadialGradient(0, -15, this.innerSize*z, 0, -15, this.outerSize*z);
 			gradient.addColorStop(0.1,"green");
 			gradient.addColorStop(0.5, "#0E8016");
 			gradient.addColorStop(0.9, "#8FFF96");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-20, -40, 40, 40);
+			c.fillRect(-20*z, -40*z, 40*z, 40*z);
 		}
 		
 		else {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"green");
 			gradient.addColorStop(0.5, "#0E8016");
 			gradient.addColorStop(0.8, "#57FF62");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
-			c.fillRect(-100, -100, 200, 200);
+			c.fillRect(-100*z, -100*z, 200*z, 200*z);
 		}
 		
 		
