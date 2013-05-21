@@ -5,6 +5,8 @@
 // Instantiate variables
 
 var clockCycle = 1; // (1 - 60) based on game cycles per second (fps).
+var cycleTime = 0;
+
 var z = 1.0;
 var canvasE;
 var c;
@@ -36,6 +38,7 @@ var fuel = 100;
 var pewN = 1;
 
 var toggleDebug = false;
+var togglePerformance = false;
 var instructionsDisplayed = true;
 
 var toggleSunEffect = true;

@@ -86,13 +86,15 @@ function keyEventFired(e) {
 	case 84:	toggleInstructions();
 				break;
 				
-	// L - toggle sun effect
-	case 76:	if (toggleSunEffect) { toggleSunEffect = false; }
-				else { toggleSunEffect = true; }
+	// L - toggle performance
+	case 76:	if (togglePerformance) { togglePerformance = false; }
+				else { togglePerformance = true; }
+				break;
 				
 	// J - toggle sound effects
 	case 74:	if (toggleSound) { toggleSound = false; }
 				else { toggleSound = true; }
+				break;
 	
 	// + - ZOOOOOOOOOM
 	case 187:	z += 0.25;

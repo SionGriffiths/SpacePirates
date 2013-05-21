@@ -209,14 +209,14 @@ function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, a
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
 			c.fillRect(-20*z, -20*z, 40*z, 40*z);
-			var gradient = c.createRadialGradient(0, 15, this.innerSize*z, 0, 15, this.outerSize*z);
+			var gradient = c.createRadialGradient(0, 12*z, this.innerSize*z, 0, 12*z, this.outerSize*z);
 			gradient.addColorStop(0.1,"green");
 			gradient.addColorStop(0.5, "#0E8016");
 			gradient.addColorStop(0.9, "#8FFF96");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
 			c.fillRect(-20*z, -20*z, 40*z, 40*z);
-			var gradient = c.createRadialGradient(0, -15, this.innerSize*z, 0, -15, this.outerSize*z);
+			var gradient = c.createRadialGradient(0, -12*z, this.innerSize*z, 0, -12*z, this.outerSize*z);
 			gradient.addColorStop(0.1,"green");
 			gradient.addColorStop(0.5, "#0E8016");
 			gradient.addColorStop(0.9, "#8FFF96");
@@ -330,7 +330,7 @@ function paintDeployedMunitions() {
 				c.save();
 				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
 				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
-				c.translate(-18, -15);
+				c.translate(-16*z, -17*z);
 				deployedMunitions[i].draw();
 				
 				if(toggleDebug==true) {
@@ -348,7 +348,7 @@ function paintDeployedMunitions() {
 				c.save();
 				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
 				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
-				c.translate(18, -15);
+				c.translate(16*z, -17*z);
 				deployedMunitions[i].draw();
 				
 				if(toggleDebug==true) {
@@ -366,7 +366,7 @@ function paintDeployedMunitions() {
 				c.save();
 				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
 				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
-				c.translate(0, -50);
+				c.translate(0*z, -50*z);
 				deployedMunitions[i].draw();
 				
 				if(toggleDebug==true) {

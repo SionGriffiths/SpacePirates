@@ -268,7 +268,7 @@ Game.paint = function() {
 
 	//console.log("Asteroids Array" + Game.asteroids.toString());
 
-	if(toggleDebug == true){
+	if(toggleDebug){
 		c.save();
 		c.font="12px Verdana";
 		var pcount = "P:" + Game.planets.length;
@@ -283,14 +283,29 @@ Game.paint = function() {
 		c.fillText(astpaint, 10, 50);
 		c.translate(0, 20);
 		c.fillText(planpaint, 10, 50);
+		c.translate(0, 20);
+		c.fillText(cycleTime, 10, 50);
 		c.restore();
 
+		//c.save();
+		//c.rect(10, 10, gameMap.canvasWidth-20, gameMap.canvasHeight-20);
+		//c.lineWidth = 1;
+        //c.strokeStyle = 'blue';
+        //c.stroke();
+		//c.restore();
+	}
+	
+	if (togglePerformance) {
+		
+		var cyclePercentage = ((cycleTime / (1000/fps)) * 100);
+	
 		c.save();
-		c.rect(10, 10, gameMap.canvasWidth-20, gameMap.canvasHeight-20);
-		c.lineWidth = 1;
-      	c.strokeStyle = 'blue';
-      	c.stroke();
+		c.font="12px Verdana";
+		c.fillStyle = "white";
+		c.translate(0, 20);
+		c.fillText("Percentage cycle time: " + cyclePercentage.toFixed(0), 10, 50);
 		c.restore();
+	
 	}
 
 }

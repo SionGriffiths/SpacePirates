@@ -142,13 +142,24 @@
 	
 	Game.run = function() {
 		setInterval(function() {
+			
+			var date = new Date();
+			var dateTime = date.getTime();
+			
 			Game.paint();
 			Game.update();
 			
 			clockCycle += 1;
 			if (clockCycle > fps) { clockCycle = 1; }
 		
+			if (clockCycle == 60) { 
 			
+				var postCycleDate = new Date();
+				var postCycleTime = postCycleDate.getTime();
+			
+				cycleTime = postCycleTime - dateTime;
+		
+			}
 		}, waitTime);
 	};
 	
