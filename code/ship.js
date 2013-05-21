@@ -434,8 +434,6 @@ Ship.getCurrentThrusterImage = function() {
 		}
 	}
 
-
-
 	this.thrustEffect += 1;
 	
 	if (this.thrustEffect == 4) { 

@@ -218,6 +218,12 @@ Game.load = function() {
 		planetImage8.src = "images/planets/planet8.png";
 	}, 600);
 
+
+
+	setTimeout(function() {
+		for(var i = 0; i < 4; i++) { var initialSolarSystem = new SolarSystem();}		
+	}, 900);
+
 	// Call the game to run, after finished loading
 	setTimeout(function() {
 		Game.run();
@@ -234,9 +240,9 @@ Game.load = function() {
 	var initialAsteroid6 = new Asteroid(newAst);
 	var initialAsteroid7 = new Asteroid(newAst);
 
-	setTimeout(function() {
-		for(var i = 0; i < 30; i++) { var tempPlanet = new Planet();}
-	}, 1000);
+	//setTimeout(function() {
+		//for(var i = 0; i < 30; i++) { var tempPlanet = new Planet();}
+	//}, 1000);
 	
 }
 
@@ -247,6 +253,7 @@ Game.paint = function() {
 
 	paintBackground();
 	paintFuelGuage();
+	paintSolarSystems();	
 	paintPlanets();		
 	paintDeployedMunitions();
 	paintAsteroids();
@@ -275,6 +282,7 @@ Game.paint = function() {
 Game.update = function() {
 	
 	Ship.update();
+	updateSolarSystems();
 	updatePlanets();
 	updateEnemyShips();
 	paintFuelGuage();
@@ -408,7 +416,7 @@ Game.firePlayerShipLaserPulse = function(munitionsType) {
 	
 }
 
-
+Game.solarsystems = new Array();
 Game.enemyShips = new Array();
 Game.asteroids = new Array();
 Game.planets = new Array();
@@ -459,6 +467,7 @@ function fireNewMunitions() {
 	
 	
 }
+
 
 
 

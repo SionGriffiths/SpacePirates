@@ -94,9 +94,9 @@ function keyEventFired(e) {
 				else { toggleSound = true; }
 	
 	// K - PLANET! :D
-	case 75:	var newPlanet = new Planet();
+	case 75:	//var newPlanet = new Planet();
 				break;
-				
+
 	}
 }
 

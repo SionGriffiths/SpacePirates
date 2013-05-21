@@ -11,18 +11,32 @@ var planetImage6;
 var planetImage7;
 var planetImage8;
 
-
 var planetImages = new Array();
 
-function Planet() {
+function Planet(paras) {
+
+// if(typeof paras[0] == 'undefined'){
+// 	this.PlanetType = Math.floor(Math.random()*8);
+// } else {
+// 	if(paras[0]=='random'){
+// 		this.PlanetType = Math.floor(Math.random()*8);
+// 	} else {
+// 		this.PlanetType = paras[0];
+// 	}	
+// }
 this.PlanetType = Math.floor(Math.random()*8);
 this.image;
 this.image = choosePlanetTypeImage(this.PlanetType);
 
-this.xandy = getNewPlanetPosition();
 
-this.x = this.xandy[0];
-this.y = this.xandy[1];
+	// this.xandy = getNewPlanetPosition();
+	// this.x = this.xandy[0];
+	// this.y = this.xandy[1];
+
+	this.x = paras[1];
+	this.y = paras[2];
+
+
 
 this.ScaleRandom = (1+Math.floor(Math.random()*401));
 this.Scale = 200 + this.ScaleRandom;
@@ -53,6 +67,8 @@ if(this.random % 5 == 0) {
 	}
 }
 
+if(this.Scale > paras[3]) {this.Scale = paras[3];}
+
 
 
 
@@ -81,6 +97,7 @@ this.draw = function() {
 	c.save();
 	c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 	c.rotate(this.Spin * TO_RADIANS);
+	//alert(this.image);
 	c.drawImage(this.image, -this.Size, -this.Size, this.Scale, this.Scale);	
 	if(toggleDebug==true) {
 		c.fillStyle="blue";
