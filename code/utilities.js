@@ -139,11 +139,26 @@ function toggleInstructions() {
 }
 
 function getCirclePoints(centerX,centerY,radius,segments){
-  var totalPoints = new Array();
+  var totalPoints = new Array(); 
   for(var i=0; i<segments; i++){
     cx = centerX+radius*Math.sin(i*2*Math.PI/segments);
     cy = centerY+radius*Math.cos(i*2*Math.PI/segments);
     totalPoints.push({'x':cx,'y':cy});
   }
+ // alert(totalPoints);
   return totalPoints;
+}
+
+function getOrbitPlot(acenterX,centerY,radius,distance){
+    var newPoints = new Array();
+    x = acenterX+radius*Math.sin(distance*2*Math.PI/1000);
+    y =centerY+radius*Math.cos(distance*2*Math.PI/1000);
+
+    //alert(acenterX);
+
+    newPoints[0] = x;
+    newPoints[1] = y;
+
+    //alert(newPoints);
+  return newPoints;
 }

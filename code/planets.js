@@ -15,13 +15,13 @@ var planetImages = new Array();
 
 function Planet(paras) {
 
-// if(typeof paras[0] == 'undefined'){
+// if(typeof paras[1] == 'undefined'){
 // 	this.PlanetType = Math.floor(Math.random()*8);
 // } else {
-// 	if(paras[0]=='random'){
+// 	if(paras[1]=='random'){
 // 		this.PlanetType = Math.floor(Math.random()*8);
 // 	} else {
-// 		this.PlanetType = paras[0];
+// 		this.PlanetType = paras[1];
 // 	}	
 // }
 this.PlanetType = Math.floor(Math.random()*8);
@@ -33,45 +33,20 @@ this.image = choosePlanetTypeImage(this.PlanetType);
 	// this.x = this.xandy[0];
 	// this.y = this.xandy[1];
 
-	this.x = paras[1];
-	this.y = paras[2];
+	this.x = paras[2];
+	this.y = paras[3];
 
+var SSNo = paras[0];
+this.SolarSystemNumber = SSNo;
 
-
-this.ScaleRandom = (1+Math.floor(Math.random()*401));
+this.ScaleRandom = (1+Math.floor(Math.random()*paras[4]));
 this.Scale = 200 + this.ScaleRandom;
 if(this.random % 8 == 0) {this.Scale = this.Scale * 0.7;}
 if(this.random % 20 == 0) {this.Scale = this.Scale * 2.0;} 
 if(this.Scale < 100) {this.Scale = 100;}
 
-if(this.random % 5 == 0) {
-	this.differenceOrigin = liesWithinRadius(
-								0,
-								0,
-								this.x,
-								this.y,
-								2000);
-	if (!this.differenceOrigin) {
-		this.Scale = this.Scale * 1.5; 
-	}
-}
-if(this.random % 5 == 0) {
-	this.differenceOrigin2 = liesWithinRadius(
-								0,
-								0,
-								this.x,
-								this.y,
-								6000);
-	if (!this.differenceOrigin2) {
-		this.Scale = this.Scale * 3; 
-	}
-}
 
-if(this.Scale > paras[3]) {this.Scale = paras[3];}
-
-
-
-
+if(this.Scale > paras[4]) {this.Scale = paras[4] - (this.Scale/4);}
 
 
 this.Size = this.Scale / 2;
@@ -89,6 +64,10 @@ if(this.Size > 200) {
 }
 
 
+this.OrbitPosition = paras[6]; 
+this.OrbitDistance = paras[5];
+this.OrbitSpeed = 0.05;
+this.plot = new Object();
 
 addPlanet(this);
 
@@ -112,6 +91,18 @@ this.draw = function() {
 
 this.update = function(){
 	this.Spin += this.SpinSpeed;
+	this.OrbitPosition += this.OrbitSpeed;
+	var OrbitData = Array(
+				Game.solarsystems[this.SolarSystemNumber].x,
+				Game.solarsystems[this.SolarSystemNumber].y,
+				this.OrbitDistance,
+				this.OrbitPosition
+				);
+	this.plot = getOrbitPlot(OrbitData[0], OrbitData[1], OrbitData[2], OrbitData[3]);
+
+	this.x = this.plot[0];
+	this.y = this.plot[1];
+	//alert(getOrbitPlot(OrbitData));
 }
 
 
