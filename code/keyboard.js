@@ -69,7 +69,8 @@ function keyEventFired(e) {
 		
 		
 	// P - place an enemy ship - development convenience
-	case 80:	EnemyShip.instantiate(500, 300);
+	case 80:	var enemyShip = new EnemyShip();
+				enemyShip.instantiate(0,0);
 				break;
 
 	// O - Place an asteroid

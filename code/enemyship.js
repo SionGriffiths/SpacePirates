@@ -126,8 +126,8 @@ this.trackOntoScreen = function() {
 				break;
 				
 	// Choose a central point, and face it	
-	case 1:		this.nextLocationX = gameMap.currentX;
-				this.nextLocationY = 150 + gameMap.currentY + Math.floor((Math.random() * 150));
+	case 1:		this.nextLocationX = gameMap.currentX + (-600 + Math.floor(Math.random() * 1200));
+				this.nextLocationY = gameMap.currentY + (-400 + Math.floor(Math.random() * 800));
 				var angleDegree = findAngleBetweenTwoPoints(this.x, this.y, this.nextLocationX, this.nextLocationY);
 				var faceDirection = 360 - angleDegree - 90;
 				if (faceDirection < 0) {faceDirection += 360;}
@@ -257,12 +257,9 @@ function paintEnemyShips(){
 function updateEnemyShips() {
 	//for (var i = 0; i < Game.enemyShips.length; i++) {
 	
-		// Only chooses zero for now, as only one object
-		// is created, the same one :D
-		
-		if (Game.enemyShips.length > 0) {
-			Game.enemyShips[0].update();
-			Game.enemyShips[0].detectCollisions();
+		for (var i = 0; i < Game.enemyShips.length; i++) {
+			Game.enemyShips[i].update();
+			Game.enemyShips[i].detectCollisions();
 		}
 		
 
