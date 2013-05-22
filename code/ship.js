@@ -446,7 +446,8 @@ Ship.getCurrentThrusterImage = function() {
 
 
 Ship.CollisionDetection = function(){
-
+	scsD = new Date();
+	shipCollisionStart = scsD.getTime();
 	//this.ShieldActive = false;
 	for (var i = 0; i < Game.planets.length; i++) {
 		var collisionOccured = liesWithinRadius(
@@ -545,5 +546,8 @@ Ship.CollisionDetection = function(){
 			c.restore();
 		}
 	}
+
+	scfD = new Date();
+	shipCollisionFinish = scfD.getTime();
 	
 }

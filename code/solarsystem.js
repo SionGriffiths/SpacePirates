@@ -9,7 +9,7 @@ function SolarSystem() {
 	this.xandy = getNewSolarSystemPosition();
 	this.x = this.xandy[0];
 	this.y = this.xandy[1];
-	this.Scale = 5000;
+	this.Scale = 1000*(3+Math.round(Math.random()*7));
 	this.Size = this.Scale / 2;
 	this.colour = getStarColour(Math.floor(Math.random()*10));
 

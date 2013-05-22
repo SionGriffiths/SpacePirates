@@ -44,7 +44,7 @@ function drawFuel(fuelpiece) {
 	} else {
 		fuelpiece.graphic = fuelImage2;
 	}
-	c.drawImage(fuelpiece.graphic, fuelpiece.size, fuelpiece.size);
+	c.drawImage(fuelpiece.graphic, -(fuelpiece.size/2), -(fuelpiece.size/2), fuelpiece.size*z, fuelpiece.size*z);
 	if(toggleDebug==true) {
 		c.beginPath();
 		c.strokeStyle = 'yellow';

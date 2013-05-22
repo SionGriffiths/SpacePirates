@@ -31,11 +31,9 @@ function keyEventFired(e) {
 	
 	// W
 	case 87:	Game.movePlayerShip("Forwards");
-
 				Game.playThrust();
-
 				break;
-				
+
 	// S
 	case 83:	Game.movePlayerShip("Backwards");
 				break;
@@ -49,7 +47,7 @@ function keyEventFired(e) {
 				break;
 				
 	// ESC
-	case 27:	gameRunning = false;
+	case 27:	Game.togglePause();
 				break;
 				
 	// SPACEBAR - Red Laser
@@ -97,11 +95,9 @@ function keyEventFired(e) {
 				break;
 	
 	// + - ZOOOOOOOOOM
-	case 187:	z += 0.25;
-				if(z>2.0){z=2.0;}
+	case 187:	gameMap.changeZoomLevel('down');
 				break;
-	case 189:	z -= 0.25;
-				if(z<0.25){z=0.05;}
+	case 189:	gameMap.changeZoomLevel('up');
 				break;
 
 	}
@@ -131,8 +127,7 @@ function keyEventOver(e) {
 					
 	// D
 	case 68:	Game.stopMovePlayerShip("Right");
-				break;
-				
+				break;				
 					
 	// SPACEBAR - Red Laser
 	case 32:	Game.playerFiringMunitions = false;
