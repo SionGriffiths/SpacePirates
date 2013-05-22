@@ -219,17 +219,53 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		planetImage8.src = "images/planets/planet8.png";
 	}, 600);
-		setTimeout(function() {
+	setTimeout(function() {
 		sunImage2 = new Image();
 		sunImage2.onload = updateProgressBar();
 		imageLoadProgress += 1;
 		sunImage2.src = "images/suns/sun2.png";
 	}, 700);
-		setTimeout(function() {
+	setTimeout(function() {
+		bg0 = new Image();
+		bg0.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bg0.src = "images/backgrounds/starsmicro.jpg";
+	}, 700);
+	setTimeout(function() {
 		bg1 = new Image();
 		bg1.onload = updateProgressBar();
 		imageLoadProgress += 1;
-		bg1.src = "images/backgrounds/stars.jpg";
+		bg1.src = "images/backgrounds/starstiny.jpg";
+	}, 700);
+	setTimeout(function() {
+		bg2 = new Image();
+		bg2.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bg2.src = "images/backgrounds/starssmall.jpg";
+	}, 700);
+	setTimeout(function() {
+		bg3 = new Image();
+		bg3.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bg3.src = "images/backgrounds/starsnormal.jpg";
+	}, 700);
+	setTimeout(function() {
+		bg4 = new Image();
+		bg4.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bg4.src = "images/backgrounds/starsmed.jpg";
+	}, 700);
+	setTimeout(function() {
+		bg5 = new Image();
+		bg5.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bg5.src = "images/backgrounds/starsbig.jpg";
+	}, 700);
+	setTimeout(function() {
+		bg6 = new Image();
+		bg6.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bg6.src = "images/backgrounds/starshuge.jpg";
 	}, 700);
 
 
@@ -283,7 +319,8 @@ Game.paint = function() {
 		paintBackground();
 		paintFuelGuage();
 		paintSolarSystems();	
-		paintPlanets();		
+		paintPlanets();	
+		Ship.paint();	
 	}
 	
 	
@@ -352,10 +389,21 @@ Game.update = function() {
 	}
 }
 
+Game.zoomLevelStore = 3;
 
 Game.togglePause = function(){
 	if(Game.paused==true){Game.paused=false;}
 	if(Game.paused==false){Game.paused=true;}
+}
+
+Game.toggleMap = function(){
+	if(Game.mode=='map'){
+		gameMap.changeZoomLevel('to', 3);
+	}
+	if(Game.mode=='play'){
+		Game.zoomLevelStore = gameMap.zoomLevel;
+		gameMap.changeZoomLevel('to', 7);
+	}
 }
 
 

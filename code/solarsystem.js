@@ -9,39 +9,38 @@ function SolarSystem() {
 	this.xandy = getNewSolarSystemPosition();
 	this.x = this.xandy[0];
 	this.y = this.xandy[1];
-	this.Scale = 1000*(3+Math.round(Math.random()*7));
+	this.Scale = 2000*(2+Math.round(Math.random()*7));
 	this.Size = this.Scale / 2;
+	this.gSize = this.Scale / 2.2;
 	this.colour = getStarColour(Math.floor(Math.random()*10));
 
 
 	if(Game.solarsystems.length>0) {this.SolarSystemNumber = Game.solarsystems.length;} else {this.SolarSystemNumber = 0;}
 
 
-	this.InnerPlanetCount = 2+(1+Math.round(Math.random()*3));
-	this.OuterPlanetCount = 2+(1+Math.round(Math.random()*4));
+	this.PlanetCount = 2+(1+Math.round(Math.random()*8));
 	this.AsteroidsCount = 10+(1+Math.round(Math.random()*50));
+	this.PlanetOrbit = 1000;
+
+	this.PlanetOrbitStep = (Math.PI*(this.PlanetOrbit*2))/this.PlanetCount;
+	this.PlanetOffset = 500;
+	this.PlanetSize = 100;
 
 
-	this.InnerPlanetOrbit = this.Size/2.3;
-	this.OuterPlanetOrbit = this.Size/1.2;
-
-	this.InnerPlanetOrbitStep = (Math.PI*(this.InnerPlanetOrbit*2))/this.InnerPlanetCount;
-	this.OuterPlanetOrbitStep = (Math.PI*(this.OuterPlanetOrbit*2))/this.OuterPlanetCount;
-
-
-	this.InnerPlanets = Array();
-	this.InnerPlanetCoords = getCirclePoints(this.x,this.y,this.InnerPlanetOrbit,this.InnerPlanetCount);
-	for(var i = 1; i < this.InnerPlanetCount; i++){
-		var PlanetOffset = Math.floor(Math.random()*300);
-		var planetVars = Array(this.SolarSystemNumber,'random',this.InnerPlanetCoords[i-1].x,this.InnerPlanetCoords[i-1].y,250,this.InnerPlanetOrbit-PlanetOffset,this.InnerPlanetOrbitStep*i);
-		this.InnerPlanets[i] = new Planet(planetVars);
-	}
-	this.OuterPlanets = Array();
-	this.OuterPlanetCoords = getCirclePoints(this.x,this.y,this.OuterPlanetOrbit,this.OuterPlanetCount);
-	for(var i = 1; i < this.OuterPlanetCount; i++){
-		var PlanetOffset = Math.floor(Math.random()*500);
-		var planetVars = Array(this.SolarSystemNumber,'random',this.OuterPlanetCoords[i-1].x,this.OuterPlanetCoords[i-1].y,700,this.OuterPlanetOrbit-PlanetOffset,this.OuterPlanetOrbitStep*i);
-		this.OuterPlanets[i] = new Planet(planetVars);
+	this.Planets = Array();
+	this.PlanetCoords = getCirclePoints(this.x,this.y,this.PlanetOrbit,this.PlanetCount);
+	for(var i = 1; i < this.PlanetCount; i++){
+		this.PlanetOffset += this.PlanetSize*2.2;
+		this.PlanetOrbitStep = (Math.PI*(this.PlanetOrbit*2))/(1+Math.round(Math.random()*11));
+		var planetVars = Array(this.SolarSystemNumber,'random',this.PlanetCoords[i-1].x,this.PlanetCoords[i-1].y,this.PlanetSize,this.PlanetOffset,this.PlanetOrbitStep*i);
+		this.Planets[i] = new Planet(planetVars);
+		if(i>(this.PlanetCount/2)) {
+			this.PlanetSize -= (1+Math.floor(Math.random()*200));
+		}
+		else {
+			this.PlanetSize += (1+Math.floor(Math.random()*300));
+		}
+		
 	}
 	this.Asteroids = Array();
 	this.AsteroidsCoords = getCirclePoints(this.x,this.y,this.Size/0.9,this.AsteroidsCount);
@@ -61,7 +60,7 @@ function SolarSystem() {
 		c.save();
 		
 		// Create gradient
-		var grd = c.createRadialGradient(gameMap.translateX(this.x),gameMap.translateY(this.y),0,gameMap.translateX(this.x),gameMap.translateY(this.y),this.Size*z);
+		var grd = c.createRadialGradient(gameMap.translateX(this.x),gameMap.translateY(this.y),0,gameMap.translateX(this.x),gameMap.translateY(this.y),this.gSize*z);
 		
 		
 		grd.addColorStop( 0.1, 'rgba('+this.colour+',1)');
@@ -84,7 +83,7 @@ function SolarSystem() {
 		
 		// Fill with gradient
 		c.fillStyle=grd;
-		c.fillRect(gameMap.translateX(this.x-this.Size),gameMap.translateY(this.y-this.Size), this.Scale*z, this.Scale*z);
+		c.fillRect(gameMap.translateX(this.x-this.gSize),gameMap.translateY(this.y-this.gSize), this.Scale*z, this.Scale*z);
 		c.drawImage(sunImage2, gameMap.translateX(this.x - (sunImage2.width/2)), gameMap.translateY(this.y - (sunImage2.height/2)), sunImage2.width*z, sunImage2.height*z);
 		
 		
@@ -158,7 +157,7 @@ function getNewSolarSystemPosition() {
 									Game.solarsystems[i].y,
 									newX,
 									newY,
-									Game.solarsystems[i].Scale*1.3);
+									Game.solarsystems[i].Scale*1.8);
 
 				if (tooClose) {
 					theseXYOK = false;

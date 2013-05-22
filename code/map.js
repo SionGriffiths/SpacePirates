@@ -57,39 +57,55 @@ function Map() {
 	
 	}
 
-	this.changeZoomLevel = function(direction){
+	this.changeZoomLevel = function(direction, level){
 		if(direction=="up"){
-			this.zoomLevel +=1;
-			if(this.zoomLevel > 7){
-				this.zoomLevel = 7;
+			this.zoomLevel +=level;
+			if(this.zoomLevel > 8){
+				this.zoomLevel = 8;
 			}
 		}
 		if(direction=="down"){
-			this.zoomLevel -=1;
+			this.zoomLevel -=level;
 			if(this.zoomLevel < 1){
 				this.zoomLevel = 1;
 			}
+		}		
+		if(direction=="to") {
+			this.zoomLevel = level;
 		}
+
 		switch(this.zoomLevel){
 			case 1: z = 2.0;
+					Game.mode = 'play';
 					break;
 			case 2: z = 1.5;
+					Game.mode = 'play';
 					break;
 			case 3: z = 1;
+					Game.mode = 'play';
 					break;
 			case 4: z = 0.75;
+					Game.mode = 'play';
 					break;
 			case 5: z = 0.5;
+					Game.mode = 'play';
 					break;
 			case 6: z = 0.25;
 					Game.mode = 'play';
 					break;
-			case 7: z = 0.05;
+			case 7: z = 0.03;
+					Game.mode = 'map';
+					break;
+			case 8: z = 0.01;
 					Game.mode = 'map';
 					break;
 		}
 	}
 	
+
+	this.toggleMapMode = function(){
+
+	}
 
 	// this.getZoomStarCount = function(){
 	// 	var stars = 80;

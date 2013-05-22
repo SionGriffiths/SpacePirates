@@ -46,7 +46,7 @@ if(this.random % 20 == 0) {this.Scale = this.Scale * 2.0;}
 if(this.Scale < 100) {this.Scale = 100;}
 
 
-if(this.Scale > paras[4]) {this.Scale = paras[4] - (this.Scale/4);}
+if(this.Scale > paras[4]) {this.Scale = paras[4] + (this.Scale/4);}
 
 
 this.Size = this.Scale / 2;

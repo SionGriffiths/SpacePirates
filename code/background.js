@@ -13,23 +13,51 @@ var numOfStarColours;
 function paintBackground(){
 	bpsD = new Date();
 	bgPaintStart = bpsD.getTime();
-	// Paint the background black
+	// Paint the background image
+	var strSz = 1.75;
+	switch(gameMap.zoomLevel){
+		case 1: bg = bg0; strSz = 3.40; break;
+		case 2: bg = bg1; strSz = 3.10; break;
+		case 3: bg = bg2; strSz = 2.50; break;
+		case 4: bg = bg3; strSz = 2.30; break;
+		case 5: bg = bg4; strSz = 2.20; break;
+		case 6: bg = bg5; strSz = 2.00; break;
+		case 7: bg = bg6; break;
+	}	
 	c.save();
-	c.drawImage(bg1, 0, 0,canvasE.width, canvasE.height);
+	c.drawImage(bg, 0, 0,canvasE.width, canvasE.height);
 	c.restore();
 	
-
-	updateStarPositions();	
+	if(Game.mode=='play'){
+		updateStarPositions();
 	
-	for (var i = 0; i < backgroundStars.length; i++){
-		c.save();
-		c.fillStyle = backgroundStars[i][3];
-		c.font = backgroundStars[i][2]*z + "px arial";
-		c.shadowColor = "white";
-		c.shadowBlur = backgroundStars[i][2] / 10;
-		c.fillText(star, backgroundStars[i][0]*z, backgroundStars[i][1]*z);
-		c.restore();
+				
+		for (var i = 0; i < backgroundStars.length; i++){
+			c.save();
+			c.globalAlpha=0.25+(50/backgroundStars[i][2]);
+			// c.fillStyle = backgroundStars[i][3];
+			// c.font = backgroundStars[i][2]*z + "px arial";
+			// c.shadowColor = "white";
+			// c.shadowBlur = backgroundStars[i][2] / 10;
+			// c.fillText(star, backgroundStars[i][0]*z, backgroundStars[i][1]*z);
+			c.shadowColor=backgroundStars[i][3];
+  			c.shadowBlur = 2*z; 
+			c.strokeStyle = backgroundStars[i][3];
+			//c.lineWidth = (backgroundStars[i][2]/14)*z;
+			c.lineWidth = strSz;
+			c.beginPath();
+			c.moveTo(backgroundStars[i][4], backgroundStars[i][5]);
+			c.lineTo(backgroundStars[i][0]+(1*z), backgroundStars[i][1]+(1*z));
+			c.stroke();
+			c.globalAlpha=0.8
+			c.restore();
+
+		}
+		
 	}
+
+
+
 	
 	bpfD = new Date();
 	bgPaintFinish = bpfD.getTime();
@@ -73,6 +101,8 @@ function initializeBackground(){
 		starData.push(starDataY);
 		starData.push(starDataSize);
 		starData.push(starDataColour);
+		starData.push(starDataX+2);
+		starData.push(starDataY+2);
 		
 		backgroundStars.push(starData);
 		previousMaps.push(backgroundStars);
@@ -84,51 +114,72 @@ function initializeBackground(){
 function updateStarPositions(){
 	// If the ship moves, move the stars very very slightly,
 	// with the largest (closest) ones moving more.
-	if (gameMap.boundaryShift) {
 	
-		for (var i = 0; i < backgroundStars.length; i++) {
-			
-			var movement = backgroundStars[i][2] / 45;
-			
-			switch (gameMap.boundaryShiftDirectionX) {
-			
-			case "Left": 	backgroundStars[i][0] += movement;
-							if ((backgroundStars[i][0] + 2) > canvasWidth) {
-								backgroundStars[i][0] = -2;
-								backgroundStars[i][1] = Math.floor(Math.random() * canvasHeight);
-							}
-							break;
-							
-			case "Right":	backgroundStars[i][0] -= movement;
-							if ((backgroundStars[i][0] - 2) < -2) {
-								backgroundStars[i][0] = canvasWidth + 2;
-								backgroundStars[i][1] = Math.floor(Math.random() * canvasHeight);
-							}
-							break;
-			}
+	
+	for (var i = 0; i < backgroundStars.length; i++) {
 
-			switch (gameMap.boundaryShiftDirectionY) {
-			
-			case "Up":		backgroundStars[i][1] += movement;
-							if ((backgroundStars[i][1] + 2) > canvasHeight) {
-								backgroundStars[i][1] = -2;
-								backgroundStars[i][0] = Math.floor(Math.random() * canvasWidth);
-							}
-							break;
-							
-			case "Down":	backgroundStars[i][1] -= movement;
-							if ((backgroundStars[i][1] - 2) < -2) {
-								backgroundStars[i][1] = canvasHeight + 2;
-								backgroundStars[i][0] = Math.floor(Math.random() * canvasWidth);
-							}
-							break;
-			}
-			
-			//if ((backgroundStars[i][0] + 
-			
+		backgroundStars[i][4] = backgroundStars[i][0];
+		backgroundStars[i][5] = backgroundStars[i][1];
+
+		if (gameMap.boundaryShift) {
+
+	
+
+		var movementX = ((backgroundStars[i][2] / 60)*z) * Math.cos((Ship.Direction-90) * TO_RADIANS);
+		var movementY = ((backgroundStars[i][2] / 60)*z) * Math.sin((Ship.Direction+90) * TO_RADIANS);
+
 		
+		
+
+		
+
+		switch (gameMap.boundaryShiftDirectionX) {
+		
+		case "Left": 	backgroundStars[i][0] += ((backgroundStars[i][2] / 20)*z) * Math.cos((Ship.Direction+90) * TO_RADIANS);
+						if ((backgroundStars[i][0] + 2) > canvasWidth) {
+							backgroundStars[i][0] = -2;
+							backgroundStars[i][1] = Math.floor(Math.random() * canvasHeight);
+							backgroundStars[i][4] = backgroundStars[i][0]-1;
+							backgroundStars[i][5] = backgroundStars[i][1]-1;
+						}
+						break;
+						
+		case "Right":	backgroundStars[i][0] -= ((backgroundStars[i][2] / 20)*z) * Math.cos((Ship.Direction-90) * TO_RADIANS);
+						if ((backgroundStars[i][0] - 2) < -2) {
+							backgroundStars[i][0] = canvasWidth + 2;
+							backgroundStars[i][1] = Math.floor(Math.random() * canvasHeight);
+							backgroundStars[i][4] = backgroundStars[i][0]-1;
+							backgroundStars[i][5] = backgroundStars[i][1]-1;
+						}
+						break;
 		}
+
+		switch (gameMap.boundaryShiftDirectionY) {
+		
+		case "Up":		backgroundStars[i][1] += ((backgroundStars[i][2] / 20)*z) * Math.sin((Ship.Direction+90) * TO_RADIANS);;
+						if ((backgroundStars[i][1] + 2) > canvasHeight) {
+							backgroundStars[i][1] = -2;
+							backgroundStars[i][0] = Math.floor(Math.random() * canvasWidth);
+							backgroundStars[i][4] = backgroundStars[i][0]-1;
+							backgroundStars[i][5] = backgroundStars[i][1]-1;
+						}
+						break;
+						
+		case "Down":	backgroundStars[i][1] -= ((backgroundStars[i][2] / 20)*z) * Math.sin((Ship.Direction-90) * TO_RADIANS);;
+						if ((backgroundStars[i][1] - 2) < -2) {
+							backgroundStars[i][1] = canvasHeight + 2;
+							backgroundStars[i][0] = Math.floor(Math.random() * canvasWidth);
+							backgroundStars[i][4] = backgroundStars[i][0]-1;
+							backgroundStars[i][5] = backgroundStars[i][1]-1;
+						}
+						break;
+		}
+		
+		//if ((backgroundStars[i][0] + 
+		}	
+	
 	}
+	
 	
 }
 
