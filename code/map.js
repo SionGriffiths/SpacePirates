@@ -20,6 +20,7 @@ function Map() {
 	this.boundaryShiftDirectionX;
 	this.boundaryShiftDirectionY;
 	
+	this.zoomLevel = 3;
 	
 	this.translateX = function(gameX) {
 	
@@ -55,7 +56,59 @@ function Map() {
 		this.boundaryShiftDirectionY = " ";
 	
 	}
+
+	this.changeZoomLevel = function(direction){
+		if(direction=="up"){
+			this.zoomLevel +=1;
+			if(this.zoomLevel > 7){
+				this.zoomLevel = 7;
+			}
+		}
+		if(direction=="down"){
+			this.zoomLevel -=1;
+			if(this.zoomLevel < 1){
+				this.zoomLevel = 1;
+			}
+		}
+		switch(this.zoomLevel){
+			case 1: z = 2.0;
+					break;
+			case 2: z = 1.5;
+					break;
+			case 3: z = 1;
+					break;
+			case 4: z = 0.75;
+					break;
+			case 5: z = 0.5;
+					break;
+			case 6: z = 0.25;
+					Game.mode = 'play';
+					break;
+			case 7: z = 0.05;
+					Game.mode = 'map';
+					break;
+		}
+	}
 	
+
+	// this.getZoomStarCount = function(){
+	// 	var stars = 80;
+	// 	switch(this.zoomLevel){
+	// 		case 1: stars = 20;
+	// 				break;
+	// 		case 2: stars = 40;
+	// 				break;
+	// 		case 3: stars = 80;
+	// 				break;
+	// 		case 4: stars = 320;
+	// 				break;
+	// 		case 5: stars = 1280;
+	// 				break;
+	// 		case 6: stars = 10240;
+	// 				break;
+	// 	}
+	// 	return stars;
+	// }
 	
 	/*
 	this.test = function() {

@@ -43,6 +43,7 @@
 <script type="text/javascript" src="code/munitions.js"></script>
 <script type="text/javascript" src="code/fuelCell.js"></script>
 <script type="text/javascript" src="code/asteroids.js"></script>
+<script type="text/javascript" src="code/hud.js"></script>
 
 <script type="text/javascript" src="code/game.js"></script>
 <script type="text/javascript" src="code/keyboard.js"></script>
@@ -138,7 +139,10 @@
 	var gameMap = new Map();
 	gameMap.initialize();
 	
-	
+	var postCycleDate;
+	var postCycleTime;
+	var cycleTemp;
+	var cycleTime;
 	
 	Game.run = function() {
 		setInterval(function() {
@@ -155,19 +159,37 @@
 			//	cycleSwitch = 0;
 			//}
 			
-			
+
+
+			postCycleDate = new Date();
+			postCycleTime = postCycleDate.getTime();
+		
+			cycleTemp += (postCycleTime - dateTime);
+			asteroidCollisionTemp += (asteroidCollisionFinish - asteroidCollisionStart);
+			shipCollisionTemp += (shipCollisionFinish - shipCollisionStart);
+			asteroidPaintTemp += (asteroidPaintFinish - asteroidPaintStart);
+			bgPaintTemp += (bgPaintFinish - bgPaintStart);			
 			
 			clockCycle += 1;
-			if (clockCycle > fps) { clockCycle = 1; }
+			if (clockCycle > fps) { clockCycle = 1;}
 		
-			if (clockCycle == 60) { 
+			if (clockCycle == fps) { 
 			
-				var postCycleDate = new Date();
-				var postCycleTime = postCycleDate.getTime();
-			
-				cycleTime = postCycleTime - dateTime;
+				cycleTime = cycleTemp/fps;
+				asteroidCollisionTime = asteroidCollisionTemp/fps;
+				shipCollisionTime = shipCollisionTemp/fps;
+				asteroidPaintTime = asteroidPaintTemp/fps;
+				bgPaintTime = bgPaintTemp/fps;
+
+				asteroidCollisionTemp = 0;
+				shipCollisionTemp = 0;
+				asteroidPaintTemp = 0;
+				bgPaintTemp = 0;
+				cycleTemp = 0;
 		
 			}
+
+
 		}, waitTime);
 	};
 	
