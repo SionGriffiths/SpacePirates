@@ -30,24 +30,35 @@ function keyEventFired(e) {
 	switch (input) {
 	
 	// W
-	case 87:	Game.movePlayerShip("Forwards");
-				Game.playThrust();
+	case 87:	if(Game.mode=='play'){
+					Game.movePlayerShip("Forwards");
+					Game.playThrust();
+				}
+				
 				break;
 
 	// S
-	case 83:	Game.movePlayerShip("Backwards");
+	case 83:	if(Game.mode=='play'){
+					Game.movePlayerShip("Backwards");
+				}
 				break;
 				
 	// A
-	case 65:	Game.movePlayerShip("Left");
+	case 65:	if(Game.mode=='play'){
+					Game.movePlayerShip("Left");
+				}
 				break;
 				
 	// D
-	case 68:	Game.movePlayerShip("Right");
+	case 68:	if(Game.mode=='play'){
+					Game.movePlayerShip("Right");
+				}
 				break;
 				
 	// ESC
-	case 27:	Game.togglePause();
+	case 27:	if(Game.mode=='play'){
+					Game.togglePause();
+				}
 				break;
 				
 	// SPACEBAR - Red Laser
@@ -76,6 +87,10 @@ function keyEventFired(e) {
 	case 79:    var randAst = [1];
 				var tempAsteroid = new Asteroid(randAst);
 				break; 
+
+	// M - Toggle Map Mode
+	case 77:    Game.toggleMap();
+				break; 
 				
 	// Y - toggle debug graphics
 	case 89:    DebugToggle();
@@ -96,9 +111,9 @@ function keyEventFired(e) {
 				break;
 	
 	// + - ZOOOOOOOOOM
-	case 187:	gameMap.changeZoomLevel('down');
+	case 187:	gameMap.changeZoomLevel('down',1);
 				break;
-	case 189:	gameMap.changeZoomLevel('up');
+	case 189:	gameMap.changeZoomLevel('up',1);
 				break;
 
 	}

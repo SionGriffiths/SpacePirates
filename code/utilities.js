@@ -181,10 +181,10 @@ function handle(delta) {
 
         if (newZoomLevelChangeTime - lastZoomChangeTime > 40) {
           if (delta < 0) {
-            gameMap.changeZoomLevel('down');
+            gameMap.changeZoomLevel('up',1);
           }
           else {
-             gameMap.changeZoomLevel('up');
+             gameMap.changeZoomLevel('down',1);
           }
           lastZoomChangeTime = newZoomLevelChangeTime;
       }
@@ -209,3 +209,12 @@ function wheel(event){
 if (window.addEventListener)
 window.addEventListener('DOMMouseScroll', wheel, false);
 window.onmousewheel = document.onmousewheel = wheel;
+
+
+
+
+
+
+
+
+

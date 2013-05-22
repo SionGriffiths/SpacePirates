@@ -16,7 +16,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 21;
+var numOfImages = 27;
 var imageLoadProgress = 0;
 
 
@@ -34,7 +34,7 @@ var previousDir;
 var previousMaps = new Array();
 
 var fuelCells = new Array();
-var fuel = 100;
+var fuel = 500;
 
 var pewN = 1;
 

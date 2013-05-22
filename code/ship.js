@@ -27,7 +27,10 @@ Ship.Acceleration = 0; // 0 - 6
 Ship.AccelerationFactor = 0.4;
 Ship.DecelerationFactor = 0.5;
 Ship.ThrustPower = 1;
+
 Ship.MaxSpeed = 18;
+
+
 Ship.MovingForwards = false;
 Ship.MovementModerator = 1;
 
@@ -181,25 +184,28 @@ Ship.paint = function() {
 	
 	//Game.printToDebugConsole("P GameXY: " + this.X + " " + this.Y);
 	//Game.printToDebugConsole("P CanvasXY: " + gameMap.translateX(this.X) + " " + gameMap.translateY(this.Y));
-	
-	if (this.ShieldActive) {
-		c.save();
-		c.scale(1*z, 1.5*z);
-		c.beginPath();
-		c.arc(0,0,this.ShieldSize*z,0,2*Math.PI);
-		var grd = c.createRadialGradient(0,0,(this.ShieldSize/4)*z,0,0,(this.ShieldSize*2)*z);
-		grd.addColorStop(0.2,"rgba(255,255,255, 0.1)");
-		grd.addColorStop(0.9, "white");
-		c.fillStyle = grd;
-		c.strokeStyle = "white";
-		c.stroke();
-		c.fill();
-		c.restore();
+	if(Game.mode=='play'){
+		if (this.ShieldActive) {
+			c.save();
+			c.scale(1*z, 1.5*z);
+			c.beginPath();
+			c.arc(0,0,40*z,0,2*Math.PI);
+			var grd = c.createRadialGradient(0,0,5,0,0,70*z);
+			grd.addColorStop(0.2,"rgba(255,255,255, 0.1)");
+			grd.addColorStop(0.9, "rgba(255,255,255, 0.6)");
+			c.fillStyle = grd;
+			c.strokeStyle = "rgba(255,255,255, 0.8)";
+			c.stroke();
+			c.fill();
+			c.restore();
+		}		
+		c.drawImage(this.shipImage, -50*z, -50*z, 100*z, 100*z);
+		c.drawImage(this.getCurrentThrusterImage(), -50*z, 33*z, 100*z, 100*z);
 	}
-	
-	c.drawImage(this.shipImage, -50*z, -50*z, 100*z, 100*z);
-	c.drawImage(this.getCurrentThrusterImage(), -50*z, 33*z, 100*z, 100*z);
-	
+	if(Game.mode=='map'){
+		c.fillStyle="orange";
+		c.fillRect(-5,-5,10,10);
+	}	
 	if(toggleDebug==true) {
 		c.fillStyle="green";
 		c.fillRect(-5*z,-5*z,10*z,10*z);
@@ -231,13 +237,11 @@ Ship.updateCoordinates = function(input) {
 		this.X = this.X - this.Momentum * Math.cos((this.Direction - 90) * TO_RADIANS);
 		this.Y = this.Y - this.Momenwum * Math.sin((this.Direction - 90) * TO_RADIANS);
 	}
-
-	
 	
 	
 	
 	var movementInitiated = false;
-	var movementModerator = 50 - (this.Momentum / 1.5);
+	var movementModerator = (50 - (this.Momentum / 1.5))*z;
 	gameMap.boundaryShiftDirectionX = " ";
 	gameMap.boundaryShiftDirectionY = " ";
 	
