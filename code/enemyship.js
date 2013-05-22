@@ -15,6 +15,9 @@ this.momentum;
 this.nextLocationX;
 this.nextLocationY;
 this.collisionRadius;
+this.lastFireTime;
+this.target;
+this.fireRate;
 
 
 this.draw = function() {
@@ -54,6 +57,13 @@ this.instantiate = function(initialX, initialY) {
 	
 	this.update();
 	
+	var lastFireDate = new Date();
+	this.lastFireTime = lastFireDate.getTime();
+	
+	this.target = "Player Ship";
+	this.fireRate = 400;
+	
+	
 	addNewEnemyShip(this);
 	
 	
@@ -61,7 +71,8 @@ this.instantiate = function(initialX, initialY) {
 }
 
 
-this.faceTowardsPlayerShip = function() {
+this.faceTowardsAPoint = function() {
+	
 	var angleDegree = findAngleBetweenTwoPoints(this.x, this.y, this.nextLocationX, this.nextLocationY);
 	var faceDirection = 360 - angleDegree - 90;
 	
@@ -103,8 +114,13 @@ this.faceTowardsPlayerShip = function() {
 			this.direction = 359;
 		}
 	}
-	this.nextLocationX = Ship.X;
-	this.nextLocationY = Ship.Y;
+	
+	if (this.target == "Player Ship") {
+	
+		this.nextLocationX = Ship.X;
+		this.nextLocationY = Ship.Y;
+	
+	}
 	
 	if (Math.abs(faceDirection - this.direction) < 2){
 		return true;
@@ -126,8 +142,8 @@ this.trackOntoScreen = function() {
 	switch (this.AISequenceCounter) {
 	
 	// Initially place the ship outside canvas view (even if player ship moving)
-	case 0:		this.x = gameMap.currentX - canvasWidth;
-				this.y = gameMap.currentY;
+	case 0:		this.x = gameMap.currentX + (-1200 + Math.floor(Math.random()* 2400));
+				this.y = gameMap.currentY + (-1200 + Math.floor(Math.random()* 2400));
 				this.AISequenceCounter += 1;
 				Game.printToDebugConsole("Ship Placed");
 				break;
@@ -148,17 +164,22 @@ this.trackOntoScreen = function() {
 				var comparitiveY = Math.abs((this.y - this.nextLocationY));
 				
 				if (comparitiveX > 2) {
-					if (this.nextLocationX > this.x && comparitiveX > 5) {this.x += 7;}
-					else {this.x -= 1;}
+					if (this.nextLocationX > this.x && comparitiveX > 7) {this.x += 7;}
+					else {this.x += 5;}
+					if (this.nextLocationX < this.x && comparitiveX > 7) {this.x -= 7;}
+					else {this.x -= 5;}
+					
 				}
 				
 				if (comparitiveY > 2) {
-					if (this.nextLocationY > this.y && comparitiveY > 5) {this.y += 7;}
-					else {this.y -= 1;}
+					if (this.nextLocationY > this.y && comparitiveY > 7) {this.y += 7;}
+					else {this.y += 5;}
+					if (this.nextLocationY < this.y && comparitiveY > 7) {this.y -= 7;}
+					else {this.y -= 5;}
 				}
 				
 				
-				if (comparitiveX < 5 && comparitiveY < 5) {
+				if (comparitiveX <= 25 && comparitiveY <= 25) {
 					this.AISequenceCounter += 1;
 				}
 				Game.printToDebugConsole("Moving Towards Target");
@@ -185,21 +206,24 @@ this.engagePlayerShipStationary = function() {
 	switch (this.AISequenceCounter) {
 	
 		// Face the player ship
-		case 0:		var targetAquired = this.faceTowardsPlayerShip();
+		case 0:		var targetAquired = this.faceTowardsAPoint();
 					if (targetAquired) { this.AISequenceCounter = 1; }
 					break;	
 		
 		// Fire weapons
 		case 1:		this.fireLaserPulse();
-					var targetAquired = this.faceTowardsPlayerShip();
+					var targetAquired = this.faceTowardsAPoint();
 					if (!(targetAquired)) { this.AISequenceCounter = 0; }
 					break;
 
 		
 	
 	}
-
+	
 }
+
+
+
 
 
 
@@ -209,26 +233,42 @@ this.engagePlayerShipStationary = function() {
 
 this.update = function() {
 
+	if (this.AISequence != 2) {
+
+		var playerCloseBy = liesWithinRadius(Ship.X,Ship.Y,this.x,this.y,750/z);
+
+		if (playerCloseBy) {
+			this.AISequenceCounter = 1;
+			this.AISequence = 3;
+		}
+		else {
+		
+			this.AISequenceCounter = 0;
+			this.AISequence = 1;
+		
+		}
+
+		
+	}
+	
+	
+	
+	//Game.printToDebugConsole("Enemy Ship Sequence: " + this.AISequence);
+	//Game.printToDebugConsole("Close By: " + playerCloseBy);
+	
+	//this.AISequence = 3;
+
 	switch (this.AISequence) {
 	
-	case 1:		this.faceTowardsPlayerShip();
+	case 1:		this.faceTowardsAPoint();
 				break;
 	case 2:		this.trackOntoScreen();
 				break;
 	case 3:		this.engagePlayerShipStationary();
 				break;
 	}
-	
-	if (clockCycle % 20 == 0) {
-	
-		var playerCloseBy = liesWithinRadius(Ship.X,Ship.Y,this.x,this.y,600*z);
-		
-		// If the ship is shooting the player, and they're not close by, stop shooting
-		if (this.AISequenceCounter == 3 && !(playerCloseBy)) { this.AISequenceCounter = 0; this.AISequence = 1; }
-		if (this.AISequenceCounter == 1 && playerCloseBy) { this.AISequenceCounter = 0; this.AISequence = 3; }
-	
-	
-	}
+
+
 	
 	
 }
@@ -244,7 +284,7 @@ this.detectCollisions = function() {
 			this.y,
 			this.collisionRadius);
 			
-		if (collisionOccured) {
+		if (collisionOccured && (deployedMunitions[i].origin != this.type)) {
 			deployedMunitions[i].destroyed = true;
 		}
 		
@@ -254,10 +294,46 @@ this.detectCollisions = function() {
 
 
 this.fireLaserPulse = function() {
+	
+	// Flip direction
+	var flippedDirection = this.direction - 180;
+	if (flippedDirection < 0) { flippedDirection += 360; }
+	
+	
+	var currentFireDate = new Date();
+	var currentFireTime = currentFireDate.getTime();
+	
+	if (currentFireTime - this.lastFireTime > this.fireRate) {
+		fireShipLaserPulse("GreenLaser", this.x, this.y, flippedDirection, this.type, this.momentum, 1);
+		this.lastFireTime = currentFireTime;
+	}
+}
 
-fireShipLaserPulse("GreenLaser", this.x, this.y, this.direction, this.type, this.momentum, 1);
+
+
+
+
+
+
+this.moveToAPoint = function() {
+
+	switch (this.AISequenceCounter) {
+	
+	case 0:		var facingPoint = this.faceTowardsAPoint();
+				if (facingPoint) { this.AISequenceCounter = 1; }
+				break;
+	case 1:		
+	
+
+	}
 
 }
+
+
+
+
+
+
 
 
 

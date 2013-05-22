@@ -19,8 +19,9 @@ function paintBackground(){
 	c.restore();
 	
 
-	updateStarPositions();	
+	//updateStarPositions();	
 	
+	/*
 	for (var i = 0; i < backgroundStars.length; i++){
 		c.save();
 		c.fillStyle = backgroundStars[i][3];
@@ -30,6 +31,8 @@ function paintBackground(){
 		c.fillText(star, backgroundStars[i][0]*z, backgroundStars[i][1]*z);
 		c.restore();
 	}
+	
+	*/
 	
 	bpfD = new Date();
 	bgPaintFinish = bpfD.getTime();

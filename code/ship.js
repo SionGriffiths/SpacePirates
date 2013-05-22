@@ -41,7 +41,7 @@ Ship.lastAsteroidHit;
 Ship.ShieldActive = false;
 Ship.ShieldTimer = 0;
 Ship.gunTurret = 0; // 0 or 1 - left or right turret
-
+Ship.ShieldSize = 50;
 
 Ship.move = function(direction){
 	if (fuel > 0) {
@@ -186,8 +186,8 @@ Ship.paint = function() {
 		c.save();
 		c.scale(1*z, 1.5*z);
 		c.beginPath();
-		c.arc(0,0,40*z,0,2*Math.PI);
-		var grd = c.createRadialGradient(0,0,5,0,0,70*z);
+		c.arc(0,0,this.ShieldSize*z,0,2*Math.PI);
+		var grd = c.createRadialGradient(0,0,(this.ShieldSize/4)*z,0,0,(this.ShieldSize*2)*z);
 		grd.addColorStop(0.2,"rgba(255,255,255, 0.1)");
 		grd.addColorStop(0.9, "white");
 		c.fillStyle = grd;
@@ -476,13 +476,13 @@ Ship.CollisionDetection = function(){
 	}
 
 
-	for (var i = 0; i < Game.asteroids.length; i++) {
+for (var i = 0; i < Game.asteroids.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			Game.asteroids[i].x + Game.asteroids[i].Scale ,
 			Game.asteroids[i].y + Game.asteroids[i].Scale,
 			this.X,
 			this.Y,
-			80*z);
+			(this.ShieldSize + Game.asteroids[i].Size)*z);
 			
 		if (collisionOccured) {
 		
@@ -492,20 +492,7 @@ Ship.CollisionDetection = function(){
 			if (!(Game.asteroids[i].recentlyHit)) {
 			
 			Game.asteroids[i].recentlyHit = true;
-		
-			// Flash Shield Up
-			//c.save();
-			//c.beginPath();
-			//c.strokeStyle = 'violet';
-			//c.arc(this.X,this.Y,60,0,2*Math.PI);		
-			//c.stroke();
-			//c.restore();
-	
 			
-			// DISPLAY SHIELD
-	
-	
-	
 			// Bounce Asteroid
 			var allignedDirection = this.Direction - 90;
 			if (allignedDirection < 0) { allignedDirection += 360; }
@@ -546,7 +533,29 @@ Ship.CollisionDetection = function(){
 			c.restore();
 		}
 	}
-
+	
+	
+	for (var i = 0; i < deployedMunitions.length; i++) {
+	
+		var collisionOccured = liesWithinRadius(
+					deployedMunitions[i].x,
+					deployedMunitions[i].y,
+					this.X,
+					this.Y,					
+					//(this.ShieldSize + 10)*z);
+					((this.ShieldSize/z) * 2) * (z / 1.1));
+		
+		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
+			
+			this.ShieldActive = true;
+		
+			deployedMunitions[i].destroyed = true;
+		
+		}
+		
+	
+	}
+	
 	scfD = new Date();
 	shipCollisionFinish = scfD.getTime();
 	
