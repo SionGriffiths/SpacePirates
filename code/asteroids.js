@@ -145,7 +145,6 @@ this.update = function() {
 
 
 this.detectCollisions = function() {
-	
 	for (var i = 0; i < deployedMunitions.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			deployedMunitions[i].x,
@@ -199,17 +198,23 @@ this.detectCollisions = function() {
 
 // Paint Asteroids objects, held in an array
 function paintAsteroids(){
+	apsD = new Date();
+	asteroidPaintStart = apsD.getTime();
 	AsteroidsPainted = 0;
 	for (var i = 0; i < Game.asteroids.length; i++) {
 		Game.asteroids[i].draw();
 		//Game.printToDebugConsole("How many a-droids: " + Game.asteroids.length);
 		
 	}
+	apfD = new Date();
+	asteroidPaintFinish = apfD.getTime();
+	
 }
 
 // Update Asteroids objects
 function updateAsteroids() {
-
+	acsD = new Date();
+	asteroidCollisionStart = acsD.getTime();
 	for (var i = 0; i < Game.asteroids.length; i++) {
 
 		Game.asteroids[i].update();
@@ -220,14 +225,14 @@ function updateAsteroids() {
 		// If the asteroid has drifted WAY away from the current center
 		// of the screen, dont deal with it.
 		var distanceX = Math.abs(Game.asteroids[i].x - gameMap.currentX);
-		if (distanceX > (gameMap.canvasWidth/2)/z) {
+		if (distanceX > (gameMap.canvasWidth/1.5)/z) {
 			Game.asteroids[i].inRange = false;
 			//Game.asteroids.splice(i, 1);
 		} else {
 			Game.asteroids[i].inRange = true;
 		}
 		var distanceY = Math.abs(Game.asteroids[i].y - gameMap.currentY);
-		if (distanceY > (gameMap.canvasHeight/2)/z) {
+		if (distanceY > (gameMap.canvasHeight/1.5)/z) {
 			Game.asteroids[i].inRange = false;
 			//Game.asteroids.splice(i, 1);
 		} else {
@@ -236,6 +241,9 @@ function updateAsteroids() {
 		
 		
 	}
+	acfD = new Date();
+	asteroidCollisionFinish = acfD.getTime();
+	
 }
 
 // Add an Asteroid to the array

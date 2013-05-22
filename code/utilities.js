@@ -157,3 +157,55 @@ function getOrbitPlot(acenterX,centerY,radius,distance){
     //alert(newPoints);
   return newPoints;
 }
+
+
+
+
+
+
+
+
+
+
+
+var lastZoomLevelChangeDate = new Date();
+var lastZoomChangeTime = lastZoomLevelChangeDate.getTime();
+
+/** This is high-level function.
+ * It must react to delta being more/less than zero.
+ */
+function handle(delta) {
+        
+        var newZoomLevelChangeDate = new Date();
+        var newZoomLevelChangeTime = newZoomLevelChangeDate.getTime();
+
+        if (newZoomLevelChangeTime - lastZoomChangeTime > 40) {
+          if (delta < 0) {
+            gameMap.changeZoomLevel('down');
+          }
+          else {
+             gameMap.changeZoomLevel('up');
+          }
+          lastZoomChangeTime = newZoomLevelChangeTime;
+      }
+
+}
+
+function wheel(event){
+        var delta = 0;
+        if (!event) /* For IE. */
+                event = window.event;
+        if (event.wheelDelta) { /* IE/Opera. */
+                delta = event.wheelDelta/500;
+        } else if (event.detail) { 
+                delta = -event.detail/3;
+        }
+        if (delta)
+                handle(delta);
+        if (event.preventDefault)
+                event.preventDefault();
+  event.returnValue = false;
+}
+if (window.addEventListener)
+window.addEventListener('DOMMouseScroll', wheel, false);
+window.onmousewheel = document.onmousewheel = wheel;

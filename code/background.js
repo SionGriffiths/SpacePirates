@@ -11,11 +11,11 @@ var numOfStarColours;
 
 // Background manager
 function paintBackground(){
-	
+	bpsD = new Date();
+	bgPaintStart = bpsD.getTime();
 	// Paint the background black
 	c.save();
-	c.fillStyle = "black";
-	c.fillRect(0,0,canvasE.width, canvasE.height);
+	c.drawImage(bg1, 0, 0,canvasE.width, canvasE.height);
 	c.restore();
 	
 
@@ -31,9 +31,8 @@ function paintBackground(){
 		c.restore();
 	}
 	
-	if (toggleSunEffect) {
-		//addSunFlare();
-	}
+	bpfD = new Date();
+	bgPaintFinish = bpfD.getTime();
 }
 
 // Initialize the stars with their random coordinates and size
@@ -60,6 +59,8 @@ function initializeBackground(){
 	backgroundStarColours.push("#FFFFFF");
 	numOfStarColours = backgroundStarColours.length;
 	
+	numOfStars = 100;
+
 	for (var i = 0; i < numOfStars; i++){
 
 		var starData = new Array();
