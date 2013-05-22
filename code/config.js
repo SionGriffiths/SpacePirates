@@ -34,7 +34,7 @@ var previousDir;
 var previousMaps = new Array();
 
 var fuelCells = new Array();
-var fuel = 500;
+var fuel = 100;
 
 var pewN = 1;
 

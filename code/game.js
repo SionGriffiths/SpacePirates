@@ -18,10 +18,9 @@ Game.initialize = function() {
 
 	//Ship.X = 0;
 	//Ship.Y = 0;
-	Game.printToDebugConsole("Initializing background");
-	
-	initializeBackground();
+	Game.printToDebugConsole("Initializing background");	
 
+	initializeBackground();
 	Game.mode = 'loading';
 }
 
@@ -270,7 +269,7 @@ Game.load = function() {
 
 
 	setTimeout(function() {
-		for(var i = 0; i < 12; i++) { var initialSolarSystem = new SolarSystem();}		
+		for(var i = 0; i < 12; i++) {var initialSolarSystem = new SolarSystem();}		
 	}, 900);
 
 
@@ -304,8 +303,7 @@ Game.paint = function() {
 
 	if(Game.mode=='play'){
 		clearCanvas();
-		paintBackground();
-		paintFuelGuage();
+		paintBackground();		
 		paintSolarSystems();	
 		paintPlanets();		
 		paintDeployedMunitions();
@@ -313,6 +311,9 @@ Game.paint = function() {
 		Ship.paint();
 		paintEnemyShips();
 		paintFuel();
+		paintFuelGuage();
+		paintShieldLevel();
+
 	}
 	if(Game.mode=='map') {
 		clearCanvas();
@@ -384,8 +385,8 @@ Game.update = function() {
 		fireNewMunitions();
 	}
 	if(Game.mode=='map') {
-		updateSolarSystems();
-		updatePlanets();
+		//updateSolarSystems();
+		//updatePlanets();
 	}
 }
 
@@ -415,12 +416,10 @@ Game.printToDebugConsole = function(message){
 
 
 
-
 // Clear canvas
 function clearCanvas() {
 	canvasElement.width = canvasElement.width;
 }
-
 
 
 
@@ -431,7 +430,6 @@ Game.movePlayerShip = function(direction) {
 Game.stopMovePlayerShip = function(direction) {
 	Ship.stopMove(direction);
 }
-
 
 
 
@@ -502,9 +500,7 @@ var lastGreenLaserFireDate = new Date();
 var lastGreenLaserFireTime = lastGreenLaserFireDate.getTime();
 
 function fireNewMunitions() {
-
-	if (Game.playerFiringMunitions) {
-		
+	if (Game.playerFiringMunitions) {	
 		if (Game.playerMunitionsType == 0){
 			var newRedLaserFireDate = new Date();
 			var newRedLaserFireTime = newRedLaserFireDate.getTime();
@@ -529,9 +525,7 @@ function fireNewMunitions() {
 				lastGreenLaserFireTime = newGreenLaserFireTime;
 			}
 		}		
-		
 	}	
-	
 }
 
 

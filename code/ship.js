@@ -45,6 +45,7 @@ Ship.ShieldActive = false;
 Ship.ShieldTimer = 0;
 Ship.gunTurret = 0; // 0 or 1 - left or right turret
 Ship.ShieldSize = 50;
+Ship.ShieldLevel = 100;
 
 Ship.move = function(direction){
 	if (fuel > 0) {
@@ -172,6 +173,16 @@ Ship.update = function() {
 	}
 	
 	this.CollisionDetection();	
+
+	if(this.ShieldLevel<0) {
+		this.ShieldLevel = 0;
+	}
+	if(this.ShieldLevel>100) {
+		this.ShieldLevel = 100;
+	} else {
+		this.ShieldLevel +=0.2;
+	}
+
 }
 
 
@@ -185,7 +196,7 @@ Ship.paint = function() {
 	//Game.printToDebugConsole("P GameXY: " + this.X + " " + this.Y);
 	//Game.printToDebugConsole("P CanvasXY: " + gameMap.translateX(this.X) + " " + gameMap.translateY(this.Y));
 	if(Game.mode=='play'){
-		if (this.ShieldActive) {
+		if (this.ShieldActive && this.ShieldLevel > 2) {
 			c.save();
 			c.scale(1*z, 1.5*z);
 			c.beginPath();
@@ -491,7 +502,7 @@ for (var i = 0; i < Game.asteroids.length; i++) {
 		if (collisionOccured) {
 		
 			this.ShieldActive = true;
-		
+			this.ShieldLevel -=  0.1;
 		
 			if (!(Game.asteroids[i].recentlyHit)) {
 			
@@ -552,7 +563,7 @@ for (var i = 0; i < Game.asteroids.length; i++) {
 		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
 			
 			this.ShieldActive = true;
-		
+			this.ShieldLevel -=  2;
 			deployedMunitions[i].destroyed = true;
 		
 		}

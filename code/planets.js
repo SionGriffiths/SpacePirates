@@ -51,7 +51,7 @@ if(this.Scale > paras[4]) {this.Scale = paras[4] + (this.Scale/4);}
 
 this.Size = this.Scale / 2;
 this.Spin = 0.01;
-this.SpinSpeed = 0.03;
+this.SpinSpeed = 0.35;
 
 this.massFactor = this.Scale / 1000;
 
