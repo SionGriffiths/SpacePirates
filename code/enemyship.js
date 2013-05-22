@@ -105,6 +105,13 @@ this.faceTowardsPlayerShip = function() {
 	}
 	this.nextLocationX = Ship.X;
 	this.nextLocationY = Ship.Y;
+	
+	if (Math.abs(faceDirection - this.direction) < 2){
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 
@@ -178,10 +185,15 @@ this.engagePlayerShipStationary = function() {
 	switch (this.AISequenceCounter) {
 	
 		// Face the player ship
-		case 0:	break;	
+		case 0:		var targetAquired = this.faceTowardsPlayerShip();
+					if (targetAquired) { this.AISequenceCounter = 1; }
+					break;	
 		
 		// Fire weapons
-		case 1:	break;
+		case 1:		this.fireLaserPulse();
+					var targetAquired = this.faceTowardsPlayerShip();
+					if (!(targetAquired)) { this.AISequenceCounter = 0; }
+					break;
 
 		
 	
@@ -205,6 +217,17 @@ this.update = function() {
 				break;
 	case 3:		this.engagePlayerShipStationary();
 				break;
+	}
+	
+	if (clockCycle % 20 == 0) {
+	
+		var playerCloseBy = liesWithinRadius(Ship.X,Ship.Y,this.x,this.y,600*z);
+		
+		// If the ship is shooting the player, and they're not close by, stop shooting
+		if (this.AISequenceCounter == 3 && !(playerCloseBy)) { this.AISequenceCounter = 0; this.AISequence = 1; }
+		if (this.AISequenceCounter == 1 && playerCloseBy) { this.AISequenceCounter = 0; this.AISequence = 3; }
+	
+	
 	}
 	
 	
@@ -232,7 +255,7 @@ this.detectCollisions = function() {
 
 this.fireLaserPulse = function() {
 
-
+fireShipLaserPulse("GreenLaser", this.x, this.y, this.direction, this.type, this.momentum, 1);
 
 }
 

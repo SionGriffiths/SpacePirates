@@ -27,7 +27,7 @@ Ship.Acceleration = 0; // 0 - 6
 Ship.AccelerationFactor = 0.4;
 Ship.DecelerationFactor = 0.5;
 Ship.ThrustPower = 1;
-Ship.MaxSpeed = 5;
+Ship.MaxSpeed = 18;
 Ship.MovingForwards = false;
 Ship.MovementModerator = 1;
 
