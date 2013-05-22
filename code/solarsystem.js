@@ -19,7 +19,7 @@ function SolarSystem() {
 
 	this.InnerPlanetCount = 2+(1+Math.round(Math.random()*3));
 	this.OuterPlanetCount = 2+(1+Math.round(Math.random()*4));
-	this.AsteroidsCount = 10+(1+Math.round(Math.random()*50));
+	this.AsteroidsCount = 50+(1+Math.round(Math.random()*50));
 
 
 	this.InnerPlanetOrbit = this.Size/2.3;

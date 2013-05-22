@@ -208,12 +208,14 @@ this.engagePlayerShipStationary = function() {
 		// Face the player ship
 		case 0:		var targetAquired = this.faceTowardsAPoint();
 					if (targetAquired) { this.AISequenceCounter = 1; }
+					Game.printToDebugConsole("Aquiring Target");
 					break;	
 		
 		// Fire weapons
 		case 1:		this.fireLaserPulse();
 					var targetAquired = this.faceTowardsAPoint();
 					if (!(targetAquired)) { this.AISequenceCounter = 0; }
+					Game.printToDebugConsole("Fired at Target");
 					break;
 
 		
@@ -238,8 +240,10 @@ this.update = function() {
 		var playerCloseBy = liesWithinRadius(Ship.X,Ship.Y,this.x,this.y,750/z);
 
 		if (playerCloseBy) {
-			this.AISequenceCounter = 1;
+			
+			if (this.AISequence != 3) {	this.AISequenceCounter = 0; }
 			this.AISequence = 3;
+			
 		}
 		else {
 		
