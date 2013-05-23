@@ -167,6 +167,9 @@
 			shipCollisionTemp += (shipCollisionFinish - shipCollisionStart);
 			asteroidPaintTemp += (asteroidPaintFinish - asteroidPaintStart);
 			bgPaintTemp += (bgPaintFinish - bgPaintStart);			
+			munitionsUpdateTemp += (munitionsUpdateFinish - munitionsUpdateStart);
+			munitionsPaintTemp += (munitionsPaintFinish - munitionsPaintStart);
+			
 			
 			clockCycle += 1;
 			if (clockCycle > fps) { clockCycle = 1;}
@@ -178,7 +181,11 @@
 				shipCollisionTime = shipCollisionTemp/fps;
 				asteroidPaintTime = asteroidPaintTemp/fps;
 				bgPaintTime = bgPaintTemp/fps;
-
+				munitionsUpdateTime = munitionsUpdateTemp/fps;
+				munitionsPaintTime = munitionsPaintTemp/fps;
+				
+				munitionsUpdateTemp = 0;
+				munitionsPaintTemp = 0;
 				asteroidCollisionTemp = 0;
 				shipCollisionTemp = 0;
 				asteroidPaintTemp = 0;

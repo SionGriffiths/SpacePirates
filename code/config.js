@@ -85,3 +85,17 @@ var shipCollisionStart;
 var shipCollisionFinish;
 var shipCollisionTemp = 0;
 var shipCollisionTime;
+
+var mpsD;
+var mpfD;
+var munitionsPaintStart;
+var munitionsPaintFinish;
+var munitionsPaintTemp = 0;
+var munitionsPaintTime;
+
+var musD;
+var mufD;
+var munitionsUpdateStart;
+var munitionsUpdateFinish;
+var munitionsUpdateTemp = 0;
+var munitionsUpdateTime;

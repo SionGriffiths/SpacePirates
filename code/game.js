@@ -504,7 +504,10 @@ Game.paint = function() {
 			var astColPercentage = ((asteroidCollisionTime / (1000/fps)) * 100);	
 			var shipColPercentage = ((shipCollisionTime / (1000/fps)) * 100);
 			var astPaintPercentage = ((asteroidPaintTime / (1000/fps)) * 100);	
-			var bgPaintPercentage = ((bgPaintTime / (1000/fps)) * 100);	
+			var bgPaintPercentage = ((bgPaintTime / (1000/fps)) * 100);
+			var munitionsPaintPercentage = ((munitionsPaintTime / (1000/fps)) * 100);
+			var munitionsUpdatePercentage = ((munitionsUpdateTime / (1000/fps)) * 100);	
+			
 			c.save();
 			c.font="12px Verdana";
 			c.fillStyle = "white";
@@ -520,6 +523,10 @@ Game.paint = function() {
 			c.fillText("Ship Collision time %: " + shipColPercentage.toFixed(0), 10, 350);
 			c.translate(0, 20);
 			c.fillText("Number of Asteroids: " + Game.asteroids.length.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Munitions Paint time %: " + munitionsPaintPercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Munitions Update time %: " + munitionsUpdatePercentage.toFixed(0), 10, 350);
 			c.restore();
 		}
 	}

@@ -321,6 +321,10 @@ function paintDeployedMunitions() {
 	// maintain direction data and rotate the
 	// canvas for painting.
 	
+	mpsD = new Date();
+	munitionsPaintStart = mpsD.getTime();
+	
+	
 	for (var i = 0; i < deployedMunitions.length; i++) {
 	
 		if (deployedMunitions[i].origin == "PlayerShip"){ 
@@ -400,15 +404,17 @@ function paintDeployedMunitions() {
 		
 		
 		}
-	}	
+	}
+	
+	mpfD = new Date();
+	munitionsPaintFinish = mpfD.getTime();
+	
 }
 
 function updateDeployedMunitions() {
 
-	// For each item in the munitions array,
-	// get it and update its x and y.
-	// Perhaps change its graphic properties for
-	// animation effect too.
+	musD = new Date();
+	munitionsUpdateStart = musD.getTime();
 
 	for (var i = 0; i < deployedMunitions.length; i++) {
 		deployedMunitions[i].update();
@@ -418,8 +424,12 @@ function updateDeployedMunitions() {
 		else if (deployedMunitions[i].destroySequence > 10) {
 			deployedMunitions.splice(i, 1);
 		}
-	}	
+	}
 
+	
+
+	mufD = new Date();
+	munitionsUpdateFinish = mufD.getTime();
 	
 }
 
