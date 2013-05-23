@@ -449,7 +449,7 @@ Game.paint = function() {
 		paintSolarSystems();	
 		paintPlanets();		
 		paintDeployedMunitions();
-		paintAsteroids();
+		paintAsteroids2();
 		Ship.paint();
 		paintEnemyShips();
 		paintFuelGuage();

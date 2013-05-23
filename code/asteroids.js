@@ -81,25 +81,7 @@ this.draw = function() {
 
 
 this.update = function() {
-	/*
-	if (this.x <= (1 - this.Scale)) {
-		this.prevDir = "right";
-		this.x = canvasWidth;
-	} else if (this.x >= canvasWidth) {
-		
-		this.prevDir = "left";
-		this.x = 1;
-	} else if (this.y <= (1 - this.Scale)) {
 
-		this.prevDir = "up";
-		this.y = canvasHeight;
-	} else if (this.y >= canvasHeight) {
-		
-		this.prevDir = "down";
-		this.y = 1;
-	}
-
-	*/
 	this.x = this.x + this.Speed * Math.cos(this.direction * TO_RADIANS);
 	this.y = this.y + this.Speed * Math.sin(this.direction * TO_RADIANS);
 
@@ -207,8 +189,6 @@ function paintAsteroids(){
 	AsteroidsPainted = 0;
 	for (var i = 0; i < Game.asteroids.length; i++) {
 		Game.asteroids[i].draw();
-		//Game.printToDebugConsole("How many a-droids: " + Game.asteroids.length);
-		
 	}
 	apfD = new Date();
 	asteroidPaintFinish = apfD.getTime();
@@ -216,6 +196,24 @@ function paintAsteroids(){
 }
 
 
+// Paint Asteroids objects, held in an array
+function paintAsteroids2(){
+	apsD = new Date();
+	asteroidPaintStart = apsD.getTime();
+	AsteroidsPainted = 0;
+	
+	var closeAsteroids = getCloseAsteroids();
+	
+	
+	for (var i = 0; i < closeAsteroids.length; i++) {
+		closeAsteroids[i].draw();
+	}
+	
+	
+	apfD = new Date();
+	asteroidPaintFinish = apfD.getTime();
+	
+}
 
 
 
@@ -275,7 +273,7 @@ function updateAsteroids() {
 
 
 
-// Update Asteroids objects
+// Update Asteroids objects - far better performance
 function updateAsteroids2() {
 
 	acsD = new Date();

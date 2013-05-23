@@ -142,7 +142,7 @@ Ship.update = function() {
 		}
 	}
 	
-	this.CollisionDetection();
+	this.CollisionDetection2();
 
 	if(this.ShieldLevel<0) {
 		this.ShieldLevel = 0;
@@ -517,9 +517,7 @@ Ship.CollisionDetection = function(){
 	
 	scsD = new Date();
 	shipCollisionStart = scsD.getTime();
-	
-	
-	
+
 	for (var i = 0; i < Game.planets.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			Game.planets[i].x,
@@ -634,6 +632,146 @@ Ship.CollisionDetection = function(){
 
 
 
+
+
+
+
+
+
+
+Ship.CollisionDetection2 = function(){
+	
+	scsD = new Date();
+	shipCollisionStart = scsD.getTime();
+	
+	
+	var localPlanets = getClosePlanets();
+	
+	
+	for (var i = 0; i < localPlanets.length; i++) {
+		var collisionOccured = liesWithinRadius(
+			localPlanets[i].x,
+			localPlanets[i].y,
+			this.X,
+			this.Y,
+			localPlanets[i].Size*z);
+			if(toggleDebug==true) {
+				c.save();
+				c.beginPath();
+				c.strokeStyle = 'blue';
+				c.arc(gameMap.translateX(localPlanets[i].x),gameMap.translateY(localPlanets[i].y),localPlanets[i].Size*z,0,2*Math.PI);		
+				c.stroke();
+				c.restore();
+			}
+		if (collisionOccured) {
+			console.log('PLANET HAPPENED! :D');
+			this.Momentum += localPlanets[i].massFactor;
+
+			if(this.Y>localPlanets[i].y) {this.Direction +=4;}
+			if(this.Y<localPlanets[i].y) {this.Direction -= 4;}
+			if(this.X<localPlanets[i].x) {this.Direction +=4;}
+			if(this.X>localPlanets[i].x) {this.Direction -= 4;}
+		}
+	}
+
+	var localAsteroids = getCloseAsteroids();
+
+	for (var i = 0; i < localAsteroids.length; i++) {
+		var collisionOccured = liesWithinRadius(
+			localAsteroids[i].x + localAsteroids[i].Scale ,
+			localAsteroids[i].y + localAsteroids[i].Scale,
+			this.X,
+			this.Y,
+			(this.ShieldSize + localAsteroids[i].Size)*z);
+			
+		if (collisionOccured) {
+		
+			this.ShieldActive = true;
+			this.ShieldLevel -=  0.1;
+		
+			if (!(Game.asteroids[i].recentlyHit)) {
+			
+			localAsteroids[i].recentlyHit = true;
+			
+			// Bounce Asteroid
+			var allignedDirection = this.Direction - 90;
+			if (allignedDirection < 0) { allignedDirection += 360; }
+			var newAsteroidDirection;
+			
+			if (allignedDirection > localAsteroids[i].direction) {
+				newAsteroidDirection = localAsteroids[i].direction - (Math.floor(Math.random() * 180));
+			}
+			else {
+				newAsteroidDirection = localAsteroids[i].direction + (Math.floor(Math.random() * 180));
+			}
+			
+			if (newAsteroidDirection < 0) { newAsteroidDirection += 360; }
+
+			localAsteroids[i].direction = newAsteroidDirection;
+
+			if (this.Momentum > 0) {
+				localAsteroids[i].Speed += (this.Momentum / 2);
+			}
+
+			}
+		}
+
+		if(toggleDebug==true) {
+			c.save();
+			c.beginPath();
+			c.strokeStyle = 'orange';
+			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60*z,0,2*Math.PI);		
+			c.stroke();
+			c.restore();
+		}
+		if(z<0.26) {
+			c.save();
+			c.beginPath();
+			c.strokeStyle = 'orange';
+			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60*z,0,2*Math.PI);		
+			c.stroke();
+			c.restore();
+		}
+	}
+	
+	
+	for (var i = 0; i < deployedMunitions.length; i++) {
+	
+		var collisionOccured = liesWithinRadius(
+					deployedMunitions[i].x,
+					deployedMunitions[i].y,
+					this.X,
+					this.Y,					
+					//(this.ShieldSize + 10)*z);
+					((this.ShieldSize/z) * 2) * (z / 1.1));
+		
+		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
+			
+			this.ShieldActive = true;
+			this.ShieldLevel -=  2;
+			deployedMunitions[i].destroyed = true;
+		
+		}
+		
+	
+	}
+	
+	scfD = new Date();
+	shipCollisionFinish = scfD.getTime();
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
 Ship.FuelUsage = function() {
 
 	if (fuel < 1) {
@@ -649,4 +787,27 @@ Ship.FuelUsage = function() {
 			if (fuel > 100) { fuel = 100; }
 		}
 	}
+}
+
+
+
+function getClosePlanets() {
+
+	var closePlanets = new Array();
+
+	for (var i = 0; i < Game.planets.length; i++) {
+		var isCloseBy = liesWithinRadius(
+			Game.planets[i].x,
+			Game.planets[i].y,
+			Ship.X,
+			Ship.Y,
+			canvasWidth / z);
+	
+		if (isCloseBy) { closePlanets.push(Game.planets[i]); }
+		
+	}
+	
+	return closePlanets;
+	
+	
 }
