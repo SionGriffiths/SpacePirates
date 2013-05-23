@@ -452,15 +452,14 @@ Game.paint = function() {
 		paintAsteroids();
 		Ship.paint();
 		paintEnemyShips();
-		paintFuel();
 		paintFuelGuage();
 		paintShieldLevel();
+		paintFuel();
 
 	}
 	if(Game.mode=='map') {
 		clearCanvas();
 		paintBackground();
-		paintFuelGuage();
 		paintSolarSystems();	
 		paintPlanets();	
 		Ship.paint();	
@@ -536,14 +535,9 @@ Game.update = function() {
 		updateSolarSystems();
 		updatePlanets();
 		updateEnemyShips();
-		paintFuelGuage();
 		updateDeployedMunitions();
 		updateAsteroids();
 		updateFuel();
 		fireNewMunitions();
-	}
-	if(Game.mode=='map') {
-		//updateSolarSystems();
-		//updatePlanets();
 	}
 }

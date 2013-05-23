@@ -10,7 +10,7 @@ function FuelCell(type, x, y) {
 		} else {
 			this.size = 40;
 		}
-		this.collisionRadius = this.size + 10;
+		this.collisionRadius = this.size + 30;
 		this.x = x;
 		this.y = y;
 		
@@ -29,11 +29,15 @@ function addFuel(fuel) {
 	Game.printToDebugConsole("Fuel cell added to array" + fuel.x + " " + fuel.y);
 }
 
+
 function paintFuel() {
+
 	for (var i = 0; i < fuelCells.length; i++) {
 		drawFuel(fuelCells[i]);
 	}
+
 }
+
 
 function drawFuel(fuelpiece) {
 
@@ -44,7 +48,7 @@ function drawFuel(fuelpiece) {
 	} else {
 		fuelpiece.graphic = fuelImage2;
 	}
-	c.drawImage(fuelpiece.graphic, -(fuelpiece.size/2), -(fuelpiece.size/2), fuelpiece.size*z, fuelpiece.size*z);
+	c.drawImage(fuelpiece.graphic, 0, 0, fuelpiece.size*z, fuelpiece.size*z);
 	if(toggleDebug==true) {
 		c.beginPath();
 		c.strokeStyle = 'yellow';
@@ -61,8 +65,8 @@ function detectFuelCollisions() {
 	var  collisionOccured = liesWithinRadius(
 							Ship.X,
 							Ship.Y,
-							thisFuelCell.x + (thisFuelCell.size * 1.5),
-							thisFuelCell.y + (thisFuelCell.size * 1.5),
+							thisFuelCell.x,
+							thisFuelCell.y,
 							thisFuelCell.collisionRadius);
 	
 	if(collisionOccured) {
@@ -84,12 +88,13 @@ function detectFuelCollisions() {
 	}
 }
 
-this.updateFuel = function() {
+function updateFuel() {
 	
-		detectFuelCollisions();
+	detectFuelCollisions();
+	
 	for (var i = 0; i < fuelCells.length; i++) {	
 		if(fuelCells[i].isCollected) {
-						fuelCells.splice(i, 1);
+			fuelCells.splice(i, 1);
 			Game.printToDebugConsole("Removed fuel cell " + fuelCells.length + " remaining");
 		}
 	}

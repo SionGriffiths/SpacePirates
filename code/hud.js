@@ -4,13 +4,16 @@
 
 
 function paintFuelGuage() {
-	var FuelPercent = (fuel/100)*100;
+	var FuelPercent = fuel;
 	c.save();
 	c.strokeStyle = "red";
 	c.strokeRect(10, canvasHeight - 30, 100, 10);
 	c.fillStyle = "red";
 	c.fillRect(10, canvasHeight - 30, FuelPercent, 10);
 	c.restore();
+	
+	//Game.printToDebugConsole("Painting Fuel Guage" + clockCycle);
+	
 }
 
 function paintShieldLevel() {

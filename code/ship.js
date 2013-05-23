@@ -50,55 +50,23 @@ Ship.ShieldLevel = 100;
 Ship.move = function(direction){
 	if (fuel > 0) {
 
-		//Game.printToDebugConsole("Moving Ship");	
-	
 		if (direction == "Forwards") {
-			Ship.MovingForwards = true;
-		
-			fuel = fuel - (fuel / 100);
-			if (fuel < 1) {
-				fuel = 0;
-			}
-			//Game.printToDebugConsole("Fuel = " + fuel + "%");			
+			Ship.MovingForwards = true;	
 		}
-	
-	
+		
 		else if (direction == "Backwards") {
-			
 			this.MovingForwards = false;
-			
 			this.Momentum /= 1.5;
-			
-			fuel = fuel - (fuel / 150);
-			if (fuel < 1) {
-				fuel = 0;
-			}
-			//Game.printToDebugConsole("Fuel = " + fuel + "%");
 		}
 	
 		else if (direction == "Left") {
 			this.TurningLeft = true;
-		
-			fuel = fuel - (fuel / 400);
-			if (fuel < 1) {
-				fuel = 0;
-			}
-			//Game.printToDebugConsole("Fuel = " + fuel + "%");
 		}
 	
 		else if (direction == "Right") {
 			this.TurningRight = true;
-		
-			fuel = fuel - (fuel / 400);
-			if (fuel < 1) {
-				fuel = 0;
-			}
-			//Game.printToDebugConsole("Fuel = " + fuel + "%");
 		}
-	} else {
-		//Game.printToDebugConsole("Fuel is at " + fuel + "%");
-		//Game.printToDebugConsole("Ship cannot fly");
-	}
+	} 
 }
 
 
@@ -122,6 +90,8 @@ Ship.stopMove = function(direction) {
 
 
 Ship.update = function() {
+
+	this.FuelUsage();
 
 	// Only calculate and move one in 3 game loops
 	this.MovementModerator += 1;
@@ -172,7 +142,7 @@ Ship.update = function() {
 		}
 	}
 	
-	this.CollisionDetection();	
+	this.CollisionDetection();
 
 	if(this.ShieldLevel<0) {
 		this.ShieldLevel = 0;
@@ -193,8 +163,6 @@ Ship.paint = function() {
 	c.translate(gameMap.translateX(this.X), gameMap.translateY(this.Y));
 	c.rotate(this.Direction * TO_RADIANS);
 	
-	//Game.printToDebugConsole("P GameXY: " + this.X + " " + this.Y);
-	//Game.printToDebugConsole("P CanvasXY: " + gameMap.translateX(this.X) + " " + gameMap.translateY(this.Y));
 	if(Game.mode=='play'){
 		if (this.ShieldActive && this.ShieldLevel > 2) {
 			c.save();
@@ -662,4 +630,27 @@ Ship.CollisionDetection = function(){
 	scfD = new Date();
 	shipCollisionFinish = scfD.getTime();
 	
+}
+
+
+
+Ship.FuelUsage = function() {
+
+	//Game.printToDebugConsole("Fuel Usage Check " + clockCycle);
+
+	if (fuel < 1) {
+		fuel = 0;
+	}
+	else {
+		if (gameMap.boundaryShift) {
+			fuel -= 0.01;
+			//Game.printToDebugConsole("Fuel Deducted " + clockCycle);
+		}
+		else {
+			fuel += 0.005;
+			
+			if (fuel > 100) { fuel = 100; }
+		}
+		//Game.printToDebugConsole("Fuel = " + fuel);
+	}
 }
