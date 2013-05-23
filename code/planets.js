@@ -66,7 +66,7 @@ if(this.Size > 200) {
 
 this.OrbitPosition = paras[6]; 
 this.OrbitDistance = paras[5];
-this.OrbitSpeed = 0.02;
+this.OrbitSpeed = 0.01 + (Math.floor(Math.random()*(this.Scale/100))/100);
 this.plot = new Object();
 
 addPlanet(this);
@@ -85,23 +85,30 @@ this.draw = function() {
 		c.strokeStyle = 'blue';
 		c.arc(0,0,this.Size*z,0,2*Math.PI);		
 		c.stroke();
+		c.moveTo(0,0);
+		c.lineTo(0,this.OrbitDistance*z);
+		c.stroke();	
 	}
 	c.restore();
 }
 
 this.update = function(){
-	this.Spin += this.SpinSpeed;
+	//this.Spin += this.SpinSpeed;
 	this.OrbitPosition += this.OrbitSpeed;
+	this.Spin = 90 - findAngleBetweenTwoPoints(this.x, this.y, Game.solarsystems[this.SolarSystemNumber].x, Game.solarsystems[this.SolarSystemNumber].y);
+	if(this.Spin<0){this.Spin+=360;}
 	var OrbitData = Array(
 				Game.solarsystems[this.SolarSystemNumber].x,
 				Game.solarsystems[this.SolarSystemNumber].y,
 				this.OrbitDistance,
 				this.OrbitPosition
 				);
-	this.plot = getOrbitPlot(OrbitData[0], OrbitData[1], OrbitData[2], OrbitData[3]);
 
+	this.plot = getOrbitPlot(OrbitData[0], OrbitData[1], OrbitData[2], OrbitData[3]);
 	this.x = this.plot[0];
 	this.y = this.plot[1];
+
+	
 }
 
 
