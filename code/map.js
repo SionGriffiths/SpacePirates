@@ -59,8 +59,11 @@ function Map() {
 
 	this.changeZoomLevel = function(direction, level){
 		
-		this.boundaryRadiusX = this.canvasWidth / (5/z);
-		this.boundaryRadiusY = this.canvasHeight / (5/z);
+		this.boundaryRadiusX = this.canvasWidth / (5*z);
+		this.boundaryRadiusY = this.canvasHeight / (5*z);
+		
+		gameMap.currentX = Ship.X;
+		gameMap.currentY = Ship.Y;
 		
 		if(direction=="up"){
 			this.zoomLevel +=level;
@@ -104,6 +107,7 @@ function Map() {
 					Game.mode = 'map';
 					break;
 		}
+		
 	}
 	
 

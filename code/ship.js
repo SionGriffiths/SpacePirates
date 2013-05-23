@@ -260,9 +260,26 @@ Ship.updateCoordinates = function(input) {
 	if (this.X > gameMap.currentX) {
 		var difference = (this.X - gameMap.currentX)*z;
 		
+		if (z >= 1) {
+			gameMap.currentX = this.X;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			movementInitiated = true;
+		}
 		
 		
-		if (difference > (gameMap.boundaryRadiusX / z) + (50/z)) {
+		if (difference > (gameMap.boundaryRadiusX / z) + (150 * z)) {
+			
+			gameMap.currentX += difference;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			
+			movementInitiated = true;
+		
+		
+		}
+		
+		else if (difference > (gameMap.boundaryRadiusX / z) + (50/z)) {
 			
 			gameMap.currentX += ((difference / movementModerator) / (10 * z));
 			gameMap.boundaryShift = true;
@@ -300,9 +317,24 @@ Ship.updateCoordinates = function(input) {
 	if (this.X < gameMap.currentX) {
 		var difference = (gameMap.currentX - this.X)*z;
 		
+		if (z >= 1) {
+			gameMap.currentX = this.X;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Left";
+			movementInitiated = true; 
+		}
 		
 		
-		if (difference > (gameMap.boundaryRadiusX / z) + (50/z)) {
+		if (difference > (gameMap.boundaryRadiusX / z) + (150 * z)) {
+			gameMap.currentX -= difference;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Left";
+			
+			movementInitiated = true; 
+		
+		}
+		
+		else if (difference > (gameMap.boundaryRadiusX / z) + (50/z)) {
 			gameMap.currentX -= ((difference / movementModerator) / (10 * z));
 			gameMap.boundaryShift = true;
 			gameMap.boundaryShiftDirectionX = "Left";
@@ -338,7 +370,27 @@ Ship.updateCoordinates = function(input) {
 	if (this.Y > gameMap.currentY) {
 		var difference = (this.Y - gameMap.currentY)*z;
 		
-		if (difference > (gameMap.boundaryRadiusY / z) + (50 / z)) {
+		if (z >= 1) {
+		
+			gameMap.currentY = this.Y;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		
+		}
+		
+		if (difference >= (gameMap.boundaryRadiusY / z) + (100 * z)) {
+		
+			gameMap.currentY += difference;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		
+		}
+		
+		
+		
+		else if (difference >= (gameMap.boundaryRadiusY / z) + (50 / z)) {
 		
 			gameMap.currentY += ((difference / movementModerator) / (10 * z));
 			gameMap.boundaryShift = true;
@@ -366,13 +418,33 @@ Ship.updateCoordinates = function(input) {
 		}
 	}
 	
+	
+	
+	
+	
 	if (this.Y < gameMap.currentY) {
 		var difference = (gameMap.currentY - this.Y)*z;
 		
+		if (z >= 1) {
+		
+			gameMap.currentY = this.Y;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		
+		}
+		
+		if (difference >= (gameMap.boundaryRadiusY / z) + (100 * z)) {
+		
+			gameMap.currentY -= difference;
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		
+		}
 		
 		
-		
-		if (difference > (gameMap.boundaryRadiusY / z) + (50 / z)) {
+		else if (difference >= (gameMap.boundaryRadiusY / z) + (50 / z)) {
 		
 			gameMap.currentY -= ((difference / movementModerator) / (10 * z));
 			gameMap.boundaryShift = true;
