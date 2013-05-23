@@ -636,21 +636,17 @@ Ship.CollisionDetection = function(){
 
 Ship.FuelUsage = function() {
 
-	//Game.printToDebugConsole("Fuel Usage Check " + clockCycle);
-
 	if (fuel < 1) {
 		fuel = 0;
 	}
 	else {
 		if (gameMap.boundaryShift) {
 			fuel -= 0.01;
-			//Game.printToDebugConsole("Fuel Deducted " + clockCycle);
 		}
 		else {
 			fuel += 0.005;
 			
 			if (fuel > 100) { fuel = 100; }
 		}
-		//Game.printToDebugConsole("Fuel = " + fuel);
 	}
 }

@@ -145,6 +145,9 @@ this.update = function() {
 
 
 this.detectCollisions = function() {
+
+	
+
 	for (var i = 0; i < deployedMunitions.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			deployedMunitions[i].x,
@@ -166,20 +169,21 @@ this.detectCollisions = function() {
 			Game.printToDebugConsole("Asteroid Collision!");
 
 			if(this.aType==1) {
-				if(this.hit>19){
+				if(this.hit > 19 && this.hit < 21){
 					
 					newAst = [0, this.x+this.Size, this.y+this.Size, 2];
 					var babyAsteroid1 = new Asteroid(newAst);
 					var babyAsteroid2 = new Asteroid(newAst);
-					var doMakeFuel = Math.floor(Math.random() * 2);
+					var doMakeFuel = Math.floor(Math.random() * 3);
 					if(doMakeFuel == 1) {
 						var newFuelCell = new FuelCell(1, newAst[1], newAst[2]);
 					}
-				} else {
+				} 
+				else {
 					this.direction = deployedMunitions[i].direction -90;
 					this.Speed += 0.1;
 				}			
-				this.hit += 1;
+				this.hit += 2;
 			} else {
 				this.direction = deployedMunitions[i].direction -90;
 				this.Speed += 0.1;
@@ -211,15 +215,34 @@ function paintAsteroids(){
 	
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Update Asteroids objects
 function updateAsteroids() {
 	acsD = new Date();
 	asteroidCollisionStart = acsD.getTime();
+	
+	
+	
 	for (var i = 0; i < Game.asteroids.length; i++) {
 
 		Game.asteroids[i].update();
 		Game.asteroids[i].detectCollisions();
-		if(Game.asteroids[i].hit > 20) {
+		if(Game.asteroids[i].hit >= 20) {
 			Game.asteroids.splice(i, 1);
 		}
 		// If the asteroid has drifted WAY away from the current center
@@ -245,6 +268,74 @@ function updateAsteroids() {
 	asteroidCollisionFinish = acfD.getTime();
 	
 }
+
+
+
+
+
+
+
+// Update Asteroids objects
+function updateAsteroids2() {
+
+	acsD = new Date();
+	asteroidCollisionStart = acsD.getTime();
+	
+	var asteroidsCloseBy = getCloseAsteroids();
+	
+	for (var i = 0; i < asteroidsCloseBy.length; i++) {
+
+		asteroidsCloseBy[i].update();
+		asteroidsCloseBy[i].detectCollisions();
+		
+	}
+	acfD = new Date();
+	asteroidCollisionFinish = acfD.getTime();
+	
+}
+
+
+
+
+
+function getCloseAsteroids() {
+
+	var closeAsteroids = new Array();
+
+	for (var i = 0; i < Game.asteroids.length; i++) {
+		var isCloseBy = liesWithinRadius(
+			Game.asteroids[i].x,
+			Game.asteroids[i].y,
+			Ship.X,
+			Ship.Y,
+			canvasWidth / z);
+	
+		if (isCloseBy) { closeAsteroids.push(Game.asteroids[i]); }
+		
+		if (Game.asteroids[i].hit > 20) { Game.asteroids.splice(i, 1); }
+	}
+	
+	return closeAsteroids;
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Add an Asteroid to the array
 function addAsteroid(asteroid){

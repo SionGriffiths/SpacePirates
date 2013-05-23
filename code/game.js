@@ -518,6 +518,8 @@ Game.paint = function() {
 			c.fillText("Asteroid Collision time %: " + astColPercentage.toFixed(0), 10, 350);
 			c.translate(0, 20);
 			c.fillText("Ship Collision time %: " + shipColPercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Number of Asteroids: " + Game.asteroids.length.toFixed(0), 10, 350);
 			c.restore();
 		}
 	}
@@ -536,7 +538,7 @@ Game.update = function() {
 		updatePlanets();
 		updateEnemyShips();
 		updateDeployedMunitions();
-		updateAsteroids();
+		updateAsteroids2();
 		updateFuel();
 		fireNewMunitions();
 	}
