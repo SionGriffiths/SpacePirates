@@ -252,7 +252,7 @@ Ship.updateCoordinates = function(input) {
 	
 	
 	var movementInitiated = false;
-	var movementModerator = (50 - (this.Momentum / 1.5))*z;
+	var movementModerator = (100 - (this.Momentum / 1.5))*z;
 	gameMap.boundaryShiftDirectionX = " ";
 	gameMap.boundaryShiftDirectionY = " ";
 	
@@ -260,35 +260,37 @@ Ship.updateCoordinates = function(input) {
 	if (this.X > gameMap.currentX) {
 		var difference = (this.X - gameMap.currentX)*z;
 		
-		if (difference > 30*z) {
+		
+		
+		if (difference > (gameMap.boundaryRadiusX / z) + (50/z)) {
 			
-			gameMap.currentX += (difference / movementModerator);
+			gameMap.currentX += ((difference / movementModerator) / (10 * z));
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			
+			movementInitiated = true;
+		
+		
+		}
+		
+		else if (difference > (gameMap.boundaryRadiusX / z)) {
+			
+			gameMap.currentX += (difference / movementModerator) * (10*z);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Right";
+			
+			movementInitiated = true;
+		
+		
+		}
+		
+		else if (difference > 30*z) {
+			
+			gameMap.currentX += (difference / movementModerator) * (10*z);
 			gameMap.boundaryShift = true;
 			gameMap.boundaryShiftDirectionX = "Right";
 			
 			movementInitiated = true; 
-		}
-		
-		if (difference > gameMap.boundaryRadiusX) {
-			
-			gameMap.currentX += (difference / movementModerator);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionX = "Right";
-			
-			movementInitiated = true;
-		
-		
-		}
-		
-		if (difference > gameMap.boundaryRadiusX + 50) {
-			
-			gameMap.currentX += ((difference / movementModerator) / 2);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionX = "Right";
-			
-			movementInitiated = true;
-		
-		
 		}
 		
 		
@@ -298,17 +300,10 @@ Ship.updateCoordinates = function(input) {
 	if (this.X < gameMap.currentX) {
 		var difference = (gameMap.currentX - this.X)*z;
 		
-		if (difference > 30*z) {
 		
-			gameMap.currentX -= (difference / movementModerator);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionX = "Left";
-			
-			movementInitiated = true; 
-		}
 		
-		if (difference > gameMap.boundaryRadiusX) {
-			gameMap.currentX -= (difference / movementModerator);
+		if (difference > (gameMap.boundaryRadiusX / z) + (50/z)) {
+			gameMap.currentX -= ((difference / movementModerator) / (10 * z));
 			gameMap.boundaryShift = true;
 			gameMap.boundaryShiftDirectionX = "Left";
 			
@@ -316,74 +311,92 @@ Ship.updateCoordinates = function(input) {
 		
 		}
 		
-		if (difference > gameMap.boundaryRadiusX + 50) {
-			gameMap.currentX -= ((difference / movementModerator) / 2);
+		else if (difference > (gameMap.boundaryRadiusX / z)) {
+			gameMap.currentX -= (difference / movementModerator) * (10*z);
 			gameMap.boundaryShift = true;
 			gameMap.boundaryShiftDirectionX = "Left";
 			
 			movementInitiated = true; 
 		
 		}
+		
+		else if (difference > 30*z) {
+		
+			gameMap.currentX -= (difference / movementModerator) * (10*z);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionX = "Left";
+			
+			movementInitiated = true; 
+		}
+		
+		
+		
+		
 		
 	}
 
 	if (this.Y > gameMap.currentY) {
 		var difference = (this.Y - gameMap.currentY)*z;
 		
-		if (difference > 30*z) {
+		if (difference > (gameMap.boundaryRadiusY / z) + (50 / z)) {
+		
+			gameMap.currentY += ((difference / movementModerator) / (10 * z));
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		
+		}
+		
+		
+		else if (difference > (gameMap.boundaryRadiusY / 2)) {
+		
+			gameMap.currentY += (difference / movementModerator) * (10*z);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Down";
+			movementInitiated = true; 
+		
+		}
+		
+		else if (difference > 30*z) {
 			
-			gameMap.currentY += (difference / movementModerator);
+			gameMap.currentY += (difference / movementModerator) * (10*z);
 			gameMap.boundaryShift = true;
 			gameMap.boundaryShiftDirectionY = "Down";
 			movementInitiated = true; 
-		}
-		
-		if (difference > gameMap.boundaryRadiusY) {
-		
-			gameMap.currentY += (difference / movementModerator);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionY = "Down";
-			movementInitiated = true; 
-		
-		}
-		
-		if (difference > gameMap.boundaryRadiusY + 50) {
-		
-			gameMap.currentY += ((difference / movementModerator) / 2);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionY = "Down";
-			movementInitiated = true; 
-		
 		}
 	}
 	
 	if (this.Y < gameMap.currentY) {
 		var difference = (gameMap.currentY - this.Y)*z;
 		
-		if (difference > 30*z) {
+		
+		
+		
+		if (difference > (gameMap.boundaryRadiusY / z) + (50 / z)) {
+		
+			gameMap.currentY -= ((difference / movementModerator) / (10 * z));
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		
+		}
+		
+		else if (difference > (gameMap.boundaryRadiusY / z)) {
+		
+			gameMap.currentY -= (difference / movementModerator) * (10*z);
+			gameMap.boundaryShift = true;
+			gameMap.boundaryShiftDirectionY = "Up";
+			movementInitiated = true; 
+		
+		}
+		
+		
+		else if (difference > 30*z) {
 			
-			gameMap.currentY -= (difference / movementModerator);
+			gameMap.currentY -= (difference / movementModerator) * (10*z);
 			gameMap.boundaryShift = true;
 			gameMap.boundaryShiftDirectionY = "Up";
 			movementInitiated = true; 
-		}
-		
-		if (difference > gameMap.boundaryRadiusY) {
-		
-			gameMap.currentY -= (difference / movementModerator);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionY = "Up";
-			movementInitiated = true; 
-		
-		}
-		
-		if (difference > gameMap.boundaryRadiusY + 50) {
-		
-			gameMap.currentY -= ((difference / movementModerator) / 2);
-			gameMap.boundaryShift = true;
-			gameMap.boundaryShiftDirectionY = "Up";
-			movementInitiated = true; 
-		
 		}
 		
 	}
@@ -461,9 +474,12 @@ Ship.getCurrentThrusterImage = function() {
 
 
 Ship.CollisionDetection = function(){
+	
 	scsD = new Date();
 	shipCollisionStart = scsD.getTime();
-	//this.ShieldActive = false;
+	
+	
+	
 	for (var i = 0; i < Game.planets.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			Game.planets[i].x,
@@ -491,7 +507,7 @@ Ship.CollisionDetection = function(){
 	}
 
 
-for (var i = 0; i < Game.asteroids.length; i++) {
+	for (var i = 0; i < Game.asteroids.length; i++) {
 		var collisionOccured = liesWithinRadius(
 			Game.asteroids[i].x + Game.asteroids[i].Scale ,
 			Game.asteroids[i].y + Game.asteroids[i].Scale,

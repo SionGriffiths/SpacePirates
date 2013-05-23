@@ -58,6 +58,10 @@ function Map() {
 	}
 
 	this.changeZoomLevel = function(direction, level){
+		
+		this.boundaryRadiusX = this.canvasWidth / (5/z);
+		this.boundaryRadiusY = this.canvasHeight / (5/z);
+		
 		if(direction=="up"){
 			this.zoomLevel +=level;
 			if(this.zoomLevel > 8){

@@ -298,97 +298,7 @@ Game.load = function() {
 
 }
 
-// Paint - GAMELOOP
-Game.paint = function() {
 
-	if(Game.mode=='play'){
-		clearCanvas();
-		paintBackground();		
-		paintSolarSystems();	
-		paintPlanets();		
-		paintDeployedMunitions();
-		paintAsteroids();
-		Ship.paint();
-		paintEnemyShips();
-		paintFuel();
-		paintFuelGuage();
-		paintShieldLevel();
-
-	}
-	if(Game.mode=='map') {
-		clearCanvas();
-		paintBackground();
-		paintFuelGuage();
-		paintSolarSystems();	
-		paintPlanets();	
-		Ship.paint();	
-	}
-	
-	
-
-
-	if(toggleDebug){
-		c.save();
-		c.font="12px Verdana";
-		var pcount = "P:" + Game.planets.length;
-		var xandydisplay = "X: " + Math.round(Ship.X) + " Y:" + Math.round(Ship.Y);
-		var astpaint = "Asteroids Painted: " + AsteroidsPainted;
-		var planpaint = "Planets Painted: " + PlanetsPainted;
-		c.fillStyle = "white";
-		c.fillText(pcount, 10, 50);
-		c.translate(0, 20);
-		c.fillText(xandydisplay, 10, 50);
-		c.translate(0, 20);
-		c.fillText(astpaint, 10, 50);
-		c.translate(0, 20);
-		c.fillText(planpaint, 10, 50);
-		c.translate(0, 20);
-		c.fillText(cycleTime, 10, 50);
-		c.restore();
-	}
-	
-	if (togglePerformance) {		
-		var cyclePercentage = ((cycleTime / (1000/fps)) * 100);	
-		var astColPercentage = ((asteroidCollisionTime / (1000/fps)) * 100);	
-		var shipColPercentage = ((shipCollisionTime / (1000/fps)) * 100);
-		var astPaintPercentage = ((asteroidPaintTime / (1000/fps)) * 100);	
-		var bgPaintPercentage = ((bgPaintTime / (1000/fps)) * 100);	
-		c.save();
-		c.font="12px Verdana";
-		c.fillStyle = "white";
-		c.translate(0, 20);
-		c.fillText("Percentage cycle time %: " + cyclePercentage.toFixed(0), 10, 350);
-		c.translate(0, 20);
-		c.fillText("Background Paint time %: " + bgPaintPercentage.toFixed(0), 10, 350);
-		c.translate(0, 20);
-		c.fillText("Asteroid Paint time %: " + astPaintPercentage.toFixed(0), 10, 350);
-		c.translate(0, 20);
-		c.fillText("Asteroid Collision time %: " + astColPercentage.toFixed(0), 10, 350);
-		c.translate(0, 20);
-		c.fillText("Ship Collision time %: " + shipColPercentage.toFixed(0), 10, 350);
-		c.restore();	
-	}
-
-}
-
-// Update - GAMELOOP
-Game.update = function() {	
-	if(Game.mode=='play'){
-		Ship.update();
-		updateSolarSystems();
-		updatePlanets();
-		updateEnemyShips();
-		paintFuelGuage();
-		updateDeployedMunitions();
-		updateAsteroids();
-		updateFuel();
-		fireNewMunitions();
-	}
-	if(Game.mode=='map') {
-		//updateSolarSystems();
-		//updatePlanets();
-	}
-}
 
 Game.zoomLevelStore = 3;
 
@@ -401,7 +311,7 @@ Game.toggleMap = function(){
 	if(Game.mode=='map'){
 		gameMap.changeZoomLevel('to', 3);
 	}
-	if(Game.mode=='play'){
+	else if(Game.mode=='play'){
 		Game.zoomLevelStore = gameMap.zoomLevel;
 		gameMap.changeZoomLevel('to', 7);
 	}
@@ -530,4 +440,110 @@ function fireNewMunitions() {
 
 
 
+// Paint - GAMELOOP
+Game.paint = function() {
 
+	if(Game.mode=='play'){
+		clearCanvas();
+		paintBackground();		
+		paintSolarSystems();	
+		paintPlanets();		
+		paintDeployedMunitions();
+		paintAsteroids();
+		Ship.paint();
+		paintEnemyShips();
+		paintFuel();
+		paintFuelGuage();
+		paintShieldLevel();
+
+	}
+	if(Game.mode=='map') {
+		clearCanvas();
+		paintBackground();
+		paintFuelGuage();
+		paintSolarSystems();	
+		paintPlanets();	
+		Ship.paint();	
+	}
+	
+	
+
+
+	if(toggleDebug){
+		c.save();
+		c.font="12px Verdana";
+		var pcount = "P:" + Game.planets.length;
+		var xandydisplay = "X: " + Math.round(Ship.X) + " Y:" + Math.round(Ship.Y);
+		var astpaint = "Asteroids Painted: " + AsteroidsPainted;
+		var planpaint = "Planets Painted: " + PlanetsPainted;
+		c.fillStyle = "white";
+		c.fillText(pcount, 10, 50);
+		c.translate(0, 20);
+		c.fillText(xandydisplay, 10, 50);
+		c.translate(0, 20);
+		c.fillText(astpaint, 10, 50);
+		c.translate(0, 20);
+		c.fillText(planpaint, 10, 50);
+		c.translate(0, 20);
+		c.fillText(cycleTime, 10, 50);
+		c.restore();
+	}
+	
+	if (togglePerformance) {		
+		
+		if (Game.mode ==  "map") {
+			var cyclePercentage = ((cycleTime / (1000/fps)) * 100);	
+			c.save();
+			c.font="12px Verdana";
+			c.fillStyle = "white";
+			c.translate(0, 20);
+			c.fillText("Percentage cycle time %: " + cyclePercentage.toFixed(0), 10, 350);
+			c.restore();	
+		}
+		else {
+			var cyclePercentage = ((cycleTime / (1000/fps)) * 100);	
+			var astColPercentage = ((asteroidCollisionTime / (1000/fps)) * 100);	
+			var shipColPercentage = ((shipCollisionTime / (1000/fps)) * 100);
+			var astPaintPercentage = ((asteroidPaintTime / (1000/fps)) * 100);	
+			var bgPaintPercentage = ((bgPaintTime / (1000/fps)) * 100);	
+			c.save();
+			c.font="12px Verdana";
+			c.fillStyle = "white";
+			c.translate(0, 20);
+			c.fillText("Percentage cycle time %: " + cyclePercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Background Paint time %: " + bgPaintPercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Asteroid Paint time %: " + astPaintPercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Asteroid Collision time %: " + astColPercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Ship Collision time %: " + shipColPercentage.toFixed(0), 10, 350);
+			c.restore();
+		}
+	}
+
+}
+
+
+
+
+
+// Update - GAMELOOP
+Game.update = function() {	
+	if(Game.mode=='play'){
+		Ship.update();
+		updateSolarSystems();
+		updatePlanets();
+		updateEnemyShips();
+		paintFuelGuage();
+		updateDeployedMunitions();
+		updateAsteroids();
+		updateFuel();
+		fireNewMunitions();
+	}
+	if(Game.mode=='map') {
+		//updateSolarSystems();
+		//updatePlanets();
+	}
+}
