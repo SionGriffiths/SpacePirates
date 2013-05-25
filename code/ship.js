@@ -605,24 +605,26 @@ Ship.CollisionDetection = function(){
 	
 	
 	for (var i = 0; i < deployedMunitions.length; i++) {
-	
-		var collisionOccured = liesWithinRadius(
-					deployedMunitions[i].x,
-					deployedMunitions[i].y,
-					this.X,
-					this.Y,					
-					//(this.ShieldSize + 10)*z);
-					((this.ShieldSize/z) * 2) * (z / 1.1));
 		
-		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
+		if (deployedMunitions[i].origin != "PlayerShip") {
+		
+			var collisionOccured = liesWithinRadius(
+						deployedMunitions[i].x,
+						deployedMunitions[i].y,
+						this.X,
+						this.Y,					
+						//(this.ShieldSize + 10)*z);
+						((this.ShieldSize/z) * 2) * (z / 1.1));
 			
-			this.ShieldActive = true;
-			this.ShieldLevel -=  2;
-			deployedMunitions[i].destroyed = true;
-		
+			if (collisionOccured) {
+				
+				this.ShieldActive = true;
+				this.ShieldLevel -=  2;
+				deployedMunitions[i].destroyed = true;
+			
+			}
+			
 		}
-		
-	
 	}
 	
 	scfD = new Date();
@@ -689,7 +691,7 @@ Ship.CollisionDetection2 = function(){
 			this.ShieldActive = true;
 			this.ShieldLevel -=  0.1;
 		
-			if (!(Game.asteroids[i].recentlyHit)) {
+			if (!(localAsteroids[i].recentlyHit)) {
 			
 			localAsteroids[i].recentlyHit = true;
 			
@@ -711,6 +713,7 @@ Ship.CollisionDetection2 = function(){
 
 			if (this.Momentum > 0) {
 				localAsteroids[i].Speed += (this.Momentum / 2);
+				if (localAsteroids[i].Speed > this.MaxSpeed) { localAsteroids[i].Speed = this.MaxSpeed; }
 			}
 
 			}

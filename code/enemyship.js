@@ -18,6 +18,8 @@ this.collisionRadius;
 this.lastFireTime;
 this.target;
 this.fireRate;
+this.shieldActivated = false;
+
 
 
 this.draw = function() {
@@ -289,6 +291,9 @@ this.detectCollisions = function() {
 			this.collisionRadius);
 			
 		if (collisionOccured && (deployedMunitions[i].origin != this.type)) {
+		
+			this.shieldActivated = true;
+		
 			deployedMunitions[i].destroyed = true;
 		}
 		
