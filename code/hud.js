@@ -60,6 +60,7 @@ function paintInventory() {
 	c.font = "12px Verdana";
 	var height = 45;
 	var difference = 15;
+	var differenceCounter = 0;
 	
 	if (Game.collectedResources.length == 0) {
 		c.fillText("No Booty", 5, height);
@@ -68,7 +69,8 @@ function paintInventory() {
 	else {
 		for (var i = 0; i < Game.collectedResources.length; i++) {
 			if (!(typeof Game.collectedResources[i] == "undefined")) {
-				c.fillText(Game.collectedResources[i].type + ": " + Game.collectedResources[i].amount, 5, height + (difference*i));
+			differenceCounter += 1;
+				c.fillText(Game.collectedResources[i].type + ": " + Game.collectedResources[i].amount, 5, height + (difference*differenceCounter));
 			}
 		}
 	}
