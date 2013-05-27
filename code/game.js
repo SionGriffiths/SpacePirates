@@ -592,14 +592,7 @@ Game.update = function() {
 		updateFuel();
 		fireNewMunitions();
 		updateResources();
-		
-		/*
-		if (testingToggle == 1) {
-			var scrapMetal = new Resource("Scrap Metal", 200, 200, 200, scrapMetalImage);
-			Game.resources.push(scrapMetal);
-			testingToggle = 2;
-		}
-		*/
+
 	}
 	
 	if (Game.mode == 'Player Ship Destroyed') {
@@ -613,7 +606,8 @@ Game.update = function() {
 		
 		deployedMunitions = new Array();
 		this.enemyShips = new Array();
-		
+		this.collectedResources = new Array();
+		this.resources = new Array();
 		this.mode = 'play';
 	}
 }
