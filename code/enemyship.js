@@ -687,6 +687,9 @@ this.paintDestroyedSequence = function(){
 				// else { this.destroySequenceCounter = 0; this.destroySequence += 1; }
 				this.destroySequence += 1;
 				break;
+	case 19: 	Game.generateEnemyShipResources(this);
+				this.destroySequence += 1;
+				break;
 	}
 }
 
@@ -711,7 +714,7 @@ function updateEnemyShips() {
 		
 		if (Game.enemyShips[i].destroyed) {
 		
-			if (Game.enemyShips[i].destroySequence == 19) {
+			if (Game.enemyShips[i].destroySequence == 20) {
 				Game.enemyShips.splice(i, 1);
 			}
 			else { Game.enemyShips[i].update(); }

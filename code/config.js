@@ -16,7 +16,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 27;
+var numOfImages = 28;
 var imageLoadProgress = 0;
 
 
@@ -99,3 +99,4 @@ var munitionsUpdateStart;
 var munitionsUpdateFinish;
 var munitionsUpdateTemp = 0;
 var munitionsUpdateTime;
+

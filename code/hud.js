@@ -49,3 +49,25 @@ function paintHitPointsLevel() {
 
 
 }
+
+function paintInventory() {
+
+	c.save();
+	c.font="16px Verdana";
+	c.fillStyle = "white";
+	c.fillText("Cargo Hold", 5, 25);
+	
+	c.font = "12px Verdana";
+	var height = 45;
+	var difference = 15;
+	
+	if (Game.collectedResources.length == 0) {
+		c.fillText("No Booty", 5, height);
+	}
+	
+	else {
+		for (var i = 0; i < Game.collectedResources.length; i++) {
+			c.fillText(Game.collectedResources[i].type + ": " + Game.collectedResources[i].amount, 5, height + (difference*i));
+		}
+	}
+}
