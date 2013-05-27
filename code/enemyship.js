@@ -195,15 +195,16 @@ this.trackOntoScreen = function() {
 	switch (this.AISequenceCounter) {
 	
 	// Initially place the ship outside canvas view (even if player ship moving)
-	case 0:		this.x = gameMap.currentX + (-1200 + Math.floor(Math.random()* 2400));
-				this.y = gameMap.currentY + (-1200 + Math.floor(Math.random()* 2400));
+	case 0:		this.x = gameMap.currentX + (-100 + -(canvasWidth/z));
+				this.y = gameMap.currentY + (-100 + -(canvasHeight/z));
 				this.AISequenceCounter += 1;
+				this.target = "Arbitrary Point";
 				Game.printToDebugConsole("Ship Placed");
 				break;
 				
 	// Choose a central point, and face it	
-	case 1:		this.nextLocationX = gameMap.currentX + (-600 + Math.floor(Math.random() * 1200));
-				this.nextLocationY = gameMap.currentY + (-400 + Math.floor(Math.random() * 800));
+	case 1:		this.nextLocationX = gameMap.currentX + ((-1400) + Math.floor(Math.random() * (2801)));
+				this.nextLocationY = gameMap.currentY + ((-1400) + Math.floor(Math.random() * (2801)));
 				var angleDegree = findAngleBetweenTwoPoints(this.x, this.y, this.nextLocationX, this.nextLocationY);
 				var faceDirection = 360 - angleDegree - 90;
 				if (faceDirection < 0) {faceDirection += 360;}
@@ -221,6 +222,7 @@ this.trackOntoScreen = function() {
 	// Target reached, switch to trackPlayer mode
 	case 3:		this.AISequenceCounter = 0;
 				this.AISequence = 4;
+				this.target = "Player Ship";
 				Game.printToDebugConsole("Switched to Player Tracking");
 				break;
 				
@@ -277,19 +279,20 @@ this.engagePlayerShipFollow = function() {
 		
 		
 		// Check within range
-		case 2:		var shipCloseBy = this.isPlayerCloseBy(1000);
+		case 2:		var shipCloseBy = this.isPlayerCloseBy(400/z);
 					if (shipCloseBy) { this.AISequenceCounter = 0; }
 					else {
 					
-						this.nextLocationX = Ship.X + (-100 + Math.floor(Math.random()*200));
-						this.nextLocationY = Ship.Y + (-100 + Math.floor(Math.random()*200));
+						this.nextLocationX = Ship.X + (-300 + Math.floor(Math.random()*600));
+						this.nextLocationY = Ship.Y + (-300 + Math.floor(Math.random()*600));
 						this.AISequenceCounter = 3;
 					
 					}
 					break;
 		
-		case 3:		var arrivedNextTargetPoint = this.moveToAPoint(19);
-					if (arrivedNextTargetPoint) { this.AISequenceCounter = 0; }
+		case 3:		this.target = "Arbitrary Point";
+					var arrivedNextTargetPoint = this.moveToAPoint(19);
+					if (arrivedNextTargetPoint) { this.AISequenceCounter = 0; this.target = "Player Ship"}
 	
 	}
 
@@ -440,13 +443,20 @@ this.moveToAPoint = function(speed) {
 	case 1:		var comparitiveX = Math.abs((this.x - this.nextLocationX));
 				var comparitiveY = Math.abs((this.y - this.nextLocationY));
 				
-				if (comparitiveX >= (speed*2)) {
+				// Accuracy - *4 == less accurate positioning
+				if (comparitiveX >= (speed*4)) {
 					this.x = this.x + speed * Math.cos((this.direction + 90) * TO_RADIANS);
+				}
+				
+				// Accuracy - *4 == less accurate positioning
+				if (comparitiveY >= (speed*4)) {
 					this.y = this.y + speed * Math.sin((this.direction + 90) * TO_RADIANS);
 				}
 				else {
 					this.AISubSequenceCounter = 0; return true;
 				}
+				
+				this.faceTowardsAPoint();
 	}
 
 
