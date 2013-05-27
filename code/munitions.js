@@ -99,7 +99,7 @@ function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggress
 	this.speed = 4 + (aggressorMomentum / 4);
 	this.numberOfAnimations = 4;
 	this.nextAnimationCalc = 0;
-	this.lifetime = 240;
+	this.lifetime = 480;
 	this.expiryCounter = 0;
 	this.animations = new Array();
 	this.animations[0] = 0.5;

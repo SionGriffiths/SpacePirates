@@ -46,6 +46,11 @@ Ship.ShieldTimer = 0;
 Ship.gunTurret = 0; // 0 or 1 - left or right turret
 Ship.ShieldSize = 50;
 Ship.ShieldLevel = 100;
+Ship.MaxShieldLevel = 100;
+Ship.HullStrength = 100;
+Ship.MaxHullStrength = 100;
+
+
 
 Ship.move = function(direction){
 	if (fuel > 0) {
@@ -144,13 +149,21 @@ Ship.update = function() {
 	
 	this.CollisionDetection2();
 
-	if(this.ShieldLevel<0) {
+	if(this.ShieldLevel < 0) {
 		this.ShieldLevel = 0;
 	}
-	if(this.ShieldLevel>100) {
-		this.ShieldLevel = 100;
-	} else {
+	else if(this.ShieldLevel > this.MaxShieldLevel) {
+		this.ShieldLevel = this.MaxShieldLevel;
+	} 
+	else {
 		this.ShieldLevel +=0.2;
+	}
+	
+	if (this.HullStrength < 0) {
+		this.HullStrength = 0;
+	}
+	else if (this.HullStrength > this.MaxHullStrength) {
+		this.HullStrength = this.MaxHullStrength;
 	}
 
 }
@@ -628,8 +641,17 @@ Ship.CollisionDetection2 = function(){
 		
 		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
 			
-			this.ShieldActive = true;
-			this.ShieldLevel -=  deployedMunitions[i].power;
+			if (this.ShieldLevel > 2) { this.ShieldActive = true; }
+			
+			if (this.ShieldLevel - deployedMunitions[i].power < 0) {
+				this.ShieldLevel -=  deployedMunitions[i].power;
+				var difference = Math.abs(0 - this.ShieldLevel);
+				this.HullStrength -= difference;
+			}	
+			else {
+				this.ShieldLevel -=  deployedMunitions[i].power;
+			}
+			
 			deployedMunitions[i].destroyed = true;
 		
 		}

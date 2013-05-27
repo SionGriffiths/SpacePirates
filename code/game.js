@@ -454,6 +454,7 @@ Game.paint = function() {
 		paintEnemyShips();
 		paintFuelGuage();
 		paintShieldLevel();
+		paintHitPointsLevel();
 		paintFuel();
 
 	}
