@@ -26,6 +26,8 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 	this.destroySequence = 0;
 	this.gunTurret = turret;
 	this.fireRate = 100; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
+	this.power = 2;
+	
 	
 	this.draw = function() {
 
@@ -111,6 +113,8 @@ function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggress
 	this.destroySequence = 0;
 	this.gunTurret = turret;
 	this.fireRate = 1000; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
+	this.power = 50;
+	
 	
 	this.draw = function() {
 
@@ -198,6 +202,8 @@ function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, a
 	this.destroySequence = 0;
 	this.gunTurret = turret;
 	this.fireRate = 500; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
+	this.power = 4;
+	
 	
 	this.draw = function() {
 		
@@ -417,7 +423,9 @@ function updateDeployedMunitions() {
 	munitionsUpdateStart = musD.getTime();
 
 	for (var i = 0; i < deployedMunitions.length; i++) {
+		
 		deployedMunitions[i].update();
+		
 		if (deployedMunitions[i].expiryCounter >= deployedMunitions[i].lifetime) {
 		   deployedMunitions.splice(i, 1);
 		}
@@ -450,8 +458,8 @@ function fireShipLaserPulse(munitionsType, originX, originY, targetDirection, ag
 		
 	deployedMunitions.push(deployedMunition);
 	
-	Game.printToDebugConsole("One munition object added");
-	Game.printToDebugConsole("Total deployedMunitions = " + deployedMunitions.length);
+	//Game.printToDebugConsole("One munition object added");
+	//Game.printToDebugConsole("Total deployedMunitions = " + deployedMunitions.length);
 	
 }
 

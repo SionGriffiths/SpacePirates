@@ -168,7 +168,7 @@ Ship.paint = function() {
 			c.save();
 			c.scale(1*z, 1.5*z);
 			c.beginPath();
-			c.arc(0,0,40*z,0,2*Math.PI);
+			c.arc(0,0,40,0,2*Math.PI);
 			var grd = c.createRadialGradient(0,0,5,0,0,70*z);
 			grd.addColorStop(0.2,"rgba(255,255,255, 0.1)");
 			grd.addColorStop(0.9, "rgba(255,255,255, 0.6)");
@@ -208,8 +208,6 @@ Ship.updateCoordinates = function(input) {
 	if (input == "Forwards") {
 		this.X = this.X + this.Momentum * Math.cos((this.Direction - 90) * TO_RADIANS);
 		this.Y = this.Y + this.Momentum * Math.sin((this.Direction - 90) * TO_RADIANS);
-		//Game.printToDebugConsole("U GameXY: " + this.X + " " + this.Y);
-		//Game.printToDebugConsole("U CanvasXY: " + gameMap.translateX(this.X) + " " + gameMap.translateY(this.Y));
 	}
 	
 	else if (input == "Backwards") {
@@ -513,126 +511,6 @@ Ship.getCurrentThrusterImage = function() {
 
 
 
-Ship.CollisionDetection = function(){
-	
-	scsD = new Date();
-	shipCollisionStart = scsD.getTime();
-
-	for (var i = 0; i < Game.planets.length; i++) {
-		var collisionOccured = liesWithinRadius(
-			Game.planets[i].x,
-			Game.planets[i].y,
-			this.X,
-			this.Y,
-			Game.planets[i].Size*z);
-			if(toggleDebug==true) {
-				c.save();
-				c.beginPath();
-				c.strokeStyle = 'blue';
-				c.arc(gameMap.translateX(Game.planets[i].x),gameMap.translateY(Game.planets[i].y),Game.planets[i].Size*z,0,2*Math.PI);		
-				c.stroke();
-				c.restore();
-			}
-		if (collisionOccured) {
-			console.log('PLANET HAPPENED! :D');
-			this.Momentum += Game.planets[i].massFactor;
-
-			if(this.Y>Game.planets[i].y) {this.Direction +=4;}
-			if(this.Y<Game.planets[i].y) {this.Direction -= 4;}
-			if(this.X<Game.planets[i].x) {this.Direction +=4;}
-			if(this.X>Game.planets[i].x) {this.Direction -= 4;}
-		}
-	}
-
-
-	for (var i = 0; i < Game.asteroids.length; i++) {
-		var collisionOccured = liesWithinRadius(
-			Game.asteroids[i].x + Game.asteroids[i].Scale ,
-			Game.asteroids[i].y + Game.asteroids[i].Scale,
-			this.X,
-			this.Y,
-			(this.ShieldSize + Game.asteroids[i].Size)*z);
-			
-		if (collisionOccured) {
-		
-			this.ShieldActive = true;
-			this.ShieldLevel -=  0.1;
-		
-			if (!(Game.asteroids[i].recentlyHit)) {
-			
-			Game.asteroids[i].recentlyHit = true;
-			
-			// Bounce Asteroid
-			var allignedDirection = this.Direction - 90;
-			if (allignedDirection < 0) { allignedDirection += 360; }
-			var newAsteroidDirection;
-			
-			if (allignedDirection > Game.asteroids[i].direction) {
-				newAsteroidDirection = Game.asteroids[i].direction - (Math.floor(Math.random() * 180));
-			}
-			else {
-				newAsteroidDirection = Game.asteroids[i].direction + (Math.floor(Math.random() * 180));
-			}
-			
-			if (newAsteroidDirection < 0) { newAsteroidDirection += 360; }
-
-			Game.asteroids[i].direction = newAsteroidDirection;
-
-			if (this.Momentum > 0) {
-				Game.asteroids[i].Speed += (this.Momentum / 2);
-			}
-
-			}
-		}
-
-		if(toggleDebug==true) {
-			c.save();
-			c.beginPath();
-			c.strokeStyle = 'orange';
-			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60*z,0,2*Math.PI);		
-			c.stroke();
-			c.restore();
-		}
-		if(z<0.26) {
-			c.save();
-			c.beginPath();
-			c.strokeStyle = 'orange';
-			c.arc(gameMap.translateX(this.X),gameMap.translateY(this.Y),60*z,0,2*Math.PI);		
-			c.stroke();
-			c.restore();
-		}
-	}
-	
-	
-	for (var i = 0; i < deployedMunitions.length; i++) {
-		
-		if (deployedMunitions[i].origin != "PlayerShip") {
-		
-			var collisionOccured = liesWithinRadius(
-						deployedMunitions[i].x,
-						deployedMunitions[i].y,
-						this.X,
-						this.Y,					
-						//(this.ShieldSize + 10)*z);
-						((this.ShieldSize/z) * 2) * (z / 1.1));
-			
-			if (collisionOccured) {
-				
-				this.ShieldActive = true;
-				this.ShieldLevel -=  2;
-				deployedMunitions[i].destroyed = true;
-			
-			}
-			
-		}
-	}
-	
-	scfD = new Date();
-	shipCollisionFinish = scfD.getTime();
-	
-}
-
-
 
 
 
@@ -751,7 +629,7 @@ Ship.CollisionDetection2 = function(){
 		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
 			
 			this.ShieldActive = true;
-			this.ShieldLevel -=  2;
+			this.ShieldLevel -=  deployedMunitions[i].power;
 			deployedMunitions[i].destroyed = true;
 		
 		}
