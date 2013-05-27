@@ -218,7 +218,6 @@ this.trackOntoScreen = function() {
 				if (arrivedAtTargetPoint) { this.AISequenceCounter = 3; }
 				Game.printToDebugConsole("Moving Towards Target");
 				break;
-	
 	// Target reached, switch to trackPlayer mode
 	case 3:		this.AISequenceCounter = 0;
 				this.AISequence = 4;
@@ -275,25 +274,28 @@ this.engagePlayerShipFollow = function() {
 					var targetAquired = this.faceTowardsAPoint();
 					if (!(targetAquired)) { this.AISequenceCounter = 0; }
 					else { this.AISequenceCounter = 2; }
+					// Random move
+					var randomMove = Math.floor(Math.random()*100);
+					if (randomMove == 50) { this.AISequenceCounter = 4; }
 					break;
 		
 		
 		// Check within range
 		case 2:		var shipCloseBy = this.isPlayerCloseBy(400);
 					if (shipCloseBy) { this.AISequenceCounter = 0; }
-					else {
-					
-						this.nextLocationX = Ship.X + (-300 + Math.floor(Math.random()*600));
-						this.nextLocationY = Ship.Y + (-300 + Math.floor(Math.random()*600));
-						this.AISequenceCounter = 3;
-					
-					}
+					else { this.AISequenceCounter = 4;	}
 					break;
 		
 		case 3:		this.target = "Arbitrary Point";
 					var arrivedNextTargetPoint = this.moveToAPoint(19);
 					if (arrivedNextTargetPoint) { this.AISequenceCounter = 0; this.target = "Player Ship"}
-	
+					break;
+
+		// Choose new location
+		case 4:		this.nextLocationX = Ship.X + (-300 + Math.floor(Math.random()*600));
+					this.nextLocationY = Ship.Y + (-300 + Math.floor(Math.random()*600));
+					this.AISequenceCounter = 3;
+					break;
 	}
 
 
@@ -466,7 +468,7 @@ this.moveToAPoint = function(speed) {
 
 // Returns true if player within radius
 this.isPlayerCloseBy = function(radius) {
-	return liesWithinRadius(Ship.X,Ship.Y,this.x,this.y, radius / (z*1.5))
+	return liesWithinRadius(Ship.X,Ship.Y,this.x,this.y, radius / z)
 }
 
 
