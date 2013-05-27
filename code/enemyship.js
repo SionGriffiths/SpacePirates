@@ -279,7 +279,7 @@ this.engagePlayerShipFollow = function() {
 		
 		
 		// Check within range
-		case 2:		var shipCloseBy = this.isPlayerCloseBy(400/z);
+		case 2:		var shipCloseBy = this.isPlayerCloseBy(400);
 					if (shipCloseBy) { this.AISequenceCounter = 0; }
 					else {
 					
@@ -311,7 +311,7 @@ this.update = function() {
 
 		if (this.AISequence != 2 && this.AISequence != 4) {
 
-			var playerCloseBy = this.isPlayerCloseBy(750);
+			var playerCloseBy = this.isPlayerCloseBy(400);
 
 			if (playerCloseBy) {
 				
@@ -466,7 +466,7 @@ this.moveToAPoint = function(speed) {
 
 // Returns true if player within radius
 this.isPlayerCloseBy = function(radius) {
-	return liesWithinRadius(Ship.X,Ship.Y,this.x,this.y,radius/z)
+	return liesWithinRadius(Ship.X,Ship.Y,this.x,this.y, radius / (z*1.5))
 }
 
 
