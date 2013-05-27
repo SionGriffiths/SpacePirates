@@ -26,7 +26,7 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 	this.destroySequence = 0;
 	this.gunTurret = turret;
 	this.fireRate = 100; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
-	this.power = 2;
+	this.power = 1;
 	
 	
 	this.draw = function() {
@@ -113,7 +113,7 @@ function BlueLaserMunition(originX, originY, targetDirection, aggressor, aggress
 	this.destroySequence = 0;
 	this.gunTurret = turret;
 	this.fireRate = 1000; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
-	this.power = 50;
+	this.power = 25;
 	
 	
 	this.draw = function() {
@@ -202,7 +202,7 @@ function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, a
 	this.destroySequence = 0;
 	this.gunTurret = turret;
 	this.fireRate = 500; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
-	this.power = 4;
+	this.power = 6;
 	
 	
 	this.draw = function() {
