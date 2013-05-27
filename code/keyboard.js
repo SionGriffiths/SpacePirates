@@ -81,6 +81,11 @@ function keyEventFired(e) {
 	case 80:	var enemyShip = new EnemyShip();
 				enemyShip.instantiate(0,0);
 				enemyShip.fireRate = (350 + (Math.random()*1250));
+				var randomType = Math.floor(Math.random()*7);
+				if (randomType <= 3) { enemyShip.type = "Standard Vagabond"; }
+				else if (randomType == 4) { enemyShip.type = "Gold Cargo Ship"; }
+				else if (randomType == 5) { enemyShip.type = "Platinum Cargo Ship"; }
+				else { enemyShip.type = "Commercial Cargo Ship"; }
 				break;
 
 	// O - Place an asteroid

@@ -272,18 +272,35 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		scrapMetalImage.src = "images/misc/scrapmetal.png";
 	}, 1400);
-
+	setTimeout(function() {
+		dryGoodsImage = new Image();
+		dryGoodsImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		dryGoodsImage.src = "images/misc/crate.png";
+	}, 1450);
+	setTimeout(function() {
+		goldBarsImage = new Image();
+		goldBarsImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		goldBarsImage.src = "images/misc/gold.png";
+	}, 1500);
+	setTimeout(function() {
+		platinumBarsImage = new Image();
+		platinumBarsImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		platinumBarsImage.src = "images/misc/platinum.png";
+	}, 1550);
 
 	setTimeout(function() {
 		for(var i = 0; i < 12; i++) {var initialSolarSystem = new SolarSystem();}		
-	}, 1500);
+	}, 1600);
 
 
 	Game.paused = false;
 	// Call the game to run, after finished loading
 	setTimeout(function() {
 		Game.run();
-	}, 1500);
+	}, 1600);
 
 	newAst = [];
 	newAst = [0];
@@ -456,12 +473,26 @@ Game.playerCollectedResource = function(resource) {
 		
 	switch (resource.type) {
 	
-	case "Scrap Metal":	if (typeof Game.collectedResources[0] == "undefined") {
-							Game.collectedResources[0] = resource;
-						}
-						else { Game.collectedResources[0].amount += resource.amount; }
-	
-	
+	case "Scrap Metal":			if (typeof Game.collectedResources[0] == "undefined") {
+									Game.collectedResources[0] = resource;
+								}
+								else { Game.collectedResources[0].amount += resource.amount; }
+								break;
+	case "Platinum Bars":		if (typeof Game.collectedResources[1] == "undefined") {
+									Game.collectedResources[1] = resource;
+								}
+								else { Game.collectedResources[1].amount += resource.amount; }
+								break;
+	case "Gold Bars":			if (typeof Game.collectedResources[2] == "undefined") {
+									Game.collectedResources[2] = resource;
+								}
+								else { Game.collectedResources[2].amount += resource.amount; }
+								break;
+	case "Commercial Goods":	if (typeof Game.collectedResources[3] == "undefined") {
+									Game.collectedResources[3] = resource;
+								}
+								else { Game.collectedResources[3].amount += resource.amount; }
+								break;
 	}
 
 }
@@ -471,9 +502,18 @@ Game.generateEnemyShipResources = function(ship) {
 
 	switch (ship.type) {
 	
-	case "Standard Vagabond": 	var scrapMetal = new Resource("Scrap Metal", 200, ship.x, ship.y, scrapMetalImage);
-								Game.resources.push(scrapMetal);
-								break;
+	case "Standard Vagabond": 		var scrapMetal = new Resource("Scrap Metal", 200, ship.x, ship.y, scrapMetalImage);
+									Game.resources.push(scrapMetal);
+									break;
+	case "Platinum Cargo Ship":		var platinum = new Resource("Platinum Bars", 50, ship.x, ship.y, platinumBarsImage);
+									Game.resources.push(platinum);
+									break;
+	case "Gold Cargo Ship":			var gold = new Resource("Gold Bars", 100, ship.x, ship.y, goldBarsImage);
+									Game.resources.push(gold);
+									break;
+	case "Commercial Cargo Ship":	var commercial = new Resource("Commercial Goods", 1000, ship.x, ship.y, dryGoodsImage);
+									Game.resources.push(commercial);
+									break;
 	}
 }
 

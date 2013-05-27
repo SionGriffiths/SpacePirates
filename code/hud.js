@@ -67,7 +67,9 @@ function paintInventory() {
 	
 	else {
 		for (var i = 0; i < Game.collectedResources.length; i++) {
-			c.fillText(Game.collectedResources[i].type + ": " + Game.collectedResources[i].amount, 5, height + (difference*i));
+			if (!(typeof Game.collectedResources[i] == "undefined")) {
+				c.fillText(Game.collectedResources[i].type + ": " + Game.collectedResources[i].amount, 5, height + (difference*i));
+			}
 		}
 	}
 }

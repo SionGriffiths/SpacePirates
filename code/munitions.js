@@ -410,6 +410,66 @@ function paintDeployedMunitions() {
 		
 		
 		}
+		
+		else if (deployedMunitions[i].origin == "Platinum Cargo Ship") {
+		
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(5*z, -50*z);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+		
+		
+		}
+		
+		else if (deployedMunitions[i].origin == "Gold Cargo Ship") {
+		
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(5*z, -50*z);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+		
+		
+		}
+		
+		else if (deployedMunitions[i].origin == "Commercial Cargo Ship") {
+		
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(5*z, -50*z);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+		
+		
+		}
 	}
 	
 	mpfD = new Date();
