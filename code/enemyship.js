@@ -389,7 +389,7 @@ this.detectCollisions = function() {
 			((this.shieldSize/z) * 2) * (z / 1.1));
 			//this.collisionRadius);
 			
-		if (collisionOccured && (deployedMunitions[i].origin != this.type)) {
+		if (collisionOccured && (deployedMunitions[i].origin == "Player Ship")) {
 		
 			this.shieldActivated = true;
 			

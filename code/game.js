@@ -389,26 +389,26 @@ Game.firePlayerShipLaserPulse = function(munitionsType) {
 	if (munitionsType == 0) {		
 		if (Ship.gunTurret == 0) {
 			Ship.gunTurret = 1;
-			fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "Player Ship", Ship.Momentum, Ship.gunTurret);
 		}
 		else {
 			Ship.gunTurret = 0;
-			fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			fireShipLaserPulse("RedLaser", Ship.X, Ship.Y, Ship.Direction, "Player Ship", Ship.Momentum, Ship.gunTurret);
 		}		
 	}
 	
 	else if (munitionsType == 1) {
-		fireShipLaserPulse("BlueLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, 2);
+		fireShipLaserPulse("BlueLaser", Ship.X, Ship.Y, Ship.Direction, "Player Ship", Ship.Momentum, 2);
 	}
 	
 	else if (munitionsType == 2) {
 		if (Ship.gunTurret == 0) {
 			Ship.gunTurret = 1;
-			fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "Player Ship", Ship.Momentum, Ship.gunTurret);
 		}
 		else {
 			Ship.gunTurret = 0;
-			fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "PlayerShip", Ship.Momentum, Ship.gunTurret);
+			fireShipLaserPulse("GreenLaser", Ship.X, Ship.Y, Ship.Direction, "Player Ship", Ship.Momentum, Ship.gunTurret);
 		}		
 	}
 	Game.playPewPewPew();	

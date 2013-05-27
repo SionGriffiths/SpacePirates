@@ -697,7 +697,7 @@ Ship.CollisionDetection2 = function(){
 					//(this.ShieldSize + 10)*z);
 					((this.ShieldSize/z) * 2) * (z / 1.1));
 		
-		if (collisionOccured && deployedMunitions[i].origin != "PlayerShip") {
+		if (collisionOccured && deployedMunitions[i].origin != "Player Ship") {
 			
 			if (this.ShieldLevel > 2) { this.ShieldActive = true; }
 			

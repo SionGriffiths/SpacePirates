@@ -333,7 +333,7 @@ function paintDeployedMunitions() {
 	
 	for (var i = 0; i < deployedMunitions.length; i++) {
 	
-		if (deployedMunitions[i].origin == "PlayerShip"){ 
+		if (deployedMunitions[i].origin == "Player Ship"){ 
 			
 			if (deployedMunitions[i].gunTurret == 0) {
 			
