@@ -458,16 +458,18 @@ Game.paint = function() {
 		paintFuel();
 
 	}
-	if(Game.mode=='map') {
+	else if(Game.mode=='map') {
 		clearCanvas();
 		paintBackground();
 		paintSolarSystems();	
 		paintPlanets();	
 		Ship.paint();	
 	}
+	else if (Game.mode == 'Player Ship Destroyed') {
 	
+		// Not sure?
 	
-
+	}
 
 	if(toggleDebug){
 		c.save();
@@ -549,5 +551,18 @@ Game.update = function() {
 		updateAsteroids2();
 		updateFuel();
 		fireNewMunitions();
+	}
+	if (Game.mode == 'Player Ship Destroyed') {
+	
+		Ship.reset();
+		fuel = Ship.maxFuel;
+		
+		gameMap.currentX = 0;
+		gameMap.currentY = 0;
+		
+		deployedMunitions = new Array();
+		this.enemyShips = new Array();
+		
+		this.mode = 'play';
 	}
 }

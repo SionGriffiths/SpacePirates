@@ -19,12 +19,12 @@ this.lastFireTime;
 this.target;
 this.fireRate;
 this.shieldActivated = false;
-this.shieldLevel = 100;
-this.maxShieldLevel = 100;
+this.shieldLevel = 200;
+this.maxShieldLevel = 200;
 this.shieldTimer = 0;
-this.shieldSize = 50;
-this.hitPoints = 100;
-this.maxHitPoints = 100;
+this.shieldSize = 100;
+this.hitPoints = 200;
+this.maxHitPoints = 200;
 this.destroyed = false;
 this.destroySequence = 0;
 this.destroySequenceCounter = 0;
@@ -352,11 +352,11 @@ this.update = function() {
 			}
 		}
 		
-		if (this.shieldLevel<0) {
+		if (this.shieldLevel < 0) {
 			this.shieldLevel = 0;
 		}
-		else if (this.shieldLevel>100) {
-			this.shieldLevel = 100;
+		else if (this.shieldLevel > this.maxShieldLevel) {
+			this.shieldLevel = this.maxShieldLevel;
 		} 
 		else {
 			this.shieldLevel +=0.1;
