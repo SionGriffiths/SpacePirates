@@ -290,17 +290,47 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		platinumBarsImage.src = "images/misc/platinum.png";
 	}, 1550);
-
+	setTimeout(function() {
+		standardVagabondImage = new Image();
+		standardVagabondImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		standardVagabondImage.src = "images/ships/enemyship1.png";
+	}, 1600);
+	setTimeout(function() {
+		tinyFighterImage = new Image();
+		tinyFighterImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		tinyFighterImage.src = "images/ships/enemyship2.png";
+	}, 1650);
+	setTimeout(function() {
+		bigGunsShipImage = new Image();
+		bigGunsShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		bigGunsShipImage.src = "images/ships/enemyship3.png";
+	}, 1700);
+	setTimeout(function() {
+		stealthShipImage = new Image();
+		stealthShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		stealthShipImage.src = "images/ships/enemyship4.png";
+	}, 1750);
+	setTimeout(function() {
+		behemothShipImage = new Image();
+		behemothShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		behemothShipImage.src = "images/ships/enemyship5.png";
+	}, 1800);	
+	
 	setTimeout(function() {
 		for(var i = 0; i < 12; i++) {var initialSolarSystem = new SolarSystem();}		
-	}, 1600);
+	}, 1850);
 
 
 	Game.paused = false;
 	// Call the game to run, after finished loading
 	setTimeout(function() {
 		Game.run();
-	}, 1600);
+	}, 1850);
 
 	newAst = [];
 	newAst = [0];
@@ -513,6 +543,12 @@ Game.generateEnemyShipResources = function(ship) {
 									break;
 	case "Commercial Cargo Ship":	var commercial = new Resource("Commercial Goods", 1000, ship.x, ship.y, dryGoodsImage);
 									Game.resources.push(commercial);
+									break;
+	case "Behemoth Battleship":		var scrapMetal = new Resource("Scrap Metal", 1000, ship.x, ship.y, scrapMetalImage);
+									Game.resources.push(scrapMetal);
+									break;
+	default:						var scrapMetal = new Resource("Scrap Metal", 200, ship.x, ship.y, scrapMetalImage);
+									Game.resources.push(scrapMetal);
 									break;
 	}
 }

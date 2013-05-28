@@ -241,36 +241,6 @@ function GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, a
 			c.fillRect(-100*z, -100*z, 200*z, 200*z);
 		}
 		
-		
-		/*
-		if (!(this.destroyed)) {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
-			gradient.addColorStop(0,"green");
-			gradient.addColorStop(0.5, "#0E8016");
-			gradient.addColorStop(0.8, "#57FF62");
-			gradient.addColorStop(1,"transparent");
-			c.fillStyle = gradient;
-			c.fillRect(-20, -20, 40, 40);
-			var gradient = c.createRadialGradient(0, 15, this.innerSize, 0, 15, this.outerSize);
-			gradient.addColorStop(0,"green");
-			gradient.addColorStop(0.5, "#0E8016");
-			gradient.addColorStop(0.8, "#8FFF96");
-			gradient.addColorStop(1,"transparent");
-			c.fillStyle = gradient;
-			c.fillRect(-20, -20, 40, 40);
-		}
-		
-		else {
-			var gradient = c.createRadialGradient(0, 0, this.innerSize, 0, 0, this.outerSize);
-			gradient.addColorStop(0,"green");
-			gradient.addColorStop(0.5, "#0E8016");
-			gradient.addColorStop(0.8, "#57FF62");
-			gradient.addColorStop(1,"transparent");
-			c.fillStyle = gradient;
-			c.fillRect(-100, -100, 200, 200);
-		}
-	}
-	*/
 	
 	}
 	
@@ -470,6 +440,44 @@ function paintDeployedMunitions() {
 		
 		
 		}
+		
+		else if (deployedMunitions[i].origin == "Behemoth Battleship") {
+				
+			if (deployedMunitions[i].gunTurret == 0) {
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(75*z, -170*z);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+			}
+			
+			else if (deployedMunitions[i].gunTurret == 1) {
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(-75*z, -170*z);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+			}
+		
+		}
 	}
 	
 	mpfD = new Date();
@@ -511,15 +519,11 @@ function fireShipLaserPulse(munitionsType, originX, originY, targetDirection, ag
 	case "BlueLaser":	var deployedMunition = new BlueLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
 						break;
 	case "GreenLaser":	var deployedMunition = new GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
-						//var secondaryMunition = new GreenLaserPulseMunition(originX + 5, originY + 5, targetDirection, aggressor, aggressorMomentum);
-						//deployedMunitions.push(secondaryMunition);
 						break;
 	}
 		
 	deployedMunitions.push(deployedMunition);
 	
-	//Game.printToDebugConsole("One munition object added");
-	//Game.printToDebugConsole("Total deployedMunitions = " + deployedMunitions.length);
 	
 }
 

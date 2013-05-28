@@ -16,7 +16,7 @@ var waitTime = 1000 / fps;
 var canvasWidth;
 var canvasHeight;
 
-var numOfImages = 31;
+var numOfImages = 36;
 var imageLoadProgress = 0;
 
 
