@@ -15,13 +15,13 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 	this.lifetime = 240;
 	this.expiryCounter = 0;
 	this.animations = new Array();
-	this.animations[0] = 0.5;
-	this.animations[1] = 1;
-	this.animations[2] = 3;
-	this.animations[3] = 5;
-	this.animationSize = 1;
-	this.innerSize = 2;
-	this.outerSize = 7;
+	this.animations[0] = 0.05;
+	this.animations[1] = 0.25;
+	this.animations[2] = 0.5;
+	this.animations[3] = 1.5;
+	this.animationSize = 0.25;
+	this.innerSize = 0.5;
+	this.outerSize = 3.5;
 	this.destroyed = false;
 	this.destroySequence = 0;
 	this.gunTurret = turret;
@@ -43,6 +43,94 @@ function RedLaserMunition(originX, originY, targetDirection, aggressor, aggresso
 			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
 			gradient.addColorStop(0,"red");
 			gradient.addColorStop(0.5, "orange");
+			gradient.addColorStop(1,"transparent");
+			c.fillStyle = gradient;
+			c.fillRect(-200*z, -200*z, 800*z, 800*z);
+		}
+	}
+	
+	this.update = function() {
+
+			if (!(this.destroyed)) {
+			
+				this.innerSize = (this.animationSize + this.animations[this.nextAnimationCalc]);
+				this.outerSize = (this.animationSize + 5 +(2 * this.animations[this.nextAnimationCalc]));
+				this.nextAnimationCalc += 1;
+				
+				if (this.nextAnimationCalc >= this.numberOfAnimations) {
+					this.nextAnimationCalc = 0;
+				}
+				
+				this.x = this.x + this.speed * Math.cos((this.direction - 90) * TO_RADIANS);
+				this.y = this.y + this.speed * Math.sin((this.direction - 90) * TO_RADIANS);
+
+				this.expiryCounter += 1;
+				
+			}
+			
+			else {
+			
+				this.innerSize = (this.animationSize + this.animations[this.nextAnimationCalc]);
+				this.outerSize = (this.animationSize + 5 +(2 * this.animations[this.nextAnimationCalc]));
+				this.nextAnimationCalc += 1;
+				
+				if (this.nextAnimationCalc >= this.numberOfAnimations) {
+					this.nextAnimationCalc = 0;
+				}
+				
+				this.innerSize *= 3;
+				this.outerSize *= 6;
+				
+				this.destroySequence += 1;
+				
+			}
+	}
+	
+
+}
+
+
+function PinkLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret) {
+
+	this.name = "PinkLaser";
+	this.x = originX;
+	this.y = originY;
+	this.direction = targetDirection;
+	this.origin = aggressor;
+	this.speed = 11 + (aggressorMomentum / 2);
+	this.numberOfAnimations = 4;
+	this.nextAnimationCalc = 0;
+	this.lifetime = 240;
+	this.expiryCounter = 0;
+	this.animations = new Array();
+	this.animations[0] = 0.05;
+	this.animations[1] = 0.25;
+	this.animations[2] = 0.5;
+	this.animations[3] = 1.5;
+	this.animationSize = 0.25;
+	this.innerSize = 0.5;
+	this.outerSize = 3.5;
+	this.destroyed = false;
+	this.destroySequence = 0;
+	this.gunTurret = turret;
+	this.fireRate = 100; // Milisecond interval - hardcoded in Game: function fireNewMunitions()
+	this.power = 0.2;
+	
+	
+	this.draw = function() {
+
+		if (!(this.destroyed)) {
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
+			gradient.addColorStop(0,"pink");
+			gradient.addColorStop(1,"transparent");
+			c.fillStyle = gradient;
+			c.fillRect(-20*z, -20*z, 40*z, 40*z);
+		}
+		
+		else {
+			var gradient = c.createRadialGradient(0, 0, this.innerSize*z, 0, 0, this.outerSize*z);
+			gradient.addColorStop(0,"pink");
+			gradient.addColorStop(0.5, "red");
 			gradient.addColorStop(1,"transparent");
 			c.fillStyle = gradient;
 			c.fillRect(-200*z, -200*z, 800*z, 800*z);
@@ -478,6 +566,26 @@ function paintDeployedMunitions() {
 			}
 		
 		}
+		
+		else if (deployedMunitions[i].origin == "Fighter Squadron") {
+		
+				c.save();
+				c.translate(gameMap.translateX(deployedMunitions[i].x), gameMap.translateY(deployedMunitions[i].y));
+				c.rotate(deployedMunitions[i].direction * TO_RADIANS);
+				c.translate(5*z, -20*z);
+				deployedMunitions[i].draw();
+				
+				if(toggleDebug==true) {
+					c.beginPath();
+					c.strokeStyle = 'blue';
+					c.arc(0,0,20,0,2*Math.PI);			
+					c.stroke();
+				}
+
+				c.restore();
+		
+		
+		}
 	}
 	
 	mpfD = new Date();
@@ -519,6 +627,8 @@ function fireShipLaserPulse(munitionsType, originX, originY, targetDirection, ag
 	case "BlueLaser":	var deployedMunition = new BlueLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
 						break;
 	case "GreenLaser":	var deployedMunition = new GreenLaserPulseMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
+						break;
+	case "PinkLaser": 	var deployedMunition = new PinkLaserMunition(originX, originY, targetDirection, aggressor, aggressorMomentum, turret);
 						break;
 	}
 		

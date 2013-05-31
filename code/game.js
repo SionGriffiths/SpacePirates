@@ -320,17 +320,23 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		behemothShipImage.src = "images/ships/enemyship5.png";
 	}, 1800);	
+		setTimeout(function() {
+		fighterSquadronImage = new Image();
+		fighterSquadronImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		fighterSquadronImage.src = "images/ships/fightership1.png";
+	}, 1850);
 	
 	setTimeout(function() {
 		for(var i = 0; i < 12; i++) {var initialSolarSystem = new SolarSystem();}		
-	}, 1850);
+	}, 1950);
 
 
 	Game.paused = false;
 	// Call the game to run, after finished loading
 	setTimeout(function() {
 		Game.run();
-	}, 1850);
+	}, 1950);
 
 	newAst = [];
 	newAst = [0];

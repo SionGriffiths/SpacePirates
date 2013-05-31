@@ -211,7 +211,46 @@ this.createBehemothBattleship = function(initialX, initialY) {
 
 
 
+// Fighter squadron triplet ships
+this.createFighterSquadron = function(initialX, initialY) {
 
+	this.x = initialX;
+	this.y = initialY;
+	this.type = "Fighter Squadron";
+	this.strength = 2;
+	this.speed = 17;
+	this.width = 50;
+	this.height = 50;
+	this.image = new Image();
+	this.image = fighterSquadronImage;
+	this.direction = 0;
+	this.momentum = 0;
+	this.nextLocationX = Ship.X;
+	this.nextLocationY = Ship.Y;
+	this.collisionRadius = 100;
+	this.AISequence = 2;
+	this.AISequenceCounter = 0;
+	this.AISubSequenceCounter = 0;
+	this.update();
+	var lastFireDate = new Date();
+	this.lastFireTime = lastFireDate.getTime();
+	this.target = " ";
+	this.fireRate = 50;
+	this.turret = 1;
+	this.shieldActivated = false;
+	this.shieldLevel = 50;
+	this.maxShieldLevel = 50;
+	this.shieldTimer = 0;
+	this.shieldSize = 50;
+	this.hitPoints = 40;
+	this.maxHitPoints = 40;
+	this.destroyed = false;
+	this.destroySequence = 0;
+	this.destroySequenceCounter = 0;
+
+
+	addNewEnemyShip(this);
+}
 
 
 
@@ -390,8 +429,22 @@ this.engagePlayerShipFollow = function() {
 					break;
 
 		// Choose new location
-		case 4:		this.nextLocationX = Ship.X + (-300 + Math.floor(Math.random()*600));
-					this.nextLocationY = Ship.Y + (-300 + Math.floor(Math.random()*600));
+		case 4:		var randomizer = Math.floor(Math.random()*4);
+					switch (randomizer) {
+						case 0:		this.nextLocationX = Ship.X + (300 + Math.floor(Math.random()*600)); 
+									this.nextLocationY = Ship.Y + (300 + Math.floor(Math.random()*600));
+									break;
+						case 1:		this.nextLocationX = Ship.X - (300 + Math.floor(Math.random()*600)); 
+									this.nextLocationY = Ship.Y - (300 + Math.floor(Math.random()*600));
+									break;		
+						case 2:		this.nextLocationX = Ship.X + (300 + Math.floor(Math.random()*600)); 
+									this.nextLocationY = Ship.Y - (300 + Math.floor(Math.random()*600));
+									break;
+						case 3:		this.nextLocationX = Ship.X - (300 + Math.floor(Math.random()*600)); 
+									this.nextLocationY = Ship.Y + (300 + Math.floor(Math.random()*600));
+									break;
+					}
+
 					this.AISequenceCounter = 3;
 					break;
 	}
@@ -537,6 +590,11 @@ this.fireLaserPulse = function() {
 			this.lastFireTime = currentFireTime;
 			break;
 			
+		case "Fighter Squadron":
+			fireShipLaserPulse("PinkLaser", this.x, this.y, flippedDirection, this.type, this.momentum, this.turret);
+			this.lastFireTime = currentFireTime;
+			break;
+		
 		default:	fireShipLaserPulse("GreenLaser", this.x, this.y, flippedDirection, this.type, this.momentum, this.turret);
 					this.lastFireTime = currentFireTime;
 					break;

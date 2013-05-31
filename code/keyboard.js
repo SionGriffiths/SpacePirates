@@ -91,13 +91,22 @@ function keyEventFired(e) {
 	case 219:	var enemyShip = new EnemyShip();
 				enemyShip.createBehemothBattleship(0,0);
 				break;
-				
+	
+	// The } ] Key - place a fighter ship - development convenience
+	case 221:	var enemyShip = new EnemyShip();
+				enemyShip.createFighterSquadron(0,0);
+				break;		
 				
 	// O - Place an asteroid
 	case 79:    var randAst = [1];
 				var tempAsteroid = new Asteroid(randAst);
 				break; 
-
+	
+	// F - Fuel - development
+	case 70:    fuel = 100;
+				break; 
+				
+				
 	// M - Toggle Map Mode
 	case 77:    Game.toggleMap();
 				break; 
