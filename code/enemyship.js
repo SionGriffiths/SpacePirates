@@ -535,7 +535,11 @@ this.fireLaserPulse = function() {
 			fireShipLaserPulse("BlueLaser", this.x, this.y, flippedDirection, this.type, this.momentum + (this.strength*3), this.turret);
 			if (this.turret == 0) { this.turret = 1; } else { this.turret = 0; }
 			this.lastFireTime = currentFireTime;
-			break;			
+			break;
+			
+		default:	fireShipLaserPulse("GreenLaser", this.x, this.y, flippedDirection, this.type, this.momentum, this.turret);
+					this.lastFireTime = currentFireTime;
+					break;
 		
 		}
 	}
