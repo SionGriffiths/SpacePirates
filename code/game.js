@@ -553,7 +553,7 @@ Game.generateEnemyShipResources = function(ship) {
 	case "Behemoth Battleship":		var scrapMetal = new Resource("Scrap Metal", 1000, ship.x, ship.y, scrapMetalImage);
 									Game.resources.push(scrapMetal);
 									break;
-	default:						var scrapMetal = new Resource("Scrap Metal", 200, ship.x, ship.y, scrapMetalImage);
+	default:						var scrapMetal = new Resource("Scrap Metal", 50, ship.x, ship.y, scrapMetalImage);
 									Game.resources.push(scrapMetal);
 									break;
 	}

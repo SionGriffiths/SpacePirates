@@ -88,6 +88,30 @@ this.draw = function() {
 										c.restore();
 									}
 									break;
+		case "Fighter Squadron":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
+										c.save();
+										c.fillStyle = "white";
+										c.fillRect(-50*z,60*z, (this.shieldLevel/2)*z, 10*z);
+										c.fillStyle = "pink";
+										c.fillRect(-50*z,72.5*z, (this.hitPoints/2)*z, 10*z);
+										c.restore();
+									}
+									c.rotate(this.direction * TO_RADIANS);
+									if (this.shieldActivated && this.shieldLevel > 2) {
+										c.save();
+										c.scale(1*z, 1.5*z);
+										c.beginPath();
+										c.arc(-2,0,40,0,2*Math.PI);
+										var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
+										grd.addColorStop(0.2,"rgba(247,92,144, 0.1)");
+										grd.addColorStop(0.9, "rgba(247,129,168, 0.6)");
+										c.fillStyle = grd;
+										c.strokeStyle = "rgba(170,255,156, 0.8)";
+										c.stroke();
+										c.fill();
+										c.restore();
+									}
+									break;
 		default:					if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
 										c.save();
 										c.fillStyle = "white";
@@ -450,6 +474,26 @@ this.engagePlayerShipFollow = function() {
 	}
 
 
+}
+
+
+
+
+
+this.fighterSquadronDefend = function() {
+
+	switch (this.AISequenceCounter) {
+	
+		// 
+		case 0:		this.circleTarget();
+					var enemiesInbound = this.checkForEnemies();
+					if (enemiesInbound) { this.AISequenceCounter = 1; }
+					break;
+		case 1:		this.attack
+		
+		
+		
+	}
 }
 
 
