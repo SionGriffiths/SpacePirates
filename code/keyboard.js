@@ -79,7 +79,7 @@ function keyEventFired(e) {
 		
 	// P - place an enemy ship - development convenience
 	case 80:	var enemyShip = new EnemyShip();
-				enemyShip.createStandardVagabond(0,0);
+				enemyShip.createStandardVagabond(80,80);
 				enemyShip.fireRate = (350 + (Math.random()*1250));
 				var randomType = Math.floor(Math.random()*7);
 				if (randomType <= 3) { enemyShip.type = "Standard Vagabond"; }

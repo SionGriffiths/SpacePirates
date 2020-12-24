@@ -98,7 +98,7 @@
         <div class="main">
         
 		<!-- Canvas -->
-		<canvas id="maincanvas" width="1200" height="960" tabindex="0">
+		<canvas id="maincanvas" width="1200" height="960" tabindex="0" style="outline:1px solid #f3f;">
 		Sorry, HTML5 canvas is not supported by your browser.
 		Please try using the latest Firefox, Chrome (or if you must, IE) browser.
 		</canvas>
@@ -120,15 +120,15 @@
 	function init() {
 		
 		canvas = document.getElementById("maincanvas");
-		canvas.width = document.width;
-		canvas.height = document.body.offsetHeight;
-		//canvasW = canvas.width;
-		//canvasH = canvas.height;
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		canvasWidth = canvas.width;
+		canvasHeight = canvas.height;
 
-		//if ( canvas.getContext ) {
-		//	setup();
-		//	setInterval( run , 33 );
-		//}
+		if ( canvas.getContext ) {
+			//setup();
+			//setInterval( run , 33 );
+		}
 	}
 
 	init();
@@ -173,10 +173,11 @@
 			
 			
 			clockCycle += 1;
-			if (clockCycle > fps) { clockCycle = 1;}
-		
+			if (clockCycle > fps) { clockCycle = 1;}		
+
+
 			if (clockCycle == fps) { 
-			
+				
 				cycleTime = cycleTemp/fps;
 				asteroidCollisionTime = asteroidCollisionTemp/fps;
 				shipCollisionTime = shipCollisionTemp/fps;

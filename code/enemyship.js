@@ -163,8 +163,8 @@ this.createStandardVagabond = function(initialX, initialY) {
 	this.height = 180;
 	this.image = new Image();
 	this.image = standardVagabondImage;
-	this.direction = 0;
-	this.momentum = 0;
+	this.direction = 120;
+	this.momentum = 5;
 	this.nextLocationX = Ship.X;
 	this.nextLocationY = Ship.Y;
 	this.collisionRadius = 80;
@@ -366,18 +366,20 @@ this.trackOntoScreen = function() {
 	// Choose a central point, and face it	
 	case 1:		this.nextLocationX = gameMap.currentX + ((-1400) + Math.floor(Math.random() * (2801)));
 				this.nextLocationY = gameMap.currentY + ((-1400) + Math.floor(Math.random() * (2801)));
-				var angleDegree = findAngleBetweenTwoPoints(this.x, this.y, this.nextLocationX, this.nextLocationY);
+				var angleDegree = findAngleBetweenTwoPoints(50, 50, this.nextLocationX, this.nextLocationY);
 				var faceDirection = 360 - angleDegree - 90;
 				if (faceDirection < 0) {faceDirection += 360;}
-				this.direction = faceDirection;
-				this.AISequenceCounter += 1;
-				Game.printToDebugConsole("Selected Location");
+				this.AISequenceCounter = 2;
+				Game.printToDebugConsole("Selected Location "+faceDirection+' AI:'+this.AISequenceCounter);
+				console.log(faceDirection);
 				break;
 	
 	// Move towards target point, until reached
-	case 2:		var arrivedAtTargetPoint = this.moveToAPoint(14);
+	case 2:		var arrivedAtTargetPoint = this.moveToAPoint(5);
 				if (arrivedAtTargetPoint) { this.AISequenceCounter = 3; }
-				Game.printToDebugConsole("Moving Towards Target");
+				//Game.printToDebugConsole("Moving Towards Target");
+				
+				//Game.printToDwebugConsole(gameMap.currentX+','+gameMap.currentY);
 				break;
 	// Target reached, switch to trackPlayer mode
 	case 3:		this.AISequenceCounter = 0;
@@ -654,10 +656,16 @@ this.fireLaserPulse = function() {
 
 this.moveToAPoint = function(speed) {
 
+
 	switch (this.AISubSequenceCounter) {
+
+
 	
-	case 0:		var facingPoint = this.faceTowardsAPoint();
-				if (facingPoint) { this.AISubSequenceCounter = 1; }
+	case 0:		var facingPoint = this.faceTowardsAPoint();				
+				if (facingPoint) { 
+					console.log('Moving Off');
+					this.AISubSequenceCounter = 1;
+				}
 				break;
 	case 1:		var comparitiveX = Math.abs((this.x - this.nextLocationX));
 				var comparitiveY = Math.abs((this.y - this.nextLocationY));
@@ -675,7 +683,7 @@ this.moveToAPoint = function(speed) {
 					this.AISubSequenceCounter = 0; return true;
 				}
 				
-				this.faceTowardsAPoint();
+				this.faceTowardsAPoint();	
 	}
 
 

@@ -11,10 +11,15 @@ var Game = new Object();
 // Initialize the canvas
 Game.initialize = function() {
 	canvasE = document.getElementById('maincanvas');
-	c = canvasE.getContext("2d");
+	c = canvasE.getContext('2d');
 	
-	canvasWidth = canvasE.width;
-	canvasHeight = canvasE.height;
+	// c.fillStyle = 'rgb(200, 0, 0)';
+ //    c.fillRect(10, 10, 50, 50);
+ //    c.fillStyle = 'rgba(0, 0, 200, 0.5)';
+ //    c.fillRect(30, 30, 50, 50);
+	
+	//canvasWidth = canvasE.width;
+	//canvasHeight = canvasE.height;
 
 	//Ship.X = 0;
 	//Ship.Y = 0;
@@ -331,6 +336,8 @@ Game.load = function() {
 		for(var i = 0; i < 12; i++) {var initialSolarSystem = new SolarSystem();}		
 	}, 1950);
 
+	
+
 
 	Game.paused = false;
 	// Call the game to run, after finished loading
@@ -349,9 +356,9 @@ Game.load = function() {
 	var initialAsteroid6 = new Asteroid(newAst);
 	var initialAsteroid7 = new Asteroid(newAst);
 
-	//setTimeout(function() {
-		//for(var i = 0; i < 30; i++) { var tempPlanet = new Planet();}
-	//}, 1000);
+	// setTimeout(function() {
+	// 	for(var i = 0; i < 30; i++) { var tempPlanet = new Planet();}
+	// }, 1000);
 	
 	Game.mode = 'play';
 
@@ -568,7 +575,7 @@ Game.paint = function() {
 		clearCanvas();
 		paintBackground();		
 		paintSolarSystems();	
-		paintPlanets();		
+		paintPlanets();	
 		paintDeployedMunitions();
 		paintAsteroids2();
 		Ship.paint();
