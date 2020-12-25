@@ -79,22 +79,23 @@ function keyEventFired(e) {
 		
 	// P - place an enemy ship - development convenience
 	case 80:	var enemyShip = new EnemyShip();
-				enemyShip.createStandardVagabond(80,80);
-				enemyShip.fireRate = (350 + (Math.random()*1250));
+				var type = "Standard Vagabond";
 				var randomType = Math.floor(Math.random()*7);
-				if (randomType <= 3) { enemyShip.type = "Standard Vagabond"; }
-				else if (randomType == 4) { enemyShip.type = "Gold Cargo Ship"; }
-				else if (randomType == 5) { enemyShip.type = "Platinum Cargo Ship"; }
-				else { enemyShip.type = "Commercial Cargo Ship"; }
+				if (randomType <= 3) { type = "Standard Vagabond"; }
+				else if (randomType == 4) { type = "Gold Cargo Ship"; }
+				else if (randomType == 5) { type = "Platinum Cargo Ship"; }
+				else { type = "Commercial Cargo Ship"; }
+				enemyShip.createStandardShip(80,80, type);
+				enemyShip.fireRate = (350 + (Math.random()*1250));
 				break;
 	// The [ { Key - place a Behemoth ship - development convenience
 	case 219:	var enemyShip = new EnemyShip();
-				enemyShip.createBehemothBattleship(0,0);
+				enemyShip.createStandardShip(80,80, "Behemoth Battleship");
 				break;
 	
 	// The } ] Key - place a fighter ship - development convenience
 	case 221:	var enemyShip = new EnemyShip();
-				enemyShip.createFighterSquadron(0,0);
+				enemyShip.createStandardShip(80,80, "Fighter Squadron");
 				break;		
 				
 	// O - Place an asteroid

@@ -331,12 +331,36 @@ Game.load = function() {
 		imageLoadProgress += 1;
 		fighterSquadronImage.src = "images/ships/fightership1.png";
 	}, 1850);
-	
+	setTimeout(function() {
+		cargoShipImage = new Image();
+		cargoShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		cargoShipImage.src = "images/ships/cargoship1.png";
+	}, 1900);
+	setTimeout(function() {
+		falconShipImage = new Image();
+		falconShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		falconShipImage.src = "images/ships/enemyship6.png";
+	}, 1950);
+	setTimeout(function() {
+		frigateShipImage = new Image();
+		frigateShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		frigateShipImage.src = "images/ships/enemyship7.png";
+	}, 2000);
+	setTimeout(function() {
+		corvetteShipImage = new Image();
+		corvetteShipImage.onload = updateProgressBar();
+		imageLoadProgress += 1;
+		corvetteShipImage.src = "images/ships/enemyship8.png";
+	}, 2050);
+
 	setTimeout(function() {
 		for(var i = 0; i < 12; i++) {var initialSolarSystem = new SolarSystem();}		
-	}, 1950);
+	}, 2150);
 
-	
+
 
 
 	Game.paused = false;

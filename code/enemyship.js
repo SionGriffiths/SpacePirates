@@ -30,6 +30,67 @@ this.destroySequence;
 this.destroySequenceCounter;
 
 
+this.shipTypes = {
+	"Standard Vagabond": { 
+			image: standardVagabondImage,
+			width: 100,
+			height: 140,
+			speed: 12,
+			strength: 2,
+			fireRate: 200,
+			fireType: 'GreenLaser'
+	},
+	"Gold Cargo Ship": { 
+			image: corvetteShipImage,
+			width: 100,
+			height: 150,
+			speed: 14,
+			strength: 3,
+			fireRate: 200,
+			fireType: 'GreenLaser'
+	},
+	"Platinum Cargo Ship": { 
+			image: frigateShipImage,
+			width: 160,
+			height: 220,
+			speed: 10,
+			strength: 4,
+			fireRate: 200,
+			fireType: 'GreenLaser'
+	},
+	"Commercial Cargo Ship": { 
+			image: cargoShipImage,
+			width: 640,
+			height: 1500,
+			speed: 1,
+			strength: 20,
+			fireRate: 100,
+			fireType: 'BlueLaser'
+	},
+	"Behemoth Battleship": {
+			image: behemothShipImage,
+			width: 240,
+			height: 330,
+			speed: 4,
+			strength: 10,
+			fireRate: 200,
+			fireType: 'BlueLaser'
+	},
+	"Fighter Squadron": {
+			image: fighterSquadronImage,
+			width: 50,
+			height: 50,
+			speed: 15,
+			strength: 2,
+			fireRate: 50,
+			fireType: 'PinkLaser'
+	}
+
+
+
+	
+};
+
 this.draw = function() {
 
 	c.save();
@@ -152,22 +213,24 @@ this.draw = function() {
 
 
 
-this.createStandardVagabond = function(initialX, initialY) {
+this.createStandardShip = function(initialX, initialY, typeName = "Standard Vagabond") {
+
+	let type = this.shipTypes[typeName];
 
 	this.x = initialX;
 	this.y = initialY;
-	this.type = "Standard Vagabond";
-	this.strength = 2;
-	this.speed = 12;
-	this.width = 140;
-	this.height = 180;
+	this.type = typeName;
+	this.strength = type.strength;
+	this.speed = type.speed;
+	this.width = type.width;
+	this.height = type.height;
 	this.image = new Image();
-	this.image = standardVagabondImage;
-	this.direction = 120;
-	this.momentum = 5;
+	this.image = type.image;
+	this.direction = Math.floor(Math.random() * 250);
+	this.momentum = Math.floor(Math.random() * 16);
 	this.nextLocationX = Ship.X;
 	this.nextLocationY = Ship.Y;
-	this.collisionRadius = 80;
+	this.collisionRadius = (this.width+this.height)/4;
 	this.AISequence = 2;
 	this.AISequenceCounter = 0;
 	this.AISubSequenceCounter = 0;
@@ -175,7 +238,7 @@ this.createStandardVagabond = function(initialX, initialY) {
 	var lastFireDate = new Date();
 	this.lastFireTime = lastFireDate.getTime();
 	this.target = "Player Ship";
-	this.fireRate = 400;
+	this.fireRate = type.fireRate;
 	this.turret = 1;
 	this.shieldActivated = false;
 	this.shieldLevel = 200;
@@ -192,89 +255,89 @@ this.createStandardVagabond = function(initialX, initialY) {
 	addNewEnemyShip(this);
 }
 
-// Behemoth class battle ship
-this.createBehemothBattleship = function(initialX, initialY) {
+// // Behemoth class battle ship
+// this.createBehemothBattleship = function(initialX, initialY) {
 
-	this.x = initialX;
-	this.y = initialY;
-	this.type = "Behemoth Battleship";
-	this.strength = 10;
-	this.speed = 4;
-	this.width = 240;
-	this.height = 330;
-	this.image = new Image();
-	this.image = behemothShipImage;
-	this.direction = 0;
-	this.momentum = 0;
-	this.nextLocationX = Ship.X;
-	this.nextLocationY = Ship.Y;
-	this.collisionRadius = 220;
-	this.AISequence = 2;
-	this.AISequenceCounter = 0;
-	this.AISubSequenceCounter = 0;
-	this.update();
-	var lastFireDate = new Date();
-	this.lastFireTime = lastFireDate.getTime();
-	this.target = "Player Ship";
-	this.fireRate = 500;
-	this.turret = 1;
-	this.shieldActivated = false;
-	this.shieldLevel = 800;
-	this.maxShieldLevel = 800;
-	this.shieldTimer = 0;
-	this.shieldSize = 100;
-	this.hitPoints = 800;
-	this.maxHitPoints = 800;
-	this.destroyed = false;
-	this.destroySequence = 0;
-	this.destroySequenceCounter = 0;
+// 	this.x = initialX;
+// 	this.y = initialY;
+// 	this.type = "Behemoth Battleship";
+// 	this.strength = 10;
+// 	this.speed = 4;
+// 	this.width = 240;
+// 	this.height = 330;
+// 	this.image = new Image();
+// 	this.image = behemothShipImage;
+// 	this.direction = 0;
+// 	this.momentum = 0;
+// 	this.nextLocationX = Ship.X;
+// 	this.nextLocationY = Ship.Y;
+// 	this.collisionRadius = 220;
+// 	this.AISequence = 2;
+// 	this.AISequenceCounter = 0;
+// 	this.AISubSequenceCounter = 0;
+// 	this.update();
+// 	var lastFireDate = new Date();
+// 	this.lastFireTime = lastFireDate.getTime();
+// 	this.target = "Player Ship";
+// 	this.fireRate = 500;
+// 	this.turret = 1;
+// 	this.shieldActivated = false;
+// 	this.shieldLevel = 800;
+// 	this.maxShieldLevel = 800;
+// 	this.shieldTimer = 0;
+// 	this.shieldSize = 100;
+// 	this.hitPoints = 800;
+// 	this.maxHitPoints = 800;
+// 	this.destroyed = false;
+// 	this.destroySequence = 0;
+// 	this.destroySequenceCounter = 0;
 
 
-	addNewEnemyShip(this);
-}
+// 	addNewEnemyShip(this);
+// }
 
 
 
 // Fighter squadron triplet ships
-this.createFighterSquadron = function(initialX, initialY) {
+// this.createFighterSquadron = function(initialX, initialY) {
 
-	this.x = initialX;
-	this.y = initialY;
-	this.type = "Fighter Squadron";
-	this.strength = 2;
-	this.speed = 17;
-	this.width = 50;
-	this.height = 50;
-	this.image = new Image();
-	this.image = fighterSquadronImage;
-	this.direction = 0;
-	this.momentum = 0;
-	this.nextLocationX = Ship.X;
-	this.nextLocationY = Ship.Y;
-	this.collisionRadius = 100;
-	this.AISequence = 2;
-	this.AISequenceCounter = 0;
-	this.AISubSequenceCounter = 0;
-	this.update();
-	var lastFireDate = new Date();
-	this.lastFireTime = lastFireDate.getTime();
-	this.target = " ";
-	this.fireRate = 50;
-	this.turret = 1;
-	this.shieldActivated = false;
-	this.shieldLevel = 50;
-	this.maxShieldLevel = 50;
-	this.shieldTimer = 0;
-	this.shieldSize = 50;
-	this.hitPoints = 40;
-	this.maxHitPoints = 40;
-	this.destroyed = false;
-	this.destroySequence = 0;
-	this.destroySequenceCounter = 0;
+// 	this.x = initialX;
+// 	this.y = initialY;
+// 	this.type = "Fighter Squadron";
+// 	this.strength = 2;
+// 	this.speed = 15;
+// 	this.width = 50;
+// 	this.height = 50;
+// 	this.image = new Image();
+// 	this.image = fighterSquadronImage;
+// 	this.direction = 0;
+// 	this.momentum = 0;
+// 	this.nextLocationX = Ship.X;
+// 	this.nextLocationY = Ship.Y;
+// 	this.collisionRadius = 100;
+// 	this.AISequence = 2;
+// 	this.AISequenceCounter = 0;
+// 	this.AISubSequenceCounter = 0;
+// 	this.update();
+// 	var lastFireDate = new Date();
+// 	this.lastFireTime = lastFireDate.getTime();
+// 	this.target = "Player Ship";
+// 	this.fireRate = 50;
+// 	this.turret = 1;
+// 	this.shieldActivated = false;
+// 	this.shieldLevel = 50;
+// 	this.maxShieldLevel = 50;
+// 	this.shieldTimer = 0;
+// 	this.shieldSize = 50;
+// 	this.hitPoints = 40;
+// 	this.maxHitPoints = 40;
+// 	this.destroyed = false;
+// 	this.destroySequence = 0;
+// 	this.destroySequenceCounter = 0;
 
 
-	addNewEnemyShip(this);
-}
+// 	addNewEnemyShip(this);
+// }
 
 
 
@@ -336,7 +399,7 @@ this.faceTowardsAPoint = function() {
 	
 	}
 	
-	if (Math.abs(faceDirection - this.direction) <= 2){
+	if (Math.abs(faceDirection - this.direction) <= 0.1){
 		return true;
 	}
 	else {
@@ -974,3 +1037,9 @@ function addNewEnemyShip(enemyShip){
 }
 
 
+
+
+// Add an enemy ship to the array
+function addRandomEnemyShip(enemyShip){
+	Game.enemyShips.push(enemyShip);
+}
