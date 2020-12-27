@@ -30,33 +30,38 @@ this.destroySequence;
 this.destroySequenceCounter;
 
 
+
+
 this.shipTypes = {
 	"Standard Vagabond": { 
 			image: standardVagabondImage,
-			width: 100,
-			height: 140,
-			speed: 12,
+			width: 80,
+			height: 110,
+			speed: 10,
 			strength: 2,
 			fireRate: 200,
-			fireType: 'GreenLaser'
+			fireType: 'GreenLaser',
+			shieldType: 'Green'
 	},
 	"Gold Cargo Ship": { 
 			image: corvetteShipImage,
 			width: 100,
 			height: 150,
-			speed: 14,
+			speed: 8,
 			strength: 3,
-			fireRate: 200,
-			fireType: 'GreenLaser'
+			fireRate: 250,
+			fireType: 'GreenLaser',
+			shieldType: 'Green'
 	},
 	"Platinum Cargo Ship": { 
 			image: frigateShipImage,
 			width: 160,
 			height: 220,
-			speed: 10,
+			speed: 6,
 			strength: 4,
-			fireRate: 200,
-			fireType: 'GreenLaser'
+			fireRate: 300,
+			fireType: 'GreenLaser',
+			shieldType: 'Blue'
 	},
 	"Commercial Cargo Ship": { 
 			image: cargoShipImage,
@@ -64,8 +69,9 @@ this.shipTypes = {
 			height: 1500,
 			speed: 1,
 			strength: 20,
-			fireRate: 100,
-			fireType: 'BlueLaser'
+			fireRate: 800,
+			fireType: 'BlueLaser',
+			shieldType: 'Blue'
 	},
 	"Behemoth Battleship": {
 			image: behemothShipImage,
@@ -73,131 +79,183 @@ this.shipTypes = {
 			height: 330,
 			speed: 4,
 			strength: 10,
-			fireRate: 200,
-			fireType: 'BlueLaser'
+			fireRate: 600,
+			fireType: 'BlueLaser',
+			shieldType: 'Brown'
 	},
 	"Fighter Squadron": {
 			image: fighterSquadronImage,
 			width: 50,
 			height: 50,
-			speed: 15,
-			strength: 2,
-			fireRate: 50,
-			fireType: 'PinkLaser'
-	}
-
-
-
-	
+			speed: 12,
+			strength: 1,
+			fireRate: 150,
+			fireType: 'PinkLaser',
+			shieldType: 'Pink'
+	}	
 };
 
-this.draw = function() {
 
+this.shieldTypes = {
+
+	"Green": {
+		start: "rgba(24,163,0, 0.1)", 
+		end: "rgba(114,214,96, 0.6)",
+		stroke: "rgba(170,255,156, 0.8)"
+	},
+	"Brown": {
+		start: "black", 
+		end: "rgba(247,129,168, 0.6)",
+		stroke: "rgba(227,131,20, 0.8)"
+	},
+	"Pink": {
+		start: "rgba(247,92,144, 0.1)", 
+		end: "rgba(114,214,96, 0.6)",
+		stroke: "rgba(247,129,168, 0.8)"
+	},
+	"Blue": {
+		start: "rgba(61,184,237, 0.1)", 
+		end: "rgba(75,177,244, 0.6)",
+		stroke: "rgba(100,192,234, 0.8)"
+	}
+
+};
+
+
+this.draw = function() {
 	c.save();
 	c.translate(gameMap.translateX(this.x), gameMap.translateY(this.y));
 	
-	if (!(this.destroyed)) {
-	
-		// Paint Shield and health/shield levels
-		switch (this.type) {
-		
-		case "Standard Vagabond":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
-										c.save();
-										c.fillStyle = "white";
-										c.fillRect(-50*z,120*z, (this.shieldLevel/2)*z, 10*z);
-										c.fillStyle = "green";
-										c.fillRect(-50*z,135*z, (this.hitPoints/2)*z, 10*z);
-										c.restore();
-									}
-									c.rotate(this.direction * TO_RADIANS);
-									if (this.shieldActivated && this.shieldLevel > 2) {
-										c.save();
-										c.scale(1*z, 1.5*z);
-										c.beginPath();
-										c.arc(-10,0,100,0,2*Math.PI);
-										var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
-										grd.addColorStop(0.2,"rgba(24,163,0, 0.1)");
-										grd.addColorStop(0.9, "rgba(114,214,96, 0.6)");
-										c.fillStyle = grd;
-										c.strokeStyle = "rgba(170,255,156, 0.8)";
-										c.stroke();
-										c.fill();
-										c.restore();
-									}
-									break;
-		case "Behemoth Battleship":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
-										c.save();
-										c.fillStyle = "white";
-										c.fillRect(-100*z,220*z, (this.shieldLevel/2)*z, 10*z);
-										c.fillStyle = "rgb(122,82,35)";
-										c.fillRect(-100*z,235*z, (this.hitPoints/2)*z, 10*z);
-										c.restore();
-									}
-									c.rotate(this.direction * TO_RADIANS);
-									if (this.shieldActivated && this.shieldLevel > 2) {
-										c.save();
-										c.scale(1*z, 1.5*z);
-										c.beginPath();
-										c.arc(-10,0,200,0,2*Math.PI);
-										var grd = c.createRadialGradient(0,0,10*(z/3),0,0,150*(z/3));
-										grd.addColorStop(0.2, "black");
-										grd.addColorStop(0.9, "rgba(153,89,15, 0.6)");
-										c.fillStyle = grd;
-										c.strokeStyle = "rgba(227,131,20, 0.8)";
-										c.stroke();
-										c.fill();
-										c.restore();
-									}
-									break;
-		case "Fighter Squadron":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
-										c.save();
-										c.fillStyle = "white";
-										c.fillRect(-50*z,60*z, (this.shieldLevel/2)*z, 10*z);
-										c.fillStyle = "pink";
-										c.fillRect(-50*z,72.5*z, (this.hitPoints/2)*z, 10*z);
-										c.restore();
-									}
-									c.rotate(this.direction * TO_RADIANS);
-									if (this.shieldActivated && this.shieldLevel > 2) {
-										c.save();
-										c.scale(1*z, 1.5*z);
-										c.beginPath();
-										c.arc(-2,0,40,0,2*Math.PI);
-										var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
-										grd.addColorStop(0.2,"rgba(247,92,144, 0.1)");
-										grd.addColorStop(0.9, "rgba(247,129,168, 0.6)");
-										c.fillStyle = grd;
-										c.strokeStyle = "rgba(170,255,156, 0.8)";
-										c.stroke();
-										c.fill();
-										c.restore();
-									}
-									break;
-		default:					if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
-										c.save();
-										c.fillStyle = "white";
-										c.fillRect(-50*z,120*z, (this.shieldLevel/2)*z, 10*z);
-										c.fillStyle = "green";
-										c.fillRect(-50*z,135*z, (this.hitPoints/2)*z, 10*z);
-										c.restore();
-									}
-									c.rotate(this.direction * TO_RADIANS);
-									if (this.shieldActivated && this.shieldLevel > 2) {
-										c.save();
-										c.scale(1*z, 1.5*z);
-										c.beginPath();
-										c.arc(-10,0,100,0,2*Math.PI);
-										var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
-										grd.addColorStop(0.2,"rgba(24,163,0, 0.1)");
-										grd.addColorStop(0.9, "rgba(114,214,96, 0.6)");
-										c.fillStyle = grd;
-										c.strokeStyle = "rgba(170,255,156, 0.8)";
-										c.stroke();
-										c.fill();
-										c.restore();
-									}
-									break;
+	if (!(this.destroyed)) {	
+		// Paint Shield and health/shield levels		
+		if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
+			c.save();
+			c.fillStyle = "white";
+			c.fillRect(-50*z,120*z, (this.shieldLevel/2)*z, 10*z);
+			c.fillStyle = "red";
+			c.fillRect(-50*z,135*z, (this.hitPoints/2)*z, 10*z);
+			c.restore();
 		}
+		c.rotate(this.direction * TO_RADIANS);
+		if (this.shieldActivated && this.shieldLevel > 2) {
+			c.save();
+			c.scale(1*z, 1.5*z);
+			c.beginPath();
+			c.arc(0,0,this.shieldSize,0,2*Math.PI);
+			var grd = c.createRadialGradient(0,0,15*(z/3),0,0,(this.shieldSize*1.2)*(z/3));
+			grd.addColorStop(0.2, this.shieldType.start);
+			grd.addColorStop(0.9, this.shieldType.end);
+			c.fillStyle = grd;
+			c.strokeStyle = this.shieldType.stroke;
+			c.stroke();
+			c.fill();
+			c.restore();
+		}
+
+
+
+
+
+
+		// switch (this.type) {
+		
+		// case "Standard Vagabond":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
+		// 								c.save();
+		// 								c.fillStyle = "white";
+		// 								c.fillRect(-50*z,120*z, (this.shieldLevel/2)*z, 10*z);
+		// 								c.fillStyle = "green";
+		// 								c.fillRect(-50*z,135*z, (this.hitPoints/2)*z, 10*z);
+		// 								c.restore();
+		// 							}
+		// 							c.rotate(this.direction * TO_RADIANS);
+		// 							if (this.shieldActivated && this.shieldLevel > 2) {
+		// 								c.save();
+		// 								c.scale(1*z, 1.5*z);
+		// 								c.beginPath();
+		// 								c.arc(-10,0,100,0,2*Math.PI);
+		// 								var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
+		// 								grd.addColorStop(0.2,"rgba(24,163,0, 0.1)");
+		// 								grd.addColorStop(0.9, "rgba(114,214,96, 0.6)");
+		// 								c.fillStyle = grd;
+		// 								c.strokeStyle = "rgba(170,255,156, 0.8)";
+		// 								c.stroke();
+		// 								c.fill();
+		// 								c.restore();
+		// 							}
+		// 							break;
+		// case "Behemoth Battleship":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
+		// 								c.save();
+		// 								c.fillStyle = "white";
+		// 								c.fillRect(-100*z,220*z, (this.shieldLevel/2)*z, 10*z);
+		// 								c.fillStyle = "rgb(122,82,35)";
+		// 								c.fillRect(-100*z,235*z, (this.hitPoints/2)*z, 10*z);
+		// 								c.restore();
+		// 							}
+		// 							c.rotate(this.direction * TO_RADIANS);
+		// 							if (this.shieldActivated && this.shieldLevel > 2) {
+		// 								c.save();
+		// 								c.scale(1*z, 1.5*z);
+		// 								c.beginPath();
+		// 								c.arc(-10,0,200,0,2*Math.PI);
+		// 								var grd = c.createRadialGradient(0,0,10*(z/3),0,0,150*(z/3));
+		// 								grd.addColorStop(0.2, "black");
+		// 								grd.addColorStop(0.9, "rgba(153,89,15, 0.6)");
+		// 								c.fillStyle = grd;
+		// 								c.strokeStyle = "rgba(227,131,20, 0.8)";
+		// 								c.stroke();
+		// 								c.fill();
+		// 								c.restore();
+		// 							}
+		// 							break;
+		// case "Fighter Squadron":	if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
+		// 								c.save();
+		// 								c.fillStyle = "white";
+		// 								c.fillRect(-50*z,60*z, (this.shieldLevel/2)*z, 10*z);
+		// 								c.fillStyle = "pink";
+		// 								c.fillRect(-50*z,72.5*z, (this.hitPoints/2)*z, 10*z);
+		// 								c.restore();
+		// 							}
+		// 							c.rotate(this.direction * TO_RADIANS);
+		// 							if (this.shieldActivated && this.shieldLevel > 2) {
+		// 								c.save();
+		// 								c.scale(1*z, 1.5*z);
+		// 								c.beginPath();
+		// 								c.arc(-2,0,40,0,2*Math.PI);
+		// 								var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
+		// 								grd.addColorStop(0.2,"rgba(247,92,144, 0.1)");
+		// 								grd.addColorStop(0.9, "rgba(247,129,168, 0.6)");
+		// 								c.fillStyle = grd;
+		// 								c.strokeStyle = "rgba(170,255,156, 0.8)";
+		// 								c.stroke();
+		// 								c.fill();
+		// 								c.restore();
+		// 							}
+		// 							break;
+		// default:					if (this.shieldLevel < this.maxShieldLevel || this.hitPoints < this.maxHitPoints) {
+		// 								c.save();
+		// 								c.fillStyle = "white";
+		// 								c.fillRect(-50*z,120*z, (this.shieldLevel/2)*z, 10*z);
+		// 								c.fillStyle = "green";
+		// 								c.fillRect(-50*z,135*z, (this.hitPoints/2)*z, 10*z);
+		// 								c.restore();
+		// 							}
+		// 							c.rotate(this.direction * TO_RADIANS);
+		// 							if (this.shieldActivated && this.shieldLevel > 2) {
+		// 								c.save();
+		// 								c.scale(1*z, 1.5*z);
+		// 								c.beginPath();
+		// 								c.arc(-10,0,100,0,2*Math.PI);
+		// 								var grd = c.createRadialGradient(0,0,15*(z/3),0,0,120*(z/3));
+		// 								grd.addColorStop(0.2,"rgba(24,163,0, 0.1)");
+		// 								grd.addColorStop(0.9, "rgba(114,214,96, 0.6)");
+		// 								c.fillStyle = grd;
+		// 								c.strokeStyle = "rgba(170,255,156, 0.8)";
+		// 								c.stroke();
+		// 								c.fill();
+		// 								c.restore();
+		// 							}
+		// 							break;
+		// }
 		
 		c.drawImage(this.image, -(this.width / 2)*z, -(this.height / 2)*z, this.width*z, this.height*z);
 	}
@@ -210,7 +268,6 @@ this.draw = function() {
 	
 	c.restore();
 }
-
 
 
 this.createStandardShip = function(initialX, initialY, typeName = "Standard Vagabond") {
@@ -244,7 +301,8 @@ this.createStandardShip = function(initialX, initialY, typeName = "Standard Vaga
 	this.shieldLevel = 200;
 	this.maxShieldLevel = 200;
 	this.shieldTimer = 0;
-	this.shieldSize = 100;
+	this.shieldSize = (this.width+this.height)/4;
+	this.shieldType = this.shieldTypes[type.shieldType];
 	this.hitPoints = 200;
 	this.maxHitPoints = 200;
 	this.destroyed = false;
@@ -254,94 +312,6 @@ this.createStandardShip = function(initialX, initialY, typeName = "Standard Vaga
 	
 	addNewEnemyShip(this);
 }
-
-// // Behemoth class battle ship
-// this.createBehemothBattleship = function(initialX, initialY) {
-
-// 	this.x = initialX;
-// 	this.y = initialY;
-// 	this.type = "Behemoth Battleship";
-// 	this.strength = 10;
-// 	this.speed = 4;
-// 	this.width = 240;
-// 	this.height = 330;
-// 	this.image = new Image();
-// 	this.image = behemothShipImage;
-// 	this.direction = 0;
-// 	this.momentum = 0;
-// 	this.nextLocationX = Ship.X;
-// 	this.nextLocationY = Ship.Y;
-// 	this.collisionRadius = 220;
-// 	this.AISequence = 2;
-// 	this.AISequenceCounter = 0;
-// 	this.AISubSequenceCounter = 0;
-// 	this.update();
-// 	var lastFireDate = new Date();
-// 	this.lastFireTime = lastFireDate.getTime();
-// 	this.target = "Player Ship";
-// 	this.fireRate = 500;
-// 	this.turret = 1;
-// 	this.shieldActivated = false;
-// 	this.shieldLevel = 800;
-// 	this.maxShieldLevel = 800;
-// 	this.shieldTimer = 0;
-// 	this.shieldSize = 100;
-// 	this.hitPoints = 800;
-// 	this.maxHitPoints = 800;
-// 	this.destroyed = false;
-// 	this.destroySequence = 0;
-// 	this.destroySequenceCounter = 0;
-
-
-// 	addNewEnemyShip(this);
-// }
-
-
-
-// Fighter squadron triplet ships
-// this.createFighterSquadron = function(initialX, initialY) {
-
-// 	this.x = initialX;
-// 	this.y = initialY;
-// 	this.type = "Fighter Squadron";
-// 	this.strength = 2;
-// 	this.speed = 15;
-// 	this.width = 50;
-// 	this.height = 50;
-// 	this.image = new Image();
-// 	this.image = fighterSquadronImage;
-// 	this.direction = 0;
-// 	this.momentum = 0;
-// 	this.nextLocationX = Ship.X;
-// 	this.nextLocationY = Ship.Y;
-// 	this.collisionRadius = 100;
-// 	this.AISequence = 2;
-// 	this.AISequenceCounter = 0;
-// 	this.AISubSequenceCounter = 0;
-// 	this.update();
-// 	var lastFireDate = new Date();
-// 	this.lastFireTime = lastFireDate.getTime();
-// 	this.target = "Player Ship";
-// 	this.fireRate = 50;
-// 	this.turret = 1;
-// 	this.shieldActivated = false;
-// 	this.shieldLevel = 50;
-// 	this.maxShieldLevel = 50;
-// 	this.shieldTimer = 0;
-// 	this.shieldSize = 50;
-// 	this.hitPoints = 40;
-// 	this.maxHitPoints = 40;
-// 	this.destroyed = false;
-// 	this.destroySequence = 0;
-// 	this.destroySequenceCounter = 0;
-
-
-// 	addNewEnemyShip(this);
-// }
-
-
-
-
 
 
 
@@ -366,10 +336,10 @@ this.faceTowardsAPoint = function() {
 		}
 	
 		if ((Math.abs(faceDirection - this.direction)) > 15) {
-			this.direction += 3;
+			this.direction += 0.3*this.speed;
 		}
 	
-		this.direction += 1;
+		this.direction += 0.1*this.speed;
 		
 		if (this.direction > 359) {
 			this.direction = 0;
@@ -382,10 +352,10 @@ this.faceTowardsAPoint = function() {
 		}
 	
 		if ((Math.abs(faceDirection - this.direction)) > 15) {
-			this.direction -= 3;
+			this.direction -= 0.3*this.speed;
 		}
 	
-		this.direction -= 1;
+		this.direction -= 0.1*this.speed;
 		
 		if (this.direction < 0){
 			this.direction = 359;
@@ -423,9 +393,8 @@ this.trackOntoScreen = function() {
 				this.y = gameMap.currentY + (-100 + -(canvasHeight/z));
 				this.AISequenceCounter += 1;
 				this.target = "Arbitrary Point";
-				Game.printToDebugConsole("Ship Placed");
+				//Game.printToDebugConsole("Ship Placed");
 				break;
-				
 	// Choose a central point, and face it	
 	case 1:		this.nextLocationX = gameMap.currentX + ((-1400) + Math.floor(Math.random() * (2801)));
 				this.nextLocationY = gameMap.currentY + ((-1400) + Math.floor(Math.random() * (2801)));
@@ -433,22 +402,25 @@ this.trackOntoScreen = function() {
 				var faceDirection = 360 - angleDegree - 90;
 				if (faceDirection < 0) {faceDirection += 360;}
 				this.AISequenceCounter = 2;
-				Game.printToDebugConsole("Selected Location "+faceDirection+' AI:'+this.AISequenceCounter);
+				//Game.printToDebugConsole("Selected Location "+faceDirection+' AI:'+this.AISequenceCounter);
 				console.log(faceDirection);
 				break;
 	
 	// Move towards target point, until reached
-	case 2:		var arrivedAtTargetPoint = this.moveToAPoint(5);
+	case 2:		var arrivedAtTargetPoint = this.moveToAPoint(this.speed);
 				if (arrivedAtTargetPoint) { this.AISequenceCounter = 3; }
+
+				var shipCloseBy = this.isPlayerCloseBy(200);
+				if (shipCloseBy) { this.AISequenceCounter = 3; }
 				//Game.printToDebugConsole("Moving Towards Target");
 				
-				//Game.printToDwebugConsole(gameMap.currentX+','+gameMap.currentY);
+				//Game.printToDebugConsole(gameMap.currentX+','+gameMap.currentY);
 				break;
 	// Target reached, switch to trackPlayer mode
 	case 3:		this.AISequenceCounter = 0;
 				this.AISequence = 4;
 				this.target = "Player Ship";
-				Game.printToDebugConsole("Switched to Player Tracking");
+				//Game.printToDebugConsole("Switched to Player Tracking");
 				break;
 				
 	}
@@ -468,15 +440,16 @@ this.engagePlayerShipStationary = function() {
 		// Face the player ship
 		case 0:		var targetAquired = this.faceTowardsAPoint();
 					if (targetAquired) { this.AISequenceCounter = 1; }
-					Game.printToDebugConsole("Aquiring Target");
+					//Game.printToDebugConsole("Aquiring Target");
 					break;	
 		
 		// Fire weapons
 		case 1:		this.fireLaserPulse();
 					var targetAquired = this.faceTowardsAPoint();
 					if (!(targetAquired)) { this.AISequenceCounter = 0; }
-					Game.printToDebugConsole("Fired at Target");
+					//Game.printToDebugConsole("Fired at Target");
 					break;
+		default: 	this.AISequenceCounter = 0;
 
 		
 	
@@ -515,8 +488,10 @@ this.engagePlayerShipFollow = function() {
 		case 3:		this.target = "Arbitrary Point";
 					var arrivedNextTargetPoint = this.moveToAPoint(this.speed);
 					if (arrivedNextTargetPoint) { this.AISequenceCounter = 0; this.target = "Player Ship"}
+					var shipCloseBy = this.isPlayerCloseBy(400);
+					if (shipCloseBy) { this.AISequenceCounter = 0; this.target = "Player Ship" } 
+					else {this.AISequence = 2; this.AISequenceCounter = 1; this.target = "Player Ship"}
 					break;
-
 		// Choose new location
 		case 4:		var randomizer = Math.floor(Math.random()*4);
 					switch (randomizer) {
@@ -604,7 +579,7 @@ this.update = function() {
 					break;
 		}
 
-		//Game.printToDebugConsole("AISequence = " + this.AISequence);
+		//Game.printToDebugConsole("AISequence = " + this.AISequence + '.' + this.AISequenceCounter);
 		//Game.printToDebugConsole("AISequenceCount = " + this.AISequenceCounter);
 		
 		
@@ -650,6 +625,7 @@ this.detectCollisions = function() {
 			//this.collisionRadius);
 			
 		if (collisionOccured && (deployedMunitions[i].origin == "Player Ship")) {
+		
 		
 			this.shieldActivated = true;
 			
@@ -1017,8 +993,7 @@ function updateEnemyShips() {
 			if (Game.enemyShips[i].destroySequence == 20) {
 				Game.enemyShips.splice(i, 1);
 			}
-			else { Game.enemyShips[i].update(); }
-			
+			else { Game.enemyShips[i].update(); }	
 		
 		}
 		
@@ -1026,6 +1001,22 @@ function updateEnemyShips() {
 			Game.enemyShips[i].detectCollisions();
 			Game.enemyShips[i].update();
 		}
+	}
+
+	if(Game.enemyShips.length==0 && !EnemyQueued) {
+		setTimeout(function() {
+			addRandomEnemyShip();
+			EnemyQueued = false;
+		}, 15000);
+		EnemyQueued = true;
+	}
+	if(Game.enemyShips.length < 2 && (Math.random()*50000) < 2 && !FleetQueued) {
+		Game.printToDebugConsole("BAD LUCK: Adding Enemy Fleet");
+		setTimeout(function() {
+			addEnemyFleet();
+			FleetQueued = false;
+		}, 15000);
+		FleetQueued = true;	 	
 	}
 
 }
@@ -1037,9 +1028,24 @@ function addNewEnemyShip(enemyShip){
 }
 
 
-
+function addEnemyFleet(fighters = 4) {
+	var capitalShip = new EnemyShip();
+	capitalShip.createStandardShip(0,0, "Behemoth Battleship");
+	for (var i = 0; i < fighters; i++) {
+		var enemyShip = new EnemyShip();
+		enemyShip.createStandardShip(40*i,40*i, "Fighter Squadron");
+	}
+}
 
 // Add an enemy ship to the array
-function addRandomEnemyShip(enemyShip){
-	Game.enemyShips.push(enemyShip);
+function addRandomEnemyShip(){
+	var enemyShip = new EnemyShip();
+	var type = "Standard Vagabond";
+	var randomType = Math.floor(Math.random()*7);
+	if (randomType <= 3) { type = "Standard Vagabond"; }
+	else if (randomType == 4) { type = "Gold Cargo Ship"; }
+	else if (randomType == 5) { type = "Platinum Cargo Ship"; }
+	else { type = "Commercial Cargo Ship"; }
+	enemyShip.createStandardShip(80,80, type);
+	enemyShip.fireRate = (350 + (Math.random()*1250));
 }

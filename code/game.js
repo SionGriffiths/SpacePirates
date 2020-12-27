@@ -683,6 +683,8 @@ Game.paint = function() {
 			c.fillText("Munitions Paint time %: " + munitionsPaintPercentage.toFixed(0), 10, 350);
 			c.translate(0, 20);
 			c.fillText("Munitions Update time %: " + munitionsUpdatePercentage.toFixed(0), 10, 350);
+			c.translate(0, 20);
+			c.fillText("Enemy Ships: " + this.enemyShips.length, 10, 350);
 			c.restore();
 		}
 	}

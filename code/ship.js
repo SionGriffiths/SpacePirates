@@ -55,10 +55,15 @@ Ship.destroyed = false;
 Ship.destroySequence = 0;
 Ship.destroySequenceCounter = 0;
 
-Ship.maxFuel = 100;
+Ship.maxFuel = 150;
 
 
-
+// Cheating for DEV
+// Ship.ShieldLevel = 1000;
+// Ship.MaxShieldLevel = 1000;
+// Ship.HullStrength = 1000;
+// Ship.MaxHullStrength = 1000;
+// End Cheat
 
 Ship.reset = function() {
 

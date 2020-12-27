@@ -75,18 +75,10 @@ function keyEventFired(e) {
 	case 71:	Game.playerFiringMunitions = true;
 				Game.playerMunitionsType = 2;
 				break;
-		
+
 		
 	// P - place an enemy ship - development convenience
-	case 80:	var enemyShip = new EnemyShip();
-				var type = "Standard Vagabond";
-				var randomType = Math.floor(Math.random()*7);
-				if (randomType <= 3) { type = "Standard Vagabond"; }
-				else if (randomType == 4) { type = "Gold Cargo Ship"; }
-				else if (randomType == 5) { type = "Platinum Cargo Ship"; }
-				else { type = "Commercial Cargo Ship"; }
-				enemyShip.createStandardShip(80,80, type);
-				enemyShip.fireRate = (350 + (Math.random()*1250));
+	case 80:	addRandomEnemyShip();
 				break;
 	// The [ { Key - place a Behemoth ship - development convenience
 	case 219:	var enemyShip = new EnemyShip();

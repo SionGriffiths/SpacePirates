@@ -48,6 +48,9 @@ var toggleSound = true;
 var AsteroidsPainted = 0;
 var PlanetsPainted = 0;
 
+var EnemyQueued = false;
+var FleetQueued = false;
+
 // Print to debug
 var thisCode = "";
 var lastCode = ""; 
